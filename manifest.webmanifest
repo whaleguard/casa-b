@@ -1,0 +1,5 @@
+{
+ "name":"CASA B","short_name":"CASA B","start_url":"./index.html","display":"standalone",
+ "background_color":"#19130F","theme_color":"#19130F",
+ "icons":[{"src":"assets/img/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"assets/img/icon-512.png","sizes":"512x512","type":"image/png"}]
+}

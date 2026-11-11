@@ -465,6 +465,41 @@ background-size:79px 87px,113px 97px,127px 131px,149px 109px;}
 }
 @media(prefers-reduced-motion:reduce){.casab-hero-actions a{transition:none}.casab-hero-media .hero-slide.is-active{animation:none}}
 </style>
+<style id="casab-refine">
+/* 글자 = 골드 포일(고급) / 액센트 = 오렌지 유지 */
+:root{--gold-foil:linear-gradient(100deg,#6E4710 0%,#B07A22 10%,#F3D484 21%,#FFF6DC 30%,#E4AE45 40%,#C58827 49%,#F7DE94 59%,#FFFBEF 67%,#D89B34 79%,#9A6A1C 90%,#6E4710 100%);}
+/* 금박(골드 포일) 글자 + 입체감(엠보싱) */
+.gold-text,.orange-text,.brand-name{color:var(--gold)!important;background:var(--gold-foil);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 1px 0 rgba(255,246,214,.45)) drop-shadow(0 1px 2px rgba(0,0,0,.45));}
+.casab-hero-title{color:var(--gold)!important;background:var(--gold-foil);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 -1px 0 rgba(255,248,224,.55)) drop-shadow(0 2px 1px rgba(92,56,12,.6)) drop-shadow(0 5px 9px rgba(0,0,0,.5));animation:foilSheen 6.5s ease-in-out infinite alternate;}
+@keyframes foilSheen{from{background-position:0 0}to{background-position:100% 0}}
+@media(prefers-reduced-motion:reduce){.casab-hero-title{animation:none}}
+/* 종이 질감 강화 — 실물 종이 결이 보이도록 */
+.paper-black{
+background-color:#1F1A17;
+background-image:
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='gb'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='17' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23gb)' opacity='.5'/%3E%3C/svg%3E"),
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='fb'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.028 .4' numOctaves='4' seed='31' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='340' height='340' filter='url(%23fb)' opacity='.26'/%3E%3C/svg%3E"),
+linear-gradient(125deg,#2C251F 0%,#1F1A17 48%,#141009 100%);
+background-size:200px 200px,340px 340px,cover;background-repeat:repeat,repeat,no-repeat;background-blend-mode:overlay,soft-light,normal;
+}
+.paper-cream{
+background-color:#F5EFE4;
+background-image:
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='gc'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23gc)' opacity='.4'/%3E%3C/svg%3E"),
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='fc'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.04 .3' numOctaves='4' seed='22' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23fc)' opacity='.3'/%3E%3C/svg%3E"),
+linear-gradient(135deg,#FBF6ED 0%,#F3EDE1 48%,#E6DACA 100%);
+background-size:180px 180px,300px 300px,cover;background-repeat:repeat,repeat,no-repeat;background-blend-mode:multiply,soft-light,normal;
+}
+.paper-kraft{
+background-color:#C9A77D;
+background-image:
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='gk'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.66' numOctaves='4' seed='29' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23gk)' opacity='.52'/%3E%3C/svg%3E"),
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='fk'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.02 .33' numOctaves='5' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23fk)' opacity='.4'/%3E%3C/svg%3E"),
+linear-gradient(130deg,#E1C59E 0%,#C9A77D 48%,#AF885A 100%);
+background-size:170px 170px,360px 360px,cover;background-repeat:repeat,repeat,no-repeat;background-blend-mode:multiply,multiply,normal;
+}
+.paper-kraft::before{opacity:.36;}
+</style>
 </head>
 <body>
 <header class="header">
@@ -557,28 +592,28 @@ CASA B는 까사부사노의 커피 철학과 베이크 경험을
 <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 14h25v13a12 12 0 0 1-12 12h-1A12 12 0 0 1 9 27V14Z"/><path d="M34 17h5a6 6 0 0 1 0 12h-5M7 43h31M14 7h16"/></svg>
 </div>
 <h3>BAR</h3>
-<p>사람들이 잠시 머물며<br>문화를 만나는 공간</p>
+<p>잠시 머물며 한 잔과 함께<br>문화를 만나는 공간</p>
 </article>
 <article class="five-item">
 <div class="five-icon">
-<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M29 7C13 4 5 19 11 32s23 13 29-1S39 11 29 7Z"/><path d="M31 12C17 18 30 28 17 39"/></svg>
+<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 9h22l-2.5 31a3 3 0 0 1-3 2.7H18.5a3 3 0 0 1-3-2.7L13 9Z"/><path d="M14.3 19h19.4"/></svg>
 </div>
-<h3>BEAN</h3>
-<p>까사부사노의 커피 철학을<br>담은 시그니처 블렌드</p>
-</article>
-<article class="five-item">
-<div class="five-icon">
-<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="12" r="7"/><path d="M10 41V31c0-8 6-13 14-13s14 5 14 13v10M16 41V30m16 11V30M11 41h26"/></svg>
-</div>
-<h3>BARISTA</h3>
-<p>한 잔 이상의 경험을<br>만드는 사람</p>
+<h3>BEVERAGE</h3>
+<p>에스프레소부터 웰니스 음료까지<br>매일의 순간을 채우는 한 잔</p>
 </article>
 <article class="five-item">
 <div class="five-icon">
 <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34c-5-6-1-16 6-19 2-8 13-11 19-4 8-1 13 8 9 15-2 7-8 12-17 13-8 1-13-1-17-5Z"/><path d="M15 16c-2 7 0 15 6 21m5-25c-1 10 2 17 6 23m5-20c-1 6 0 11 2 15"/></svg>
 </div>
 <h3>BAKE</h3>
-<p>매일 정성껏 굽는<br>시그니처 베이크</p>
+<p>매일 정성껏 구워내는 Signature Bake<br>에그타르트는 CASA B 대표 베이크</p>
+</article>
+<article class="five-item">
+<div class="five-icon">
+<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 17h15v8a7.5 7.5 0 0 1-15 0v-8Z"/><path d="M21 19h4a4 4 0 0 1 0 8h-4"/><circle cx="36" cy="27" r="7"/><path d="M4 41h40"/></svg>
+</div>
+<h3>BEST PAIRING</h3>
+<p>음료와 베이크·디저트의 조화로<br>완성되는 CASA B만의 페어링</p>
 </article>
 </div>
 </div>

@@ -12,9 +12,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
 <style>
 :root{
-  --cream:#F3ECDD;--cream2:#EDE4D2;--paper:#FBF6EC;--ink:#2A211A;--ink2:#4a3a2d;--ink-soft:#7d6a56;
+  --cream:#F6F0E4;--cream2:#EFE8DA;--paper:#FDFAF3;--ink:#241C15;--ink2:#4a3a2d;--ink-soft:#7d6a56;--olive:#5B6B47;
   --gold:#C08A2E;--kraft:#C6A579;--kraft-dark:#AC8A5E;
-  --orange:#E0671C;--orange-dark:#B14e13;
+  --orange:#E8742B;--orange-dark:#B4531A;
   --gold-foil:linear-gradient(103deg,#9a7723 0%,#d6a63a 22%,#f0cd6e 40%,#bf8a26 54%,#e6bb55 70%,#9c7a24 100%);
   --serif:"Cinzel",Georgia,serif;--display:"Cormorant Garamond",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
   --line:rgba(120,90,60,.2);--shadow:0 6px 20px rgba(120,90,55,.12);
@@ -22,9 +22,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;padding:0;}
 body{font-family:var(--sans);background:#cfc3ad;color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;justify-content:center;}
-.app{position:relative;width:100%;max-width:440px;min-height:100vh;background:var(--cream);
-  background-image:url("assets/img/grain-cream.jpg");background-size:620px auto;background-blend-mode:multiply;
-  overflow:hidden;box-shadow:0 0 50px rgba(0,0,0,.25);}
+.app{position:relative;width:100%;max-width:440px;min-height:100vh;background:var(--cream);overflow:hidden;box-shadow:0 0 50px rgba(0,0,0,.25);}
+.app::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:url("assets/img/grain-cream.jpg");background-size:460px;opacity:.09;mix-blend-mode:multiply;}
 .screen{display:none;position:relative;z-index:1;padding:0 20px 112px;animation:fade .35s ease;}
 .screen.active{display:block;}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -119,8 +118,7 @@ h1,h2,h3{margin:0;}
 .sheet-wrap.open{display:block;}
 .sheet-bg{position:absolute;inset:0;background:rgba(40,28,16,.45);backdrop-filter:blur(2px);}
 .sheet{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:440px;max-height:93vh;overflow-y:auto;
-  background:var(--cream);background-image:url("assets/img/grain-cream.jpg");background-size:620px;background-blend-mode:multiply;
-  border-radius:24px 24px 0 0;animation:up .3s ease;}
+  background:var(--cream);border-radius:24px 24px 0 0;animation:up .3s ease;}
 @keyframes up{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
 .sh-img{width:100%;height:230px;object-fit:cover;display:block;}
 .sh-grip{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:rgba(255,255,255,.75);z-index:3;}

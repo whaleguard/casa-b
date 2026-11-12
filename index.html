@@ -470,9 +470,23 @@ background-size:79px 87px,113px 97px,127px 131px,149px 109px;}
 :root{--gold-foil:linear-gradient(100deg,#6E4710 0%,#B07A22 10%,#F3D484 21%,#FFF6DC 30%,#E4AE45 40%,#C58827 49%,#F7DE94 59%,#FFFBEF 67%,#D89B34 79%,#9A6A1C 90%,#6E4710 100%);}
 /* 금박(골드 포일) 글자 + 입체감(엠보싱) */
 .gold-text,.orange-text,.brand-name{color:var(--gold)!important;background:var(--gold-foil);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 1px 0 rgba(255,246,214,.45)) drop-shadow(0 1px 2px rgba(0,0,0,.45));}
-.casab-hero-title{color:var(--gold)!important;background:var(--gold-foil);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 -1px 0 rgba(255,248,224,.55)) drop-shadow(0 2px 1px rgba(92,56,12,.6)) drop-shadow(0 5px 9px rgba(0,0,0,.5));animation:foilSheen 6.5s ease-in-out infinite alternate;}
-@keyframes foilSheen{from{background-position:0 0}to{background-position:100% 0}}
-@media(prefers-reduced-motion:reduce){.casab-hero-title{animation:none}}
+.casab-hero-title{color:var(--gold)!important;-webkit-text-fill-color:currentColor;filter:drop-shadow(0 2px 1px rgba(92,56,12,.5)) drop-shadow(0 5px 9px rgba(0,0,0,.5));}
+.casab-hero-title .l{display:inline-block;background:var(--gold-foil);background-size:230% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;opacity:0;transform:translateY(46px);filter:blur(8px);animation:casabDrawin .9s cubic-bezier(.2,.75,.2,1) forwards,casabFoil 11s ease-in-out infinite;}
+.casab-hero-title .l.gap{margin-left:.3em}
+.casab-hero-title .l:nth-child(1){animation-delay:.08s,.08s}
+.casab-hero-title .l:nth-child(2){animation-delay:.16s,.16s}
+.casab-hero-title .l:nth-child(3){animation-delay:.24s,.24s}
+.casab-hero-title .l:nth-child(4){animation-delay:.32s,.32s}
+.casab-hero-title .l:nth-child(5){animation-delay:.44s,.44s}
+@keyframes casabDrawin{to{opacity:1;transform:none;filter:none}}
+@keyframes casabFoil{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.casab-hero-kicker{opacity:0;animation:casabFadeup .8s .5s forwards}
+.casab-hero-rule{opacity:0;animation:casabFadeup .8s .58s forwards}
+.casab-hero-slogan{opacity:0;animation:casabFadeup .8s .7s forwards}
+.casab-hero-copy{opacity:0;animation:casabFadeup .8s .85s forwards}
+.casab-hero-actions{opacity:0;animation:casabFadeup .8s 1s forwards}
+@keyframes casabFadeup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.casab-hero-title .l,.casab-hero-kicker,.casab-hero-rule,.casab-hero-slogan,.casab-hero-copy,.casab-hero-actions{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}}
 /* 종이 질감 강화 — 실물 종이 결이 보이도록 */
 .paper-black{
 background-color:#1F1A17;
@@ -499,6 +513,38 @@ linear-gradient(130deg,#E1C59E 0%,#C9A77D 48%,#AF885A 100%);
 background-size:170px 170px,360px 360px,cover;background-repeat:repeat,repeat,no-repeat;background-blend-mode:multiply,multiply,normal;
 }
 .paper-kraft::before{opacity:.36;}
+</style>
+<style id="casab-realtex">
+/* 실물 종이 결 — GPT 생성 질감(그레인)으로 교체, 또렷하게 보이도록 */
+.paper-black{
+  background-color:#1C1713;
+  background-image:url("assets/img/grain-black.jpg"),linear-gradient(125deg,#2A231D 0%,#1C1713 52%,#120E09 100%);
+  background-size:820px auto,cover;
+  background-repeat:repeat,no-repeat;
+  background-position:center,center;
+  background-blend-mode:screen,normal;
+}
+.paper-cream{
+  background-color:#EFE7D5;
+  background-image:url("assets/img/grain-cream.jpg"),linear-gradient(135deg,#F7F1E6 0%,#EEE6D4 52%,#E2D5C1 100%);
+  background-size:760px auto,cover;
+  background-repeat:repeat,no-repeat;
+  background-position:center,center;
+  background-blend-mode:multiply,normal;
+}
+/* 버튼 — 그라데이션/광택 제거, 솔리드 오렌지로 플랫하게 (안티-AI) */
+.btn-primary,.primary{
+  color:#FFF6EC!important;background:var(--orange)!important;background-image:none!important;
+  border:1px solid var(--orange-dark)!important;
+  box-shadow:0 2px 7px rgba(80,30,8,.18)!important;
+}
+.btn-primary:hover,.primary:hover{
+  background:#D9641F!important;background-position:0 0!important;border-color:var(--orange-dark)!important;
+  box-shadow:0 3px 11px rgba(80,30,8,.24)!important;transform:translateY(-1px);
+}
+.menu-tab[aria-selected="true"],.menu-tab.active,.category-tabs button.selected,.segment button.selected,.add-button,.stamp.active,.cart-count{
+  background:var(--orange)!important;background-image:none!important;border-color:var(--orange-dark)!important;color:#FFF6EC!important;
+}
 </style>
 </head>
 <body>
@@ -530,12 +576,14 @@ background-size:170px 170px,360px 360px,cover;background-repeat:repeat,repeat,no
 <main>
 <section class="casab-hero paper-black" id="home" aria-labelledby="casabHeroTitle">
 <div class="casab-hero-media">
-<img class="hero-slide is-active" src="assets/img/hero.jpg" alt="원목 테이블 위 CASA B 블랙 테이크아웃 컵과 오렌지 에그타르트 선물 패키지" fetchpriority="high" decoding="async">
-<img class="hero-slide" src="assets/img/hero-2.jpg" alt="CASA B 오렌지 에그타르트 선물 박스와 블랙 컵" decoding="async">
+<video class="hero-slide hero-video is-active" src="assets/img/hero-coffee.mp4" poster="assets/img/hero-coffee-poster.jpg" autoplay muted playsinline preload="auto" aria-label="CASA B 에스프레소 추출과 에그타르트 페어링 영상"></video>
+<img class="hero-slide" src="assets/img/hero.jpg" alt="CASA B 컵과 에그타르트 선물 패키지" fetchpriority="high" decoding="async">
+<img class="hero-slide" src="assets/img/hero-2.jpg" alt="CASA B 아이스 컵" decoding="async">
+<img class="hero-slide" src="assets/img/hero-3.jpg" alt="CASA B 컵과 에스프레소" decoding="async">
 </div>
 <div class="casab-hero-content">
 <div class="casab-hero-kicker">BEVERAGE · BAKE · PAIRING</div>
-<h1 class="casab-hero-title" id="casabHeroTitle">CASA B</h1>
+<h1 class="casab-hero-title" id="casabHeroTitle" aria-label="CASA B"><span class="l">C</span><span class="l">A</span><span class="l">S</span><span class="l">A</span><span class="l gap">B</span></h1>
 <div class="casab-hero-rule" aria-hidden="true"></div>
 <h2 class="casab-hero-slogan">GRAB.<br>PAIR.<br>GO.</h2>
 <p class="casab-hero-copy">좋은 음료와 베이크의 완벽한 페어링.<br>한 손에, 더 빠르게.<br>Every Moment. CASA B.</p>
@@ -1011,7 +1059,7 @@ renderMenu();
 renderCart();
 </script>
 <script>
-(function(){var s=document.querySelectorAll(".casab-hero-media .hero-slide");if(s.length<2)return;var i=0;setInterval(function(){s[i].classList.remove("is-active");i=(i+1)%s.length;var el=s[i];void el.offsetWidth;el.classList.add("is-active");},7000);})();
+(function(){var s=document.querySelectorAll(".casab-hero-media .hero-slide");function act(el){if(el&&el.tagName==="VIDEO"){try{el.currentTime=0;var p=el.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}}if(s.length)act(s[0]);if(s.length<2)return;var i=0;setInterval(function(){s[i].classList.remove("is-active");i=(i+1)%s.length;var el=s[i];void el.offsetWidth;el.classList.add("is-active");act(el);},7000);})();
 </script>
 </body>
 </html>

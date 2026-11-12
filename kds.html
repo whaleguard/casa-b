@@ -3,121 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#1F1A17">
+<meta name="theme-color" content="#F4EEDF">
 <title>CASA B OS — 매장 주문접수</title>
 <meta name="description" content="CASA B OS — 앱·배달앱 주문 통합 접수 (KDS). 접수 → 제조중 → 완료.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
 <style>
 :root{
-  --black:#1F1A17;--black2:#171310;--cream:#F5EFE4;--kraft:#C9A77D;--kraft-dark:#B48D61;
-  --gold:#D89B2B;--orange:#E8742B;--orange-dark:#A84317;
-  --app:#E8742B;--baemin:#2AC1BC;--coupang:#C5003E;
-  --serif:"Cinzel",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
-  --line:rgba(255,255,255,.09);
+  --cream:#F4EEDF;--cream2:#EDE4D2;--paper:#FBF6EC;--ink:#241C15;--ink2:#4a3a2d;--ink-soft:#7d6a56;
+  --kraft:#CBB088;--kraft2:#C3A87E;--kraft-dark:#AC8A5E;--gold:#C08A2E;
+  --orange:#E8742B;--orange-dark:#B4531A;--baemin:#2AC1BC;--coupang:#C5003E;
+  --serif:"Cinzel",Georgia,serif;--display:"Cormorant Garamond",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
+  --line:rgba(120,90,55,.2);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;padding:0;height:100%;}
-body{font-family:var(--sans);color:var(--cream);background:var(--black2);
-  background-image:url("assets/img/grain-black.jpg");background-size:820px auto;background-blend-mode:screen;
-  -webkit-font-smoothing:antialiased;min-height:100vh;}
-body::before{content:"";position:fixed;inset:0;background:linear-gradient(130deg,#28221E 0%,#1F1A17 55%,#141009 100%);opacity:.6;z-index:-1;}
-
-/* top bar */
-.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:18px;
-  padding:13px 22px;background:rgba(18,13,10,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-.bar .brand{display:flex;align-items:center;gap:10px;}
-.bar .dia{width:30px;height:30px;}
-.bar .nm{font-family:var(--serif);font-weight:700;letter-spacing:.12em;font-size:17px;
-  background:linear-gradient(103deg,#8a6a1f,#f6e08a,#c98f24,#f3d879,#7c5713);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;}
-.bar .store{font-size:12.5px;color:#C9B9A6;}
-.bar .store b{color:var(--cream);}
-.bar .clock{font-variant-numeric:tabular-nums;font-size:15px;color:#cdbda9;font-weight:700;letter-spacing:.04em;margin-left:4px;}
-.bar .sp{flex:1;}
-.kpi{display:flex;gap:20px;align-items:center;margin-right:6px;}
-.kpi .k{text-align:right;}
-.kpi .kv{font-family:var(--serif);font-size:17px;color:var(--cream);line-height:1;}
-.kpi .kk{font-size:10px;color:#b0a08e;margin-top:3px;letter-spacing:.04em;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--sans);color:var(--ink);background:var(--cream);min-height:100vh;-webkit-font-smoothing:antialiased;}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets/img/grain-cream.jpg");background-size:520px;opacity:.1;mix-blend-mode:multiply;pointer-events:none;}
+.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:18px;padding:14px 24px;background:rgba(244,238,223,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.brand{display:flex;flex-direction:column;}
+.brand .nm{font-family:var(--serif);font-weight:700;letter-spacing:.12em;font-size:19px;
+  background:linear-gradient(103deg,#9a7723,#d6a63a,#f0cd6e,#bf8a26,#9c7a24);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;}
+.brand .lb{font-size:9px;letter-spacing:.26em;color:var(--ink-soft);font-weight:700;margin-top:3px;}
+.store{font-size:13px;color:var(--ink2);} .store b{color:var(--ink);}
+.clock{font-variant-numeric:tabular-nums;font-size:15px;color:var(--ink);font-weight:800;letter-spacing:.04em;}
+.sp{flex:1;}
+.kpi{display:flex;gap:22px;align-items:center;margin-right:4px;}
+.kpi .k{text-align:right;} .kpi .kv{font-family:var(--display);font-size:20px;color:var(--ink);line-height:1;font-weight:700;} .kpi .kk{font-size:10px;color:var(--ink-soft);margin-top:3px;}
 .btn{border:0;cursor:pointer;font-family:var(--sans);font-weight:800;border-radius:9px;font-size:12.5px;padding:9px 14px;}
-.btn-ghost{background:transparent;color:var(--orange);border:1px solid var(--orange);}
-.btn-kraft{background:var(--kraft);color:#2a1d13;border:1px solid var(--kraft-dark);}
-
-/* columns */
-.board{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px 40px;align-items:start;}
+.btn-ghost{background:transparent;color:var(--orange);border:1.5px solid var(--orange);}
+.btn-kraft{background:var(--kraft);color:#352414;border:1px solid var(--kraft-dark);}
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:10px 24px 0;font-size:11px;color:var(--ink-soft);align-items:center;}
+.legend .lg{display:inline-flex;align-items:center;gap:5px;} .legend .sw{width:10px;height:10px;border-radius:3px;}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:14px 22px 40px;align-items:start;}
 @media(max-width:900px){.board{grid-template-columns:1fr;}}
-.col{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:16px;min-height:200px;display:flex;flex-direction:column;}
-.col-h{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--line);position:sticky;top:57px;background:rgba(22,16,12,.82);backdrop-filter:blur(6px);border-radius:16px 16px 0 0;z-index:5;}
-.col-h .ct{font-weight:800;font-size:14px;letter-spacing:.02em;display:flex;align-items:center;gap:8px;}
-.col-h .dot{width:9px;height:9px;border-radius:50%;}
-.col-h .cnt{font-family:var(--serif);font-size:15px;color:#cdbda9;min-width:24px;height:24px;border-radius:12px;background:rgba(255,255,255,.06);display:grid;place-items:center;padding:0 7px;}
-.col.new .dot{background:var(--orange);}
-.col.prog .dot{background:var(--gold);}
-.col.done .dot{background:#6ea06a;}
-.col-body{padding:12px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:calc(100vh - 150px);}
-.col-body::-webkit-scrollbar{width:7px;}.col-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:4px;}
-
-/* order card */
-.oc{border-radius:13px;overflow:hidden;background:var(--kraft);background-image:url("assets/img/grain-cream.jpg");background-size:480px;background-blend-mode:multiply;color:#241812;border:1px solid #a9865b;box-shadow:0 6px 16px rgba(0,0,0,.35);animation:pop .3s ease;}
-@keyframes pop{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+.col{display:flex;flex-direction:column;}
+.col-h{display:flex;align-items:center;justify-content:space-between;padding:6px 4px 12px;border-bottom:2px solid var(--line);margin-bottom:12px;position:sticky;top:60px;background:var(--cream);z-index:5;}
+.col-h .ct{font-family:var(--display);font-weight:700;font-size:24px;color:var(--ink);display:flex;align-items:center;gap:10px;}
+.col-h .cnt{font-size:13px;color:#fff;min-width:26px;height:26px;border-radius:13px;background:var(--orange);display:grid;place-items:center;padding:0 8px;font-weight:800;}
+.col.prog .cnt{background:var(--gold);} .col.done .cnt{background:#6ea06a;}
+.col-body{display:flex;flex-direction:column;gap:13px;overflow-y:auto;max-height:calc(100vh - 170px);padding-right:2px;}
+.oc{border-radius:12px;overflow:hidden;background:var(--kraft);background-image:url("assets/img/grain-cream.jpg");background-size:420px;background-blend-mode:multiply;color:#2a1c10;border:1px solid var(--kraft-dark);box-shadow:0 4px 12px rgba(120,80,40,.18);animation:pop .3s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .oc.flash{animation:flash 1.4s ease;}
-@keyframes flash{0%{box-shadow:0 0 0 3px rgba(232,116,43,.9),0 6px 16px rgba(0,0,0,.35)}100%{box-shadow:0 6px 16px rgba(0,0,0,.35)}}
-.oc-h{display:flex;align-items:center;justify-content:space-between;padding:11px 13px 9px;}
-.oc-no{font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.04em;}
-.oc-time{font-size:11.5px;color:#6e4a27;font-weight:700;}
-.oc-time.late{color:#b4201a;}
-.chips{display:flex;gap:6px;padding:0 13px 9px;flex-wrap:wrap;}
-.chip{font-size:10.5px;font-weight:800;letter-spacing:.02em;padding:3px 8px;border-radius:6px;color:#fff;}
-.chip.app{background:var(--app);}
-.chip.baemin{background:var(--baemin);}
-.chip.coupang{background:var(--coupang);}
-.chip.pickup{background:rgba(0,0,0,.14);color:#3a281a;border:1px solid rgba(0,0,0,.18);}
-.chip.delivery{background:rgba(0,0,0,.14);color:#3a281a;border:1px solid rgba(0,0,0,.18);}
-.oc-items{padding:4px 13px 10px;border-top:1px dashed #b08a5d;}
-.oc-it{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:5px 0;line-height:1.35;}
-.oc-it .q{font-weight:800;color:#8a3c12;flex:0 0 auto;}
-.oc-it .op{display:block;font-size:11px;color:#6e4a27;font-weight:600;margin-top:1px;}
-.oc-it .nm2{font-weight:700;}
-.oc-f{display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(0,0,0,.07);border-top:1px solid rgba(0,0,0,.1);}
+@keyframes flash{0%{box-shadow:0 0 0 3px rgba(232,116,43,.8),0 4px 12px rgba(120,80,40,.18)}100%{box-shadow:0 4px 12px rgba(120,80,40,.18)}}
+.oc-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 6px;}
+.oc-no{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.03em;}
+.oc-time{font-size:11.5px;color:#6e4a27;font-weight:700;} .oc-time.late{color:#b4201a;}
+.chips{display:flex;gap:6px;padding:0 14px 8px;flex-wrap:wrap;}
+.chip{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:6px;color:#fff;}
+.chip.app{background:var(--orange);}.chip.baemin{background:var(--baemin);}.chip.coupang{background:var(--coupang);}
+.chip.pickup,.chip.delivery{background:rgba(42,28,16,.1);color:#3a281a;border:1px solid rgba(42,28,16,.2);}
+.oc-items{padding:6px 14px 10px;border-top:1px dashed var(--kraft-dark);}
+.oc-it{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:5px 0;}
+.oc-it .nm2{font-weight:700;} .oc-it .op{display:block;font-size:11px;color:#6e4a27;font-weight:600;margin-top:1px;}
+.oc-it .q{font-weight:800;color:#8a3c12;}
+.oc-f{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(42,28,16,.06);border-top:1px solid rgba(42,28,16,.1);}
 .oc-tot{font-weight:800;font-size:14px;}
-.oc-act{border:0;cursor:pointer;font-weight:800;font-size:12.5px;padding:9px 14px;border-radius:9px;color:#fff6ec;background:var(--orange);border:1px solid var(--orange-dark);}
-.oc-act.prog{background:#7a5a1e;border-color:#5e4414;}
-.oc-act.done{background:#5d7a58;border-color:#46603f;}
-.col-empty{text-align:center;color:#8a7a68;font-size:12.5px;padding:26px 0;}
-
-/* soldout modal */
-.modal-wrap{position:fixed;inset:0;z-index:60;display:none;}
-.modal-wrap.open{display:block;}
-.modal-bg{position:absolute;inset:0;background:rgba(5,3,2,.62);backdrop-filter:blur(2px);}
-.modal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(520px,92vw);max-height:84vh;overflow-y:auto;
-  background:var(--black);background-image:url("assets/img/grain-black.jpg");background-size:720px;background-blend-mode:screen;
-  border:1px solid var(--line);border-radius:18px;padding:20px 22px;}
-.modal h3{font-family:var(--serif);font-size:19px;margin:0 0 4px;letter-spacing:.03em;}
-.modal .sub{font-size:12px;color:#b0a08e;margin-bottom:14px;}
+.oc-act{border:0;cursor:pointer;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:30px;color:#fff;background:var(--orange);border:1px solid var(--orange-dark);}
+.oc-act.prog{background:var(--gold);border-color:#9a6f1e;} .oc-act.done{background:#5d7a58;border-color:#46603f;}
+.col-empty{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:26px 0;}
+.modal-wrap{position:fixed;inset:0;z-index:60;display:none;}.modal-wrap.open{display:block;}
+.modal-bg{position:absolute;inset:0;background:rgba(40,28,16,.4);}
+.modal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(520px,92vw);max-height:84vh;overflow-y:auto;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 20px 50px rgba(80,50,20,.3);}
+.modal h3{font-family:var(--display);font-size:24px;margin:0 0 4px;font-weight:700;}
+.modal .sub{font-size:12px;color:var(--ink-soft);margin-bottom:14px;}
 .so-row{display:flex;align-items:center;justify-content:space-between;padding:11px 2px;border-bottom:1px solid var(--line);}
 .so-row .nm3{font-size:14px;font-weight:600;}
-.toggle{width:52px;height:28px;border-radius:15px;background:#3a2f26;border:1px solid var(--line);position:relative;cursor:pointer;flex:0 0 auto;transition:.2s;}
-.toggle .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#cdbda9;transition:.2s;}
-.toggle.on{background:var(--orange);border-color:var(--orange-dark);}
-.toggle.on .kn{left:26px;background:#fff;}
-.so-state{font-size:11px;font-weight:800;margin-right:10px;}
-.so-state.sell{color:#6ea06a;}.so-state.out{color:#c0564a;}
-
-.toast{position:fixed;top:70px;right:22px;z-index:80;background:#2a1d13;color:#fff6ec;border:1px solid var(--kraft-dark);
-  padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.45);
-  opacity:0;transform:translateX(30px);transition:.3s;display:flex;align-items:center;gap:9px;}
-.toast.show{opacity:1;transform:none;}
-.toast .nd{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(232,116,43,.25);}
-.legend{display:flex;gap:14px;flex-wrap:wrap;padding:0 20px 2px;font-size:11px;color:#b0a08e;align-items:center;}
-.legend .lg{display:inline-flex;align-items:center;gap:5px;}
-.legend .sw{width:10px;height:10px;border-radius:3px;}
+.toggle{width:52px;height:28px;border-radius:15px;background:#d8c7ad;border:1px solid var(--line);position:relative;cursor:pointer;flex:0 0 auto;transition:.2s;}
+.toggle .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.toggle.on{background:var(--orange);border-color:var(--orange-dark);} .toggle.on .kn{left:26px;}
+.so-state{font-size:11px;font-weight:800;margin-right:10px;} .so-state.sell{color:#5d7a58;}.so-state.out{color:var(--coupang);}
+.toast{position:fixed;top:72px;right:24px;z-index:80;background:#2a1c10;color:var(--cream);border:1px solid var(--kraft-dark);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 10px 24px rgba(80,50,20,.3);opacity:0;transform:translateX(30px);transition:.3s;display:flex;align-items:center;gap:9px;}
+.toast.show{opacity:1;transform:none;} .toast .nd{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(232,116,43,.25);}
 </style>
 </head>
 <body>
 <div class="bar">
-  <div class="brand"><span class="dia" id="dia"></span><span class="nm">CASA B OS</span></div>
-  <span class="store">· <b>부산 서면점</b> 주문접수</span>
+  <div class="brand"><span class="nm">CASA B OS</span><span class="lb">KITCHEN DISPLAY · 부산 서면점</span></div>
   <span class="clock" id="clock">--:--:--</span>
   <span class="sp"></span>
   <div class="kpi">
@@ -128,134 +91,42 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(130deg
   <button class="btn btn-ghost" onclick="openSold()">품절 관리</button>
   <button class="btn btn-kraft" onclick="simulate()">새 주문 (데모)</button>
 </div>
-
 <div class="legend">
-  <span class="lg"><span class="sw" style="background:var(--app)"></span>CASA B 앱</span>
+  <span class="lg"><span class="sw" style="background:var(--orange)"></span>CASA B 앱</span>
   <span class="lg"><span class="sw" style="background:var(--baemin)"></span>배달의민족</span>
   <span class="lg"><span class="sw" style="background:var(--coupang)"></span>쿠팡이츠</span>
-  <span style="margin-left:auto">● 픽업 / 배달 채널 통합 · 15초마다 신규 주문 자동 수신(데모)</span>
+  <span style="margin-left:auto;font-style:italic;font-family:var(--display);font-size:14px">Good Coffee Brings People Together</span>
 </div>
-
 <div class="board">
-  <div class="col new"><div class="col-h"><span class="ct"><span class="dot"></span>신규 · 접수대기</span><span class="cnt" id="cNew">0</span></div><div class="col-body" id="colNew"></div></div>
-  <div class="col prog"><div class="col-h"><span class="ct"><span class="dot"></span>제조중</span><span class="cnt" id="cProg">0</span></div><div class="col-body" id="colProg"></div></div>
-  <div class="col done"><div class="col-h"><span class="ct"><span class="dot"></span>완료 · 픽업/배달대기</span><span class="cnt" id="cDone">0</span></div><div class="col-body" id="colDone"></div></div>
+  <div class="col new"><div class="col-h"><span class="ct">신규 · 접수대기</span><span class="cnt" id="cNew">0</span></div><div class="col-body" id="colNew"></div></div>
+  <div class="col prog"><div class="col-h"><span class="ct">제조중</span><span class="cnt" id="cProg">0</span></div><div class="col-body" id="colProg"></div></div>
+  <div class="col done"><div class="col-h"><span class="ct">완료 · 픽업/배달</span><span class="cnt" id="cDone">0</span></div><div class="col-body" id="colDone"></div></div>
 </div>
-
-<!-- soldout modal -->
-<div class="modal-wrap" id="soldWrap">
-  <div class="modal-bg" onclick="closeSold()"></div>
-  <div class="modal">
-    <h3>품절 관리</h3>
-    <div class="sub">품절 처리하면 앱·키오스크·배달앱 메뉴에서 자동으로 숨겨집니다.</div>
-    <div id="soldList"></div>
-    <div style="height:14px"></div>
-    <button class="btn btn-kraft" style="width:100%;padding:12px" onclick="closeSold()">완료</button>
-  </div>
+<div class="modal-wrap" id="soldWrap"><div class="modal-bg" onclick="closeSold()"></div>
+  <div class="modal"><h3>품절 관리</h3><div class="sub">품절 처리하면 앱·키오스크·배달앱 메뉴에서 자동으로 숨겨집니다.</div><div id="soldList"></div><div style="height:14px"></div><button class="btn btn-kraft" style="width:100%;padding:12px" onclick="closeSold()">완료</button></div>
 </div>
-
 <div class="toast" id="toast"><span class="nd"></span><span id="toastMsg"></span></div>
-
 <script>
-document.getElementById('dia').innerHTML='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 45 24 24 45 3 24Z" stroke="#D89B2B" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="20" font-weight="700" fill="#D89B2B">B</text></svg>';
 var won=function(n){return '₩'+n.toLocaleString('ko-KR');};
-
-/* clock */
-function tick(){var d=new Date();document.getElementById('clock').textContent=d.toLocaleTimeString('ko-KR',{hour12:false});}
+function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('ko-KR',{hour12:false});}
 setInterval(tick,1000);tick();
-
-/* menu pool for random orders */
-var MENU=[
- {n:'아메리카노',o:'ICE · R',p:3000},{n:'아메리카노',o:'HOT · R',p:3000},
- {n:'카페라떼',o:'ICE · L',p:4500},{n:'콜드브루',o:'ICE · R',p:4500},
- {n:'오르조 라떼',o:'HOT · R',p:5500},{n:'오렌지 콜드브루 클라우드',o:'ICE · R',p:5800},
- {n:'딸기 라떼',o:'ICE · R',p:5200},{n:'B 얼그레이',o:'HOT · R',p:5000},
- {n:'에그타르트',o:'',p:3200},{n:'B 오리지널 티라미수',o:'',p:5000},
- {n:'콘 타르트',o:'',p:3500},{n:'아메리카노+에그타르트',o:'세트',p:6000}
-];
+var MENU=[{n:'아메리카노',o:'ICE · R',p:3000},{n:'아메리카노',o:'HOT · R',p:3000},{n:'카페라떼',o:'ICE · L',p:4500},{n:'콜드브루',o:'ICE · R',p:4500},{n:'오르조 라떼',o:'HOT · R',p:5500},{n:'오렌지 콜드브루 클라우드',o:'ICE · R',p:5800},{n:'딸기 라떼',o:'ICE · R',p:5200},{n:'B 얼그레이',o:'HOT · R',p:5000},{n:'에그타르트',o:'',p:3200},{n:'B 오리지널 티라미수',o:'',p:5000},{n:'콘 타르트',o:'',p:3500},{n:'아메리카노+에그타르트',o:'세트',p:6000}];
 var CH=[{k:'app',t:'CASA B 앱',mode:'pickup'},{k:'baemin',t:'배달의민족',mode:'delivery'},{k:'coupang',t:'쿠팡이츠',mode:'delivery'}];
 var NAMES=['김','이','박','최','정','강','조','윤'];
-
 var orders=[];var seq=835;var todayCount=0;var todayRev=0;
 function rnd(a){return a[Math.floor(Math.random()*a.length)];}
-function makeOrder(flash){
-  var ch=rnd(CH);var n=1+Math.floor(Math.random()*3);var items=[];var tot=0;
-  for(var i=0;i<n;i++){var m=rnd(MENU);var q=1+(Math.random()<0.25?1:0);items.push({n:m.n,o:m.o,q:q,p:m.p});tot+=m.p*q;}
-  if(ch.mode==='delivery')tot+=0;
-  seq++;
-  var no=ch.k==='app'?('CB250301-'+String(seq)):ch.k==='baemin'?('배민 #'+(4000+Math.floor(Math.random()*900))):('쿠팡 #'+(7000+Math.floor(Math.random()*900)));
-  var dest=ch.mode==='delivery'?('배달 · '+rnd(NAMES)+'**'):('픽업 · '+rnd(NAMES)+'님');
-  var o={id:Date.now()+Math.random(),no:no,ch:ch,items:items,tot:tot,dest:dest,status:'new',at:Date.now(),flash:!!flash};
-  orders.unshift(o);todayCount++;todayRev+=tot;render();
-  return o;
-}
+function makeOrder(flash){var ch=rnd(CH);var n=1+Math.floor(Math.random()*3);var items=[];var tot=0;for(var i=0;i<n;i++){var m=rnd(MENU);var q=1+(Math.random()<0.25?1:0);items.push({n:m.n,o:m.o,q:q,p:m.p});tot+=m.p*q;}seq++;var no=ch.k==='app'?('CB250301-'+String(seq)):ch.k==='baemin'?('배민 #'+(4000+Math.floor(Math.random()*900))):('쿠팡 #'+(7000+Math.floor(Math.random()*900)));var dest=ch.mode==='delivery'?('배달 · '+rnd(NAMES)+'**'):('픽업 · '+rnd(NAMES)+'님');var o={id:Date.now()+Math.random(),no:no,ch:ch,items:items,tot:tot,dest:dest,status:'new',at:Date.now(),flash:!!flash};orders.unshift(o);todayCount++;todayRev+=tot;render();return o;}
 function elapsed(at){var s=Math.floor((Date.now()-at)/1000);var m=Math.floor(s/60);return m<1?'방금':(m+'분 전');}
-function cardHTML(o){
-  var chip='<span class="chip '+o.ch.k+'">'+o.ch.t+'</span>'+'<span class="chip '+o.ch.mode+'">'+(o.ch.mode==='delivery'?'배달':'픽업')+'</span>';
-  var late=(Date.now()-o.at)>420000;
-  var items=o.items.map(function(it){return '<div class="oc-it"><span><span class="nm2">'+it.n+'</span>'+(it.o?'<span class="op">'+it.o+'</span>':'')+'</span><span class="q">x'+it.q+'</span></div>';}).join('');
-  var act=o.status==='new'?'<button class="oc-act" onclick="adv(\''+o.id+'\')">접수 → 제조</button>'
-        :o.status==='prog'?'<button class="oc-act prog" onclick="adv(\''+o.id+'\')">제조 완료</button>'
-        :'<button class="oc-act done" onclick="adv(\''+o.id+'\')">'+(o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+'</button>';
-  return '<div class="oc'+(o.flash?' flash':'')+'" data-id="'+o.id+'">'+
-    '<div class="oc-h"><span class="oc-no">'+o.no+'</span><span class="oc-time'+(late?' late':'')+'">'+elapsed(o.at)+'</span></div>'+
-    '<div class="chips">'+chip+'<span class="chip pickup">'+o.dest+'</span></div>'+
-    '<div class="oc-items">'+items+'</div>'+
-    '<div class="oc-f"><span class="oc-tot">'+won(o.tot)+'</span>'+act+'</div></div>';
-}
-function render(){
-  var N=orders.filter(function(o){return o.status==='new';});
-  var P=orders.filter(function(o){return o.status==='prog';});
-  var D=orders.filter(function(o){return o.status==='done';});
-  document.getElementById('colNew').innerHTML=N.length?N.map(cardHTML).join(''):'<div class="col-empty">새 주문 없음</div>';
-  document.getElementById('colProg').innerHTML=P.length?P.map(cardHTML).join(''):'<div class="col-empty">제조중 없음</div>';
-  document.getElementById('colDone').innerHTML=D.length?D.map(cardHTML).join(''):'<div class="col-empty">완료 대기 없음</div>';
-  document.getElementById('cNew').textContent=N.length;
-  document.getElementById('cProg').textContent=P.length;
-  document.getElementById('cDone').textContent=D.length;
-  document.getElementById('kCount').textContent=todayCount;
-  document.getElementById('kRev').textContent=won(todayRev);
-  document.getElementById('kProg').textContent=P.length;
-  orders.forEach(function(o){o.flash=false;});
-}
-function adv(id){
-  var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;
-  if(o.status==='new')o.status='prog';
-  else if(o.status==='prog')o.status='done';
-  else{orders=orders.filter(function(x){return x!==o;});toast((o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+' · '+o.no);}
-  render();
-}
-/* toast */
+function cardHTML(o){var chip='<span class="chip '+o.ch.k+'">'+o.ch.t+'</span><span class="chip '+o.ch.mode+'">'+(o.ch.mode==='delivery'?'배달':'픽업')+'</span>';var late=(Date.now()-o.at)>420000;var items=o.items.map(function(it){return '<div class="oc-it"><span><span class="nm2">'+it.n+'</span>'+(it.o?'<span class="op">'+it.o+'</span>':'')+'</span><span class="q">x'+it.q+'</span></div>';}).join('');var act=o.status==='new'?'<button class="oc-act" onclick="adv(\''+o.id+'\')">접수 → 제조</button>':o.status==='prog'?'<button class="oc-act prog" onclick="adv(\''+o.id+'\')">제조 완료</button>':'<button class="oc-act done" onclick="adv(\''+o.id+'\')">'+(o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+'</button>';return '<div class="oc'+(o.flash?' flash':'')+'"><div class="oc-h"><span class="oc-no">'+o.no+'</span><span class="oc-time'+(late?' late':'')+'">'+elapsed(o.at)+'</span></div><div class="chips">'+chip+'<span class="chip pickup">'+o.dest+'</span></div><div class="oc-items">'+items+'</div><div class="oc-f"><span class="oc-tot">'+won(o.tot)+'</span>'+act+'</div></div>';}
+function render(){var N=orders.filter(function(o){return o.status==='new';}),P=orders.filter(function(o){return o.status==='prog';}),D=orders.filter(function(o){return o.status==='done';});document.getElementById('colNew').innerHTML=N.length?N.map(cardHTML).join(''):'<div class="col-empty">새 주문 없음</div>';document.getElementById('colProg').innerHTML=P.length?P.map(cardHTML).join(''):'<div class="col-empty">제조중 없음</div>';document.getElementById('colDone').innerHTML=D.length?D.map(cardHTML).join(''):'<div class="col-empty">완료 대기 없음</div>';document.getElementById('cNew').textContent=N.length;document.getElementById('cProg').textContent=P.length;document.getElementById('cDone').textContent=D.length;document.getElementById('kCount').textContent=todayCount;document.getElementById('kRev').textContent=won(todayRev);document.getElementById('kProg').textContent=P.length;orders.forEach(function(o){o.flash=false;});}
+function adv(id){var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;if(o.status==='new')o.status='prog';else if(o.status==='prog')o.status='done';else{orders=orders.filter(function(x){return x!==o;});toast((o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+' · '+o.no);}render();}
 var tT;function toast(m){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},2600);}
 function simulate(){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · '+o.no);}
-
-/* soldout */
-var SOLD=['아메리카노','카페라떼','콜드브루','오르조 라떼','딸기 라떼','B 얼그레이','에그타르트','B 오리지널 티라미수','콘 타르트','데일리 베이크'];
-var soldState={};
-function openSold(){
-  document.getElementById('soldList').innerHTML=SOLD.map(function(n,i){
-    var on=!soldState[n];
-    return '<div class="so-row"><span class="nm3">'+n+'</span><div style="display:flex;align-items:center"><span class="so-state '+(on?'sell':'out')+'" id="st'+i+'">'+(on?'판매중':'품절')+'</span><div class="toggle '+(on?'on':'')+'" id="tg'+i+'" onclick="toggleSold(\''+n.replace(/'/g,"")+'\','+i+')"><div class="kn"></div></div></div></div>';
-  }).join('');
-  document.getElementById('soldWrap').classList.add('open');
-}
+var SOLD=['아메리카노','카페라떼','콜드브루','오르조 라떼','딸기 라떼','B 얼그레이','에그타르트','B 오리지널 티라미수','콘 타르트','데일리 베이크'];var soldState={};
+function openSold(){document.getElementById('soldList').innerHTML=SOLD.map(function(n,i){var on=!soldState[n];return '<div class="so-row"><span class="nm3">'+n+'</span><div style="display:flex;align-items:center"><span class="so-state '+(on?'sell':'out')+'" id="st'+i+'">'+(on?'판매중':'품절')+'</span><div class="toggle '+(on?'on':'')+'" id="tg'+i+'" onclick="toggleSold(\''+n.replace(/\x27/g,"")+'\','+i+')"><div class="kn"></div></div></div></div>';}).join('');document.getElementById('soldWrap').classList.add('open');}
 function closeSold(){document.getElementById('soldWrap').classList.remove('open');}
-function toggleSold(n,i){
-  soldState[n]=!soldState[n];var on=!soldState[n];
-  document.getElementById('tg'+i).classList.toggle('on',on);
-  var st=document.getElementById('st'+i);st.textContent=on?'판매중':'품절';st.className='so-state '+(on?'sell':'out');
-  if(!on)toast(n+' 품절 처리 — 앱·배달앱 반영');
-}
-
-/* seed + realtime */
-(function(){
-  for(var i=0;i<3;i++)makeOrder(false);
-  orders[0].status='prog';orders[1].status='prog';
-  // backfill today's numbers to look live
-  todayCount=39;todayRev=372500;render();
-  setInterval(function(){if(document.hidden)return;if(orders.filter(function(o){return o.status!=='done';}).length<9){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · '+o.no);}},15000);
-  setInterval(render,20000);
-})();
+function toggleSold(n,i){soldState[n]=!soldState[n];var on=!soldState[n];document.getElementById('tg'+i).classList.toggle('on',on);var st=document.getElementById('st'+i);st.textContent=on?'판매중':'품절';st.className='so-state '+(on?'sell':'out');if(!on)toast(n+' 품절 처리 — 앱·배달앱 반영');}
+(function(){for(var i=0;i<3;i++)makeOrder(false);orders[0].status='prog';orders[1].status='prog';todayCount=39;todayRev=372500;render();setInterval(function(){if(document.hidden)return;if(orders.filter(function(o){return o.status!=='done';}).length<9){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · '+o.no);}},15000);setInterval(render,20000);})();
 </script>
 </body>
 </html>

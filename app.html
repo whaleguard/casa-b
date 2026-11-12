@@ -2,427 +2,534 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#F5EFE4">
 <title>CASA B — 주문</title>
-<meta name="description" content="CASA B 주문 앱 — 미리 주문하고 픽업. Grab. Pair. Go.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="description" content="CASA B 주문앱 — 좋은 커피와 가장 맛있는 순간. 멤버십·주문·쿠폰.">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
 <style>
 :root{
-  --cream:#F6F0E4;--cream2:#EFE8DA;--paper:#FDFAF3;--ink:#241C15;--ink2:#4a3a2d;--ink-soft:#7d6a56;--olive:#5B6B47;
-  --gold:#C08A2E;--kraft:#C6A579;--kraft-dark:#AC8A5E;
-  --orange:#E8742B;--orange-dark:#B4531A;
-  --gold-foil:linear-gradient(103deg,#9a7723 0%,#d6a63a 22%,#f0cd6e 40%,#bf8a26 54%,#e6bb55 70%,#9c7a24 100%);
+  --cream:#F5EFE4;--cream2:#EFE7D8;--paper:#FCF8F0;--ink:#241C15;--ink2:#4a3a2d;--ink-soft:#7d6a56;--ink-faint:#9a8870;
+  --kraft:#C6A579;--kraft2:#BB9868;--kraft-dark:#9C7B50;--gold:#C08A2E;--gold-lt:#E1B85A;
+  --orange:#E8742B;--orange-dark:#B4531A;--olive:#5B6B47;--line:rgba(120,90,55,.18);--line2:rgba(120,90,55,.28);
   --serif:"Cinzel",Georgia,serif;--display:"Cormorant Garamond",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
-  --line:rgba(120,90,60,.2);--shadow:0 6px 20px rgba(120,90,55,.12);
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;padding:0;}
-body{font-family:var(--sans);background:#cfc3ad;color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;justify-content:center;}
-.app{position:relative;width:100%;max-width:440px;min-height:100vh;background:var(--cream);overflow:hidden;box-shadow:0 0 50px rgba(0,0,0,.25);}
-.app::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:url("assets/img/grain-cream.jpg");background-size:460px;opacity:.09;mix-blend-mode:multiply;}
-.screen{display:none;position:relative;z-index:1;padding:0 20px 112px;animation:fade .35s ease;}
-.screen.active{display:block;}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-/* top brand bar */
-.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
-  padding:15px 20px 12px;margin:0 -20px 4px;background:rgba(243,236,221,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-.icon-btn{width:40px;height:40px;border:0;background:none;color:var(--ink);font-size:18px;display:grid;place-items:center;position:relative;cursor:pointer;}
-.brandwrap{text-align:center;flex:1;}
-.wordmark{font-family:var(--serif);font-weight:700;letter-spacing:.16em;font-size:21px;line-height:1;
-  background:var(--gold-foil);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
-.tagline{font-size:9px;letter-spacing:.3em;color:var(--ink-soft);font-weight:700;margin-top:5px;}
-.cart-dot{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--orange);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center;}
-
-h1,h2,h3{margin:0;}
-.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 14px;}
-.sec-title{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.01em;color:var(--ink);}
-.sec-more{font-size:12px;color:var(--orange);text-decoration:none;font-weight:700;}
-.eyebrow{font-size:10.5px;letter-spacing:.26em;font-weight:800;color:var(--ink-soft);text-transform:uppercase;}
-
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;font-family:var(--sans);
-  font-weight:800;font-size:14.5px;border-radius:40px;padding:15px 20px;width:100%;transition:transform .15s,filter .15s;}
-.btn:active{transform:scale(.985);}
-.btn-primary{background:var(--orange);color:#fff7ef;box-shadow:0 6px 16px rgba(176,70,15,.28);}
-.btn-primary:hover{filter:brightness(1.04);}
-.btn-ghost{background:transparent;color:var(--orange);border:1.5px solid var(--orange);}
-.btn-ink{background:var(--ink);color:var(--cream);}
-
-/* ===== HOME ===== */
-.greet{padding:14px 2px 2px;}
-.greet .hi{font-size:12.5px;color:var(--ink-soft);letter-spacing:.02em;}
-.greet .big{font-family:var(--display);font-weight:700;font-size:27px;margin-top:2px;color:var(--ink);}
-.greet .big .o{color:var(--orange);}
-
-.member-card{position:relative;border-radius:18px;overflow:hidden;padding:20px 22px 18px;margin:16px 0 6px;
-  background:#C6A579;background-image:url("assets/img/grain-cream.jpg");background-size:520px auto;background-blend-mode:multiply;
-  color:#352414;box-shadow:0 12px 26px rgba(120,80,40,.3);border:1px solid #a9865b;}
-.mc-top{display:flex;justify-content:space-between;align-items:flex-start;}
-.mc-brand{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.1em;color:#3a2614;}
-.mc-grade{font-size:9.5px;letter-spacing:.22em;font-weight:800;color:#6e4a27;margin-top:5px;}
-.mc-dia{width:34px;height:34px;}
-.mc-stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:16px 0 13px;}
-.stamp{aspect-ratio:1;display:grid;place-items:center;}
-.stamp svg{height:34px;width:auto;display:block;filter:drop-shadow(0 1px 1px rgba(80,50,20,.18));}
-.mc-bar{height:40px;border-radius:6px;background:repeating-linear-gradient(90deg,#3a2614 0 2px,transparent 2px 4px,#3a2614 4px 7px,transparent 7px 9px,#3a2614 9px 11px,transparent 11px 15px);opacity:.85;}
-.mc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:11px;}
-.mc-foot .l{font-family:var(--display);font-style:italic;font-size:14px;color:#4a3320;font-weight:600;}
-.mc-foot .r{font-size:11px;color:#6e4a27;font-weight:700;}
-
-.hero-line{text-align:center;padding:18px 0 4px;}
-.hero-line .gpg{font-family:var(--display);font-weight:700;font-size:40px;color:var(--ink);letter-spacing:.01em;line-height:1;}
-.hero-line .sub{font-size:10.5px;letter-spacing:.24em;color:var(--gold);font-weight:800;margin-top:10px;}
-.home-cta{margin:18px 0 4px;}
-
-/* menu grid cards (home recs) */
-.recgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
-.reccard{background:var(--paper);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;}
-.reccard img{width:100%;height:118px;object-fit:cover;display:block;}
-.reccard .rc-b{padding:11px 12px 13px;}
-.reccard .rc-n{font-family:var(--display);font-weight:700;font-size:17px;color:var(--ink);line-height:1.1;}
-.reccard .rc-s{font-size:9.5px;letter-spacing:.14em;color:var(--ink-soft);font-weight:700;margin-top:4px;text-transform:uppercase;}
-.reccard .rc-p{font-weight:800;font-size:14px;color:var(--ink);margin-top:8px;}
-
-/* pairing promo */
-.promo{position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;margin-bottom:12px;}
-.promo img{width:100%;height:160px;object-fit:cover;display:block;}
-.promo .pv{position:absolute;inset:0;background:linear-gradient(90deg,rgba(30,20,12,.82) 6%,rgba(30,20,12,.1) 70%);}
-.promo .pt{position:absolute;left:16px;bottom:15px;right:12px;color:#fff;}
-.promo .pe{font-size:9.5px;letter-spacing:.22em;color:#F3C089;font-weight:800;}
-.promo .ph{font-family:var(--display);font-weight:700;font-size:21px;margin-top:3px;}
-.promo .pp{font-size:12px;color:#f0e2d0;margin-top:3px;}
-
-/* ===== MENU ===== */
-.cat-tabs{display:flex;gap:8px;overflow-x:auto;margin:4px -20px 16px;padding:4px 20px 8px;scrollbar-width:none;position:sticky;top:64px;z-index:15;background:rgba(243,236,221,.82);backdrop-filter:blur(6px);}
-.cat-tabs::-webkit-scrollbar{display:none;}
-.cat{flex:0 0 auto;border:1.5px solid var(--line);background:var(--paper);color:var(--ink2);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:30px;cursor:pointer;white-space:nowrap;}
-.cat.active{background:var(--orange);color:#fff7ef;border-color:var(--orange-dark);}
-.menu-list{display:flex;flex-direction:column;gap:13px;}
-.item{display:flex;gap:14px;padding:12px;border-radius:16px;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow);cursor:pointer;}
-.item img{width:92px;height:92px;border-radius:12px;object-fit:cover;flex:0 0 auto;}
-.item .it-b{flex:1;min-width:0;display:flex;flex-direction:column;}
-.item .it-n{font-family:var(--display);font-weight:700;font-size:19px;color:var(--ink);line-height:1.05;}
-.item .it-d{font-size:11.5px;color:var(--ink-soft);margin-top:5px;line-height:1.45;flex:1;}
-.item .it-f{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
-.item .it-p{font-weight:800;font-size:15px;color:var(--ink);}
-.badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;padding:3px 7px;border-radius:6px;background:rgba(224,103,28,.12);color:var(--orange);border:1px solid rgba(224,103,28,.3);margin-right:5px;}
-.add-ic{width:36px;height:36px;border-radius:50%;background:var(--orange);color:#fff;border:0;font-size:20px;line-height:1;display:grid;place-items:center;box-shadow:0 3px 8px rgba(176,70,15,.3);}
-
-/* ===== DETAIL / CART SHEET ===== */
-.sheet-wrap{position:fixed;inset:0;z-index:60;display:none;}
-.sheet-wrap.open{display:block;}
-.sheet-bg{position:absolute;inset:0;background:rgba(40,28,16,.45);backdrop-filter:blur(2px);}
-.sheet{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:440px;max-height:93vh;overflow-y:auto;
-  background:var(--cream);border-radius:24px 24px 0 0;animation:up .3s ease;}
-@keyframes up{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
-.sh-img{width:100%;height:230px;object-fit:cover;display:block;}
-.sh-grip{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:rgba(255,255,255,.75);z-index:3;}
-.sh-close{position:absolute;top:13px;right:15px;z-index:3;width:34px;height:34px;border-radius:50%;background:rgba(255,250,243,.85);border:1px solid var(--line);color:var(--ink);font-size:16px;cursor:pointer;}
-.sh-body{padding:18px 20px 22px;}
-.sh-name{font-family:var(--display);font-weight:700;font-size:28px;color:var(--ink);line-height:1;}
-.sh-sub{font-size:10.5px;letter-spacing:.2em;color:var(--gold);font-weight:800;margin-top:7px;text-transform:uppercase;}
-.sh-desc{font-size:13px;color:var(--ink2);margin:11px 0 6px;line-height:1.6;}
-.sh-price{font-family:var(--display);font-weight:700;font-size:25px;color:var(--ink);margin:10px 0 4px;}
-.hr{height:1px;background:var(--line);margin:14px 0;}
-.opt-group{margin:14px 0;}
-.opt-label{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--ink-soft);margin-bottom:9px;text-transform:uppercase;}
-.seg{display:flex;gap:9px;flex-wrap:wrap;}
-.seg button{flex:0 0 auto;border:1.5px solid var(--line);background:var(--paper);color:var(--ink2);font-weight:700;font-size:13px;padding:11px 26px;border-radius:30px;cursor:pointer;}
-.seg button.on{background:var(--orange);color:#fff7ef;border-color:var(--orange-dark);}
-.opt-row{display:flex;align-items:center;justify-content:space-between;padding:12px 13px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer;background:var(--paper);}
-.opt-row.on{border-color:var(--orange);background:rgba(224,103,28,.07);}
-.opt-row .ck{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--kraft-dark);display:grid;place-items:center;font-size:12px;color:transparent;}
-.opt-row.on .ck{background:var(--orange);border-color:var(--orange);color:#fff;}
-.opt-row .on-t{font-size:13.5px;font-weight:600;color:var(--ink);}
-.opt-row .on-p{font-size:12.5px;color:var(--ink-soft);}
-.qty{display:flex;align-items:center;gap:16px;}
-.qty button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:19px;cursor:pointer;}
-.qty span{font-weight:800;font-size:17px;min-width:22px;text-align:center;}
-.sh-foot{position:sticky;bottom:0;background:linear-gradient(0deg,var(--cream) 72%,transparent);padding:14px 0 6px;margin-top:8px;}
-
-/* ===== ORDER ===== */
-.ticket{position:relative;border-radius:16px;padding:20px 22px 22px;margin:8px 0 18px;
-  background:#C6A579;background-image:url("assets/img/grain-cream.jpg");background-size:520px;background-blend-mode:multiply;color:#352414;border:1px solid #a9865b;box-shadow:0 10px 24px rgba(120,80,40,.25);}
-.ticket::before,.ticket::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:var(--cream);top:50%;transform:translateY(-50%);}
-.ticket::before{left:-11px;}.ticket::after{right:-11px;}
-.tk-h{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #a9865b;padding-bottom:12px;}
-.tk-no{font-family:var(--serif);font-size:18px;letter-spacing:.06em;font-weight:700;}
-.tk-st{font-size:10.5px;font-weight:800;letter-spacing:.08em;background:var(--orange);color:#fff;padding:5px 10px;border-radius:7px;}
-.tk-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;color:#5a4330;}
-.tk-row b{color:#352414;}
-.steps{display:flex;justify-content:space-between;margin:20px 2px 4px;position:relative;}
-.steps::before{content:"";position:absolute;top:15px;left:12%;right:12%;height:2px;background:#b79a74;}
-.step{display:flex;flex-direction:column;align-items:center;gap:7px;position:relative;z-index:1;flex:1;}
-.step .sc{width:32px;height:32px;border-radius:50%;background:#dcc39d;border:2px solid #b79a74;display:grid;place-items:center;font-size:14px;color:#8a6a43;}
-.step.done .sc,.step.cur .sc{background:var(--orange);border-color:var(--orange-dark);color:#fff;}
-.step.cur .sc{box-shadow:0 0 0 5px rgba(224,103,28,.22);}
-.step .sl{font-size:10.5px;font-weight:700;color:#6e4a27;}
-.step.done .sl,.step.cur .sl{color:#352414;}
-.eta{text-align:center;font-size:12.5px;color:var(--ink-soft);margin:2px 0 18px;}
-.eta b{color:var(--orange);font-weight:800;}
-
-/* coupons / my */
-.card{border:1px solid var(--line);background:var(--paper);border-radius:15px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);}
-.coupon{display:flex;border-radius:14px;overflow:hidden;margin-bottom:12px;border:1.5px dashed var(--kraft-dark);background:var(--paper);}
-.coupon .cp-l{flex:1;padding:15px 16px;}
-.coupon .cp-t{font-weight:800;font-size:15px;color:var(--ink);}
-.coupon .cp-s{font-size:11.5px;color:var(--ink-soft);margin-top:4px;}
-.coupon .cp-r{width:86px;flex:0 0 auto;display:grid;place-items:center;text-align:center;background:var(--orange);color:#fff;font-weight:800;font-size:12px;border-left:2px dashed rgba(255,255,255,.6);}
-.cp-r small{display:block;font-size:9px;font-weight:600;opacity:.9;}
-.my-top{display:flex;align-items:center;gap:14px;padding:12px 2px 18px;}
-.my-av{width:58px;height:58px;border-radius:50%;background:var(--gold-foil);display:grid;place-items:center;font-family:var(--serif);font-weight:700;color:#3a2614;font-size:23px;}
-.my-name{font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);}
-.my-grade{font-size:11.5px;color:var(--orange);font-weight:700;margin-top:2px;}
-.stat3{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px;background:var(--paper);}
-.stat3 div{padding:15px 8px;text-align:center;border-right:1px solid var(--line);}
-.stat3 div:last-child{border-right:0;}
-.stat3 .sv{font-family:var(--display);font-size:22px;color:var(--ink);font-weight:700;}
-.stat3 .sk{font-size:10.5px;color:var(--ink-soft);margin-top:3px;}
-.menu-link{display:flex;align-items:center;justify-content:space-between;padding:15px 4px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer;color:var(--ink);}
-.menu-link .ar{color:var(--ink-soft);}
-.ohist{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);}
-.ohist img{width:54px;height:54px;border-radius:11px;object-fit:cover;}
-.ohist .oh-n{font-weight:700;font-size:13.5px;color:var(--ink);}
-.ohist .oh-d{font-size:11px;color:var(--ink-soft);margin-top:2px;}
-.btn-sm{width:auto;padding:9px 15px;font-size:12px;}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:var(--sans);background:#d9cdb8;color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;justify-content:center;}
+.app{position:relative;width:100%;max-width:440px;min-height:100vh;background:var(--cream);overflow:hidden;box-shadow:0 0 60px rgba(60,40,20,.28);}
+.app::after{content:"";position:fixed;inset:0;max-width:440px;margin:0 auto;z-index:0;pointer-events:none;background:url("assets/img/grain-cream.jpg");background-size:480px;opacity:.085;mix-blend-mode:multiply;}
+.wordmark{font-family:var(--serif);font-weight:700;letter-spacing:.18em;background:linear-gradient(100deg,#9a7723,#d9ab3e,#f2d478,#bf8a26,#9c7a24);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;}
+.serif{font-family:var(--display);}
+.pp,.mp,.dprice,.cp,.cv,.tv,.qv,.num,.sumrow.tot span,.bigbar .code{font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1;}
+/* top bar */
+.top{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;background:linear-gradient(180deg,var(--cream) 72%,rgba(245,239,228,0));}
+.top .ic{width:30px;height:30px;display:grid;place-items:center;color:var(--ink);cursor:pointer;position:relative;}
+.top .ic svg{width:22px;height:22px;}
+.top .brand{text-align:center;}
+.top .brand .wm{font-size:21px;}
+.top .brand .sb{font-size:8px;letter-spacing:.34em;color:var(--ink-soft);font-weight:700;margin-top:3px;}
+.cartdot{position:absolute;top:-2px;right:-3px;min-width:16px;height:16px;border-radius:9px;background:var(--orange);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center;padding:0 4px;}
+/* screens */
+.screen{display:none;position:relative;z-index:1;padding:0 18px 108px;}
+.screen.on{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin:26px 2px 13px;}
+.sec-h .t{font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);letter-spacing:.01em;}
+.sec-h .t small{font-family:var(--sans);font-size:11.5px;color:var(--ink-soft);font-weight:600;letter-spacing:0;display:block;margin-top:2px;}
+.sec-h .more{font-size:12px;color:var(--ink-soft);font-weight:700;}
+.eyebrow{font-size:10.5px;letter-spacing:.26em;color:var(--kraft-dark);font-weight:800;}
+/* membership card */
+.mcard{position:relative;border-radius:18px;overflow:hidden;padding:18px 18px 16px;color:#F3E9D6;margin-top:4px;
+  background:linear-gradient(135deg,#55402a,#3a2a1b 60%,#2c2015);border:1px solid rgba(220,180,120,.3);box-shadow:0 10px 26px rgba(60,40,20,.3);}
+.mcard::before{content:"";position:absolute;inset:0;background:url("assets/img/grain-cream.jpg");background-size:300px;opacity:.14;mix-blend-mode:overlay;}
+.mcard .row{position:relative;display:flex;align-items:center;justify-content:space-between;}
+.mcard .bdg{display:flex;align-items:center;gap:9px;}
+.mcard .dia{width:26px;height:26px;}
+.mcard .mt{font-family:var(--serif);font-weight:700;letter-spacing:.14em;font-size:15px;color:#f0cd78;}
+.mcard .tier{font-size:10px;font-weight:800;letter-spacing:.1em;color:#2c2015;background:linear-gradient(100deg,#e3b84f,#f3d987);padding:4px 10px;border-radius:20px;}
+.mcard .stamps{position:relative;display:flex;gap:7px;margin:15px 0 11px;}
+.mcard .st{width:27px;height:27px;border-radius:50%;border:1.3px solid rgba(240,205,120,.5);display:grid;place-items:center;}
+.mcard .st svg{width:15px;height:15px;opacity:.85;}
+.mcard .st.on{background:linear-gradient(135deg,#e3b84f,#c58f28);border-color:transparent;}
+.mcard .st.on svg{opacity:1;}
+.mcard .prog{position:relative;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:#d8c6a8;}
+.mcard .prog b{color:#f0cd78;}
+.mcard .bar{position:absolute;left:0;right:0;bottom:-7px;}
+/* hero */
+.hero{position:relative;border-radius:18px;overflow:hidden;margin-top:18px;height:310px;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.hero .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(28,18,10,.86) 6%,rgba(28,18,10,.25) 55%,rgba(28,18,10,.45));}
+.hero .in{position:relative;padding:22px 20px 20px;color:#F6EEDD;}
+.hero .eb{font-size:10px;letter-spacing:.3em;font-weight:800;color:#e9c77e;}
+.hero .ttl{font-family:var(--display);font-weight:700;font-size:34px;line-height:1.04;margin:8px 0 7px;}
+.hero .ds{font-size:12.5px;color:#e6d8c2;line-height:1.5;}
+.hero .cta{display:inline-flex;align-items:center;gap:7px;margin-top:15px;background:var(--orange);color:#fff;font-weight:800;font-size:13.5px;padding:12px 20px;border-radius:30px;border:0;cursor:pointer;align-self:flex-start;box-shadow:0 6px 16px rgba(232,116,43,.4);}
+/* reorder chip */
+.reorder{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:14px;cursor:pointer;}
+.reorder img{width:46px;height:46px;border-radius:10px;object-fit:cover;flex:0 0 auto;}
+.reorder .ri{flex:1;min-width:0;}
+.reorder .rl{font-size:10px;letter-spacing:.14em;color:var(--kraft-dark);font-weight:800;}
+.reorder .rn{font-size:13.5px;font-weight:700;color:var(--ink);margin-top:2px;}
+.reorder .rs{font-size:11px;color:var(--ink-soft);margin-top:1px;}
+.reorder .rb{background:var(--ink);color:var(--cream);font-size:12px;font-weight:800;padding:9px 14px;border-radius:22px;border:0;flex:0 0 auto;cursor:pointer;}
+/* signature grid */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;}
+.pcard:active{transform:scale(.98);}
+.pcard .ph{position:relative;height:118px;}
+.pcard .ph img{width:100%;height:100%;object-fit:cover;}
+.pcard .tag{position:absolute;top:8px;left:8px;font-size:9.5px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:20px;background:rgba(36,28,21,.82);color:#f0cd78;}
+.pcard .tag.new{background:var(--orange);color:#fff;}
+.pcard .bd{padding:11px 12px 13px;}
+.pcard .nm{font-size:13.5px;font-weight:700;color:var(--ink);}
+.pcard .de{font-size:10.5px;color:var(--ink-soft);margin-top:3px;line-height:1.4;height:29px;overflow:hidden;}
+.pcard .pr{display:flex;align-items:center;justify-content:space-between;margin-top:9px;}
+.pcard .pp{font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink);}
+.pcard .add{width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;border:0;display:grid;place-items:center;cursor:pointer;font-size:17px;line-height:1;padding-bottom:2px;}
+/* event banner */
+.ebanner{position:relative;margin-top:16px;border-radius:15px;overflow:hidden;background:linear-gradient(100deg,var(--olive),#45533a);color:#f1efe0;padding:18px 18px;display:flex;align-items:center;justify-content:space-between;}
+.ebanner .et{font-family:var(--display);font-size:19px;font-weight:700;}
+.ebanner .es{font-size:11.5px;opacity:.85;margin-top:3px;}
+.ebanner .ea{font-size:30px;}
+/* store mini */
+.store{display:flex;align-items:center;gap:11px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-top:12px;}
+.store .pin{width:34px;height:34px;border-radius:9px;background:var(--cream2);display:grid;place-items:center;color:var(--kraft-dark);flex:0 0 auto;}
+.store .si{flex:1;min-width:0;}
+.store .sn{font-size:13px;font-weight:700;}
+.store .ss{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+.store .open{font-size:10.5px;font-weight:800;color:var(--olive);}
+/* menu */
+.tabs{position:sticky;top:64px;z-index:30;display:flex;gap:7px;padding:8px 0 10px;background:var(--cream);overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tabs .tb{flex:0 0 auto;font-size:13px;font-weight:700;color:var(--ink-soft);padding:8px 15px;border-radius:22px;border:1px solid var(--line2);background:var(--paper);cursor:pointer;}
+.tabs .tb.on{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+.mcat{margin-top:22px;}
+.mcat .ct{font-family:var(--display);font-size:19px;font-weight:700;margin:0 2px 11px;display:flex;align-items:center;gap:9px;}
+.mcat .ct::after{content:"";flex:1;height:1px;background:var(--line);}
+/* list row */
+.mrow{display:flex;gap:13px;padding:13px 2px;border-bottom:1px solid var(--line);cursor:pointer;}
+.mrow img{width:84px;height:84px;border-radius:12px;object-fit:cover;flex:0 0 auto;}
+.mrow .mi{flex:1;min-width:0;}
+.mrow .mn{font-size:14.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;}
+.mrow .mbadge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;background:var(--orange);color:#fff;}
+.mrow .mbadge.sig{background:var(--olive);}
+.mrow .md{font-size:11.5px;color:var(--ink-soft);margin-top:4px;line-height:1.45;}
+.mrow .mp{font-family:var(--display);font-weight:700;font-size:16.5px;margin-top:7px;color:var(--ink);}
+.mrow .madd{align-self:flex-end;width:32px;height:32px;border-radius:50%;background:var(--paper);border:1.5px solid var(--orange);color:var(--orange);display:grid;place-items:center;font-size:18px;cursor:pointer;flex:0 0 auto;line-height:1;padding-bottom:2px;}
+/* sheet (detail / cart) */
+.sheetwrap{position:fixed;inset:0;max-width:440px;margin:0 auto;z-index:70;display:none;}
+.sheetwrap.on{display:block;}
+.sheetbg{position:absolute;inset:0;background:rgba(30,20,12,.5);animation:fade .2s;}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:94vh;overflow-y:auto;background:var(--cream);border-radius:22px 22px 0 0;animation:slideup .28s cubic-bezier(.22,1,.36,1);}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+.sheet .grab{position:sticky;top:0;display:flex;justify-content:center;padding:10px 0 4px;background:var(--cream);z-index:2;}
+.sheet .grab i{width:38px;height:4px;border-radius:3px;background:var(--line2);display:block;}
+.dh{position:relative;height:270px;}
+.dh img{width:100%;height:100%;object-fit:cover;}
+.dh .x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;border:0;cursor:pointer;font-size:17px;color:var(--ink);}
+.db{padding:18px 20px 0;}
+.db .eyebrow{margin-bottom:6px;display:block;}
+.db .dn{font-family:var(--display);font-size:27px;font-weight:700;line-height:1.1;}
+.db .dd{font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin-top:10px;}
+.db .dprice{font-family:var(--display);font-weight:700;font-size:22px;margin-top:14px;}
+.hr{height:1px;background:var(--line);margin:18px 0;}
+.opt .ol{font-size:12px;font-weight:800;color:var(--ink2);letter-spacing:.02em;margin-bottom:9px;}
+.pills{display:flex;gap:9px;margin-bottom:18px;}
+.pill{flex:1;text-align:center;font-size:13px;font-weight:700;padding:12px 0;border-radius:12px;border:1.5px solid var(--line2);background:var(--paper);color:var(--ink2);cursor:pointer;}
+.pill.on{background:var(--orange);color:#fff;border-color:var(--orange);}
+.pill.sz{flex:0 0 auto;min-width:72px;}
+.qty{display:flex;align-items:center;gap:18px;}
+.qty button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line2);background:var(--paper);font-size:20px;color:var(--ink);cursor:pointer;line-height:1;}
+.qty .qv{font-family:var(--display);font-size:22px;font-weight:700;min-width:26px;text-align:center;}
+.dfoot{position:sticky;bottom:0;background:linear-gradient(0deg,var(--cream) 80%,rgba(245,239,228,0));padding:14px 20px 22px;margin-top:10px;}
+.bigbtn{width:100%;border:0;border-radius:15px;background:var(--orange);color:#fff;font-weight:800;font-size:15px;padding:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(232,116,43,.35);}
+.bigbtn .bp{opacity:.9;font-weight:700;}
+.footline{display:flex;align-items:center;justify-content:center;gap:16px;padding:14px 0 26px;color:var(--ink-faint);font-size:11px;}
+.footline span{display:inline-flex;align-items:center;gap:5px;}
 /* cart */
-.citem{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);}
-.citem img{width:56px;height:56px;border-radius:11px;object-fit:cover;}
-.citem .ci-n{font-weight:700;font-size:14px;color:var(--ink);}
-.citem .ci-o{font-size:11px;color:var(--ink-soft);margin-top:2px;}
-.citem .ci-p{font-weight:800;font-size:13.5px;margin-top:4px;color:var(--ink);}
-.citem .ci-x{color:var(--ink-soft);font-size:16px;padding:4px;cursor:pointer;}
-.sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);padding:4px 0;}
-.sum-row.total{font-size:16px;color:var(--ink);font-weight:800;border-top:1px dashed var(--line);margin-top:6px;padding-top:10px;}
-.empty{text-align:center;color:var(--ink-soft);padding:40px 0;font-size:13px;}
-
+.cart-it{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);}
+.cart-it img{width:66px;height:66px;border-radius:11px;object-fit:cover;flex:0 0 auto;}
+.cart-it .ci{flex:1;min-width:0;}
+.cart-it .cn{font-size:13.5px;font-weight:700;}
+.cart-it .co{font-size:11px;color:var(--ink-soft);margin-top:3px;}
+.cart-it .cf{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.cart-it .cp{font-family:var(--display);font-weight:700;font-size:15px;}
+.miniqty{display:flex;align-items:center;gap:10px;}
+.miniqty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);background:var(--paper);font-size:15px;color:var(--ink);cursor:pointer;line-height:1;}
+.sumrow{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);padding:6px 0;}
+.sumrow.tot{font-weight:800;font-size:16px;color:var(--ink);border-top:1px solid var(--line);margin-top:8px;padding-top:12px;}
+.sumrow .disc{color:var(--orange);font-weight:700;}
+.empty{text-align:center;color:var(--ink-soft);padding:60px 0;}
+.empty .em{font-size:44px;}
+/* membership screen */
+.bigbar{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px 20px;text-align:center;margin-top:8px;box-shadow:0 4px 14px rgba(120,80,40,.08);}
+.bigbar .mn2{font-size:13px;color:var(--ink-soft);font-weight:600;}
+.bigbar .code{font-family:var(--display);font-size:16px;letter-spacing:.2em;margin-top:6px;color:var(--ink);font-weight:700;}
+.barcode{height:66px;margin:16px auto 8px;display:block;}
+.bigbar .num{font-variant-numeric:tabular-nums;letter-spacing:.3em;font-size:13px;color:var(--ink2);font-weight:700;}
+.tierbox{display:flex;gap:11px;margin-top:14px;}
+.tierbox .tc{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;}
+.tierbox .tv{font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);}
+.tierbox .tl{font-size:10.5px;color:var(--ink-soft);margin-top:3px;}
+.stampboard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:14px;}
+.stampboard .sg{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px;}
+.stampboard .sc{aspect-ratio:1;border-radius:50%;border:1.5px dashed var(--line2);display:grid;place-items:center;color:var(--kraft);}
+.stampboard .sc svg{width:22px;height:22px;}
+.stampboard .sc.on{background:linear-gradient(135deg,#e3b84f,#c58f28);border:0;color:#fff;}
+.stampboard .sc.free{border:1.5px solid var(--orange);color:var(--orange);font-size:10px;font-weight:800;text-align:center;}
+/* coupon */
+.coupon{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:12px;}
+.coupon .cl{width:92px;flex:0 0 auto;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;}
+.coupon .cl .cv{font-family:var(--display);font-size:24px;font-weight:700;line-height:1;}
+.coupon .cl .cu{font-size:10px;margin-top:3px;opacity:.9;}
+.coupon .cr{flex:1;padding:13px 15px;}
+.coupon .ct2{font-size:13.5px;font-weight:700;}
+.coupon .cd{font-size:11px;color:var(--ink-soft);margin-top:4px;}
+.coupon .ce{font-size:10.5px;color:var(--kraft-dark);font-weight:700;margin-top:7px;}
+.gift{display:flex;align-items:center;gap:12px;background:linear-gradient(100deg,#55402a,#3a2a1b);color:#f0e6d4;border-radius:15px;padding:16px;margin-top:16px;}
+.gift .gi{flex:1;}
+.gift .gt{font-family:var(--display);font-size:18px;font-weight:700;color:#f0cd78;}
+.gift .gs{font-size:11.5px;opacity:.85;margin-top:3px;}
+.gift .gb{background:#f0cd78;color:#2c2015;border:0;font-weight:800;font-size:12px;padding:10px 14px;border-radius:22px;cursor:pointer;flex:0 0 auto;}
+/* MY */
+.mylist{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:14px;}
+.myrow{display:flex;align-items:center;gap:13px;padding:15px 16px;border-bottom:1px solid var(--line);cursor:pointer;}
+.myrow:last-child{border-bottom:0;}
+.myrow .mic{width:20px;color:var(--kraft-dark);display:grid;place-items:center;}
+.myrow .ml{flex:1;font-size:13.5px;font-weight:600;color:var(--ink2);}
+.myrow .mv{font-size:12px;color:var(--ink-soft);}
+.myrow .ch{color:var(--ink-faint);font-size:16px;}
+.profile{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#55402a,#3a2a1b);border-radius:18px;padding:18px;color:#f0e6d4;margin-top:8px;}
+.profile .av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#e3b84f,#c58f28);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:22px;color:#2c2015;}
+.profile .pn{font-size:16px;font-weight:800;}
+.profile .pt{font-size:11.5px;opacity:.85;margin-top:3px;}
+.profile .pt b{color:#f0cd78;}
 /* tabbar */
-.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;z-index:40;
-  display:grid;grid-template-columns:repeat(4,1fr);background:rgba(250,246,236,.96);backdrop-filter:blur(12px);
-  border-top:1px solid var(--line);padding:9px 6px calc(9px + env(safe-area-inset-bottom));}
-.tab{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-soft);font-size:10.5px;font-weight:700;cursor:pointer;}
-.tab svg{width:23px;height:23px;}
-.tab.active{color:var(--orange);}
-.toast{position:fixed;bottom:94px;left:50%;transform:translateX(-50%) translateY(20px);z-index:80;background:var(--ink);color:var(--cream);
-  padding:12px 20px;border-radius:30px;font-size:13px;font-weight:700;opacity:0;transition:.3s;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.3);}
+.tabbar{position:fixed;bottom:0;left:0;right:0;max-width:440px;margin:0 auto;z-index:50;display:flex;background:rgba(252,248,240,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:9px 6px calc(9px + env(safe-area-inset-bottom));}
+.tabbar .tbi{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);cursor:pointer;font-size:10px;font-weight:700;}
+.tabbar .tbi svg{width:23px;height:23px;}
+.tabbar .tbi.on{color:var(--orange);}
+.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%) translateY(20px);z-index:90;background:var(--ink);color:var(--cream);padding:12px 20px;border-radius:30px;font-size:13px;font-weight:700;opacity:0;transition:.3s;box-shadow:0 10px 24px rgba(40,24,10,.35);white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 <div class="app" id="app">
 
-  <!-- HOME -->
-  <section class="screen active" id="s-home">
-    <div class="topbar">
-      <button class="icon-btn">☰</button>
-      <div class="brandwrap"><div class="wordmark">CASA B</div><div class="tagline">ESPRESSO · BAKE · PAIRING</div></div>
-      <button class="icon-btn" onclick="openCart()">🛍<span class="cart-dot" id="cartDot" style="display:none">0</span></button>
+  <!-- TOP BAR -->
+  <div class="top">
+    <div class="ic" onclick="toast('메뉴 준비 중입니다')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </div>
+    <div class="brand"><div class="wm wordmark" id="brandWm">CASA B</div><div class="sb">ESPRESSO · BAKE · PAIRING</div></div>
+    <div class="ic" onclick="openCart()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 7h13l-1.3 9.2a2 2 0 01-2 1.8H9.3a2 2 0 01-2-1.8L6 7zM6 7L5 3H3"/><circle cx="9.5" cy="20.5" r="1"/><circle cx="16.5" cy="20.5" r="1"/></svg>
+      <span class="cartdot" id="cartDot" style="display:none">0</span>
+    </div>
+  </div>
 
-    <div class="greet"><div class="hi">좋은 아침이에요 ☕</div><div class="big">진우님, 오늘의 <span class="o">페어링</span>?</div></div>
-
-    <div class="member-card">
-      <div class="mc-top">
-        <div><div class="mc-brand">CASA B</div><div class="mc-grade">MEMBERSHIP · GOLD</div></div>
-        <span class="mc-dia" id="diaCard"></span>
+  <!-- ============ HOME ============ -->
+  <section class="screen on" id="home">
+    <!-- membership -->
+    <div class="mcard" onclick="go('membership')">
+      <div class="row">
+        <div class="bdg"><span class="dia" id="diaM"></span><span class="mt">MEMBERSHIP</span></div>
+        <span class="tier">SILVER</span>
       </div>
-      <div class="mc-stamps" id="homeStamps"></div>
-      <div class="mc-bar"></div>
-      <div class="mc-foot"><span class="l">Better Coffee. Brighter Days.</span><span class="r">스탬프 7 / 10</span></div>
+      <div class="stamps" id="homeStamps"></div>
+      <div class="prog"><span>지금 <b>5번째</b> — 한 잔 더 모으면 <b>무료 음료</b></span><span>5 / 10</span></div>
     </div>
 
-    <div class="hero-line"><div class="gpg">Grab. Pair. Go.</div><div class="sub">PREMIUM ESPRESSO &amp; FRESH BAKES</div></div>
-    <div class="home-cta"><button class="btn btn-primary" onclick="go('menu')">미리 주문하고 픽업하기</button></div>
-
-    <div class="sec-head"><h2 class="sec-title">시그니처 페어링</h2><a class="sec-more" onclick="go('menu')">전체보기</a></div>
-    <div class="promo" onclick="go('menu')">
-      <img src="assets/img/signature.jpg" alt="에스프레소와 에그타르트">
-      <div class="pv"></div>
-      <div class="pt"><div class="pe">THE PERFECT PAIRING</div><div class="ph">Espresso × Egg Tart</div><div class="pp">아메리카노 + 에그타르트 ₩6,000</div></div>
-    </div>
-
-    <div class="sec-head"><h2 class="sec-title">추천 메뉴</h2><a class="sec-more" onclick="go('menu')">더보기</a></div>
-    <div class="recgrid" id="homeRecs"></div>
-  </section>
-
-  <!-- MENU -->
-  <section class="screen" id="s-menu">
-    <div class="topbar">
-      <button class="icon-btn" onclick="go('home')">‹</button>
-      <div class="brandwrap"><div class="wordmark">MENU</div><div class="tagline">CASA B</div></div>
-      <button class="icon-btn" onclick="openCart()">🛍<span class="cart-dot" id="cartDot2" style="display:none">0</span></button>
-    </div>
-    <div class="cat-tabs" id="catTabs"></div>
-    <div class="menu-list" id="menuList"></div>
-  </section>
-
-  <!-- ORDER -->
-  <section class="screen" id="s-order">
-    <div class="topbar"><button class="icon-btn" onclick="go('home')">‹</button><div class="brandwrap"><div class="wordmark">ORDER</div><div class="tagline">주문 현황</div></div><span class="icon-btn"></span></div>
-    <div class="ticket">
-      <div class="tk-h"><span class="tk-no" id="tkNo">CB250301-0834</span><span class="tk-st" id="tkSt">제조 중</span></div>
-      <div style="padding:12px 0 2px">
-        <div class="tk-row"><span>픽업 매장</span><b>부산 서면점</b></div>
-        <div class="tk-row"><span>픽업 예정</span><b id="tkEta">오전 9:48 (약 7분 후)</b></div>
-        <div class="tk-row"><span>주문 메뉴</span><b id="tkItems">아메리카노 ICE 외 2</b></div>
-        <div class="tk-row"><span>결제 금액</span><b id="tkTotal">₩12,700</b></div>
-      </div>
-      <div class="steps">
-        <div class="step done"><div class="sc">✓</div><div class="sl">접수</div></div>
-        <div class="step cur"><div class="sc">●</div><div class="sl">제조 중</div></div>
-        <div class="step"><div class="sc">○</div><div class="sl">픽업 준비</div></div>
+    <!-- hero -->
+    <div class="hero">
+      <img src="assets/img/espresso.jpg" alt="">
+      <div class="ov"></div>
+      <div class="in">
+        <div class="eb">GOOD COFFEE, BETTER MOMENTS</div>
+        <div class="ttl serif">Espresso<br>& Egg Tart</div>
+        <div class="ds">좋은 커피와 가장 맛있는 순간,<br>CASA B에서 시작하세요.</div>
+        <button class="cta" onclick="go('menu')">지금 주문하기
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
     </div>
-    <div class="eta">제조가 끝나면 <b>푸시 알림</b>으로 알려드릴게요.</div>
-    <button class="btn btn-ghost" onclick="go('menu')">메뉴 더 담기</button>
-    <div style="height:10px"></div>
-    <button class="btn btn-ink" onclick="reorderToast()">같은 메뉴 재주문</button>
-  </section>
 
-  <!-- COUPON -->
-  <section class="screen" id="s-coupon">
-    <div class="topbar"><button class="icon-btn" onclick="go('home')">‹</button><div class="brandwrap"><div class="wordmark">COUPON</div><div class="tagline">쿠폰 · 스탬프</div></div><span class="icon-btn"></span></div>
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div><div style="font-weight:800;font-size:15px;color:var(--ink)">스탬프 적립</div><div style="font-size:11.5px;color:var(--ink-soft);margin-top:2px">10개 적립 시 아메리카노 무료</div></div>
-        <div style="font-family:var(--display);font-size:22px;color:var(--orange);font-weight:700">7/10</div>
+    <!-- reorder -->
+    <div class="reorder" onclick="reorder()">
+      <img src="assets/img/espresso.jpg" alt="">
+      <div class="ri">
+        <div class="rl">다시 주문</div>
+        <div class="rn">아메리카노 (ICE) 외 1개</div>
+        <div class="rs">어제 · 서면점 픽업 · ₩6,200</div>
       </div>
-      <div class="mc-stamps" id="couponStamps" style="margin:0"></div>
+      <button class="rb" onclick="event.stopPropagation();reorder()">재주문</button>
     </div>
-    <div class="eyebrow" style="margin:18px 0 10px">사용 가능 쿠폰 2</div>
-    <div class="coupon"><div class="cp-l"><div class="cp-t">신규 가입 ₩2,000 할인</div><div class="cp-s">1만원 이상 · ~2026.12.31</div></div><div class="cp-r">₩2,000<small>OFF</small></div></div>
-    <div class="coupon"><div class="cp-l"><div class="cp-t">에그타르트 1+1</div><div class="cp-s">베이크 메뉴 · 주말 한정</div></div><div class="cp-r">1+1</div></div>
-    <div class="eyebrow" style="margin:18px 0 10px">지난 쿠폰</div>
-    <div class="coupon" style="opacity:.5"><div class="cp-l"><div class="cp-t">첫 주문 무료 업사이즈</div><div class="cp-s">사용 완료 · 2026.11.02</div></div><div class="cp-r" style="background:#9a8468">USED</div></div>
+
+    <!-- signature -->
+    <div class="sec-h"><div class="t serif">Our Signature</div><div class="more" onclick="go('menu')">전체보기 ›</div></div>
+    <div class="grid2" id="homeSig"></div>
+
+    <!-- event -->
+    <div class="ebanner" onclick="go('coupon')">
+      <div><div class="et serif">친구 초대 이벤트</div><div class="es">초대하면 둘 다 아메리카노 1잔 무료</div></div>
+      <div class="ea">☕</div>
+    </div>
+
+    <!-- store -->
+    <div class="sec-h" style="margin-bottom:8px"><div class="t serif">가까운 매장</div></div>
+    <div class="store">
+      <div class="pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s7-6.3 7-11a7 7 0 10-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></div>
+      <div class="si"><div class="sn">CASA B 부산 서면점</div><div class="ss">420m · 도보 6분 · 혼잡도 보통</div></div>
+      <div class="open">영업중</div>
+    </div>
   </section>
 
-  <!-- MY -->
-  <section class="screen" id="s-my">
-    <div class="topbar"><button class="icon-btn" onclick="go('home')">‹</button><div class="brandwrap"><div class="wordmark">MY</div><div class="tagline">마이페이지</div></div><span class="icon-btn"></span></div>
-    <div class="my-top"><div class="my-av">J</div><div><div class="my-name">진우님</div><div class="my-grade">GOLD 멤버 · CASA B</div></div></div>
-    <div class="stat3"><div><div class="sv">2,450</div><div class="sk">포인트</div></div><div><div class="sv">7</div><div class="sk">스탬프</div></div><div><div class="sv">2</div><div class="sk">쿠폰</div></div></div>
-    <div class="eyebrow" style="margin:6px 0 4px">최근 주문</div>
-    <div class="ohist"><img src="assets/img/egg-tart.jpg" alt=""><div style="flex:1"><div class="oh-n">에그타르트 외 1</div><div class="oh-d">2026.11.10 · 부산 서면점 · ₩9,200</div></div><button class="btn btn-ghost btn-sm" onclick="reorderToast()">재주문</button></div>
-    <div class="ohist"><img src="assets/img/cold-brew.jpg" alt=""><div style="flex:1"><div class="oh-n">콜드브루 외 2</div><div class="oh-d">2026.11.08 · 부산 서면점 · ₩13,500</div></div><button class="btn btn-ghost btn-sm" onclick="reorderToast()">재주문</button></div>
-    <div class="eyebrow" style="margin:20px 0 2px">설정</div>
-    <div class="menu-link">픽업 매장 관리<span class="ar">›</span></div>
-    <div class="menu-link">결제 수단<span class="ar">›</span></div>
-    <div class="menu-link">알림 설정<span class="ar">›</span></div>
-    <div class="menu-link">홈 화면에 추가 (앱 설치)<span class="ar">›</span></div>
+  <!-- ============ MENU ============ -->
+  <section class="screen" id="menu">
+    <div class="sec-h" style="margin:14px 2px 2px"><div class="t serif">Menu<small>좋은 재료로, 정직하게 만듭니다.</small></div></div>
+    <div class="tabs" id="catTabs"></div>
+    <div id="menuList"></div>
+    <div class="footline"><span>🌿 신선한 재료</span><span>·</span><span>🥐 매일 굽는 빵</span></div>
   </section>
 
-  <div class="sheet-wrap" id="sheetWrap"><div class="sheet-bg" onclick="closeSheet()"></div><div class="sheet" id="sheet"></div></div>
-  <div class="sheet-wrap" id="cartWrap"><div class="sheet-bg" onclick="closeCart()"></div><div class="sheet" id="cartSheet"></div></div>
+  <!-- ============ MEMBERSHIP ============ -->
+  <section class="screen" id="membership">
+    <div class="sec-h" style="margin:14px 2px 10px"><div class="t serif">Membership</div></div>
+    <div class="bigbar">
+      <div class="mn2">진우재 님 · <b style="color:var(--gold)">SILVER</b></div>
+      <div class="code">CASA B MEMBER</div>
+      <svg class="barcode" id="barcode" viewBox="0 0 280 66" preserveAspectRatio="none"></svg>
+      <div class="num">7421 0098 5513</div>
+    </div>
+    <div class="tierbox">
+      <div class="tc"><div class="tv" id="ptStar">128</div><div class="tl">별 (포인트)</div></div>
+      <div class="tc"><div class="tv">5</div><div class="tl">스탬프</div></div>
+      <div class="tc"><div class="tv">3</div><div class="tl">보유 쿠폰</div></div>
+    </div>
+    <div class="stampboard">
+      <div class="prog" style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:var(--display);font-size:18px;font-weight:700">스탬프 적립</div><div style="font-size:11.5px;color:var(--ink-soft)">10개 모으면 무료 음료 🎁</div></div>
+      <div class="sg" id="stampGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ COUPON ============ -->
+  <section class="screen" id="coupon">
+    <div class="sec-h" style="margin:14px 2px 6px"><div class="t serif">Coupons & Gifts</div></div>
+    <div class="coupon"><div class="cl"><div class="cv">1+1</div><div class="cu">아메리카노</div></div><div class="cr"><div class="ct2">신규 가입 축하 쿠폰</div><div class="cd">아메리카노 구매 시 1잔 더</div><div class="ce">~ 2026.11.30 · 서면점</div></div></div>
+    <div class="coupon"><div class="cl"><div class="cv">15%</div><div class="cu">할인</div></div><div class="cr"><div class="ct2">실버 등급 전용 할인</div><div class="cd">전 메뉴 15% (디저트 제외)</div><div class="ce">~ 2026.12.15</div></div></div>
+    <div class="coupon"><div class="cl"><div class="cv">₩2,000</div><div class="cu">배달</div></div><div class="cr"><div class="ct2">배달 주문 할인</div><div class="cd">15,000원 이상 배달 주문 시</div><div class="ce">~ 2026.11.20</div></div></div>
+    <div class="gift">
+      <div class="gi"><div class="gt serif">기프티콘 선물하기</div><div class="gs">소중한 사람에게 커피 한 잔을</div></div>
+      <button class="gb" onclick="toast('선물하기 준비 중입니다')">선물하기</button>
+    </div>
+  </section>
+
+  <!-- ============ MY ============ -->
+  <section class="screen" id="my">
+    <div class="sec-h" style="margin:14px 2px 8px"><div class="t serif">My CASA B</div></div>
+    <div class="profile">
+      <div class="av">진</div>
+      <div><div class="pn">진우재 님</div><div class="pt"><b>SILVER</b> · 별 128 · 이번 달 12잔</div></div>
+    </div>
+    <div class="mylist">
+      <div class="myrow" onclick="toast('주문내역 준비 중')"><span class="mic">🧾</span><span class="ml">주문 내역</span><span class="mv">최근 어제</span><span class="ch">›</span></div>
+      <div class="myrow" onclick="toast('결제수단 준비 중')"><span class="mic">💳</span><span class="ml">결제 수단</span><span class="mv">카카오페이</span><span class="ch">›</span></div>
+      <div class="myrow" onclick="go('coupon')"><span class="mic">🎟️</span><span class="ml">쿠폰함</span><span class="mv">3장</span><span class="ch">›</span></div>
+      <div class="myrow" onclick="toast('알림설정 준비 중')"><span class="mic">🔔</span><span class="ml">알림 설정</span><span class="mv"></span><span class="ch">›</span></div>
+      <div class="myrow" onclick="toast('고객센터 준비 중')"><span class="mic">💬</span><span class="ml">고객센터 · FAQ</span><span class="mv"></span><span class="ch">›</span></div>
+    </div>
+    <div class="mylist">
+      <div class="myrow" onclick="toast('공지사항 준비 중')"><span class="mic">📢</span><span class="ml">공지 · 이벤트</span><span class="ch">›</span></div>
+      <div class="myrow" onclick="toast('약관 준비 중')"><span class="mic">📄</span><span class="ml">약관 · 개인정보</span><span class="ch">›</span></div>
+    </div>
+    <div class="footline"><span>CASA B · (주)문화의물결 FNC</span></div>
+  </section>
+
+  <!-- DETAIL SHEET -->
+  <div class="sheetwrap" id="detailWrap">
+    <div class="sheetbg" onclick="closeSheet('detailWrap')"></div>
+    <div class="sheet" id="detailSheet"></div>
+  </div>
+
+  <!-- CART SHEET -->
+  <div class="sheetwrap" id="cartWrap">
+    <div class="sheetbg" onclick="closeSheet('cartWrap')"></div>
+    <div class="sheet" id="cartSheet"></div>
+  </div>
+
+  <!-- ORDER STATUS SHEET -->
+  <div class="sheetwrap" id="orderWrap">
+    <div class="sheetbg" onclick="closeSheet('orderWrap')"></div>
+    <div class="sheet" id="orderSheet"></div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
+  <!-- TABBAR -->
   <nav class="tabbar">
-    <button class="tab active" data-s="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>홈</button>
-    <button class="tab" data-s="menu" onclick="go('menu')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v8a3 3 0 006 0V3M10 3v18"/><path d="M17 3c1.5 1 2 3 2 5s-.5 4-2 5v8"/></svg>메뉴</button>
-    <button class="tab" data-s="coupon" onclick="go('coupon')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v4a2 2 0 000 4v2H4v-2a2 2 0 000-4z"/><path d="M14 7v12" stroke-dasharray="2 2"/></svg>쿠폰</button>
-    <button class="tab" data-s="my" onclick="go('my')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>MY</button>
+    <div class="tbi on" data-s="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>홈</div>
+    <div class="tbi" data-s="menu" onclick="go('menu')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h11"/></svg>메뉴</div>
+    <div class="tbi" data-s="membership" onclick="go('membership')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>멤버십</div>
+    <div class="tbi" data-s="coupon" onclick="go('coupon')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v3a2 2 0 000 4v3H4v-3a2 2 0 000-4z"/></svg>쿠폰</div>
+    <div class="tbi" data-s="my" onclick="go('my')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>MY</div>
   </nav>
 </div>
 
 <script>
-var DIAK='<svg viewBox="0 0 48 48" fill="none"><path d="M24 4 44 24 24 44 4 24Z" stroke="#3a2614" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="19" font-weight="700" fill="#3a2614">B</text></svg>';
-document.getElementById('diaCard').innerHTML=DIAK;
-
-var IMG={esp:'assets/img/espresso.jpg',latte:'assets/img/cream-latte.jpg',cold:'assets/img/cold-brew.jpg',tart:'assets/img/egg-tart.jpg',tira:'assets/img/tiramisu.jpg',sig:'assets/img/signature.jpg'};
-var CATS=[
- {key:'coffee',name:'에스프레소·커피',items:[
-   {n:'아메리카노',d:'CASA B 시그니처 블렌드, 깊고 균형 잡힌 산미',p:3000,img:IMG.esp,hot:true},
-   {n:'카페라떼',d:'부드러운 스팀밀크와 에스프레소',p:4000,img:IMG.latte,hot:true},
-   {n:'콜드브루',d:'12시간 저온 추출, 묵직한 바디',p:4500,img:IMG.cold,hot:false},
-   {n:'콜드샷 바닐라',d:'진한 샷 + 바닐라 크림',p:4800,img:IMG.cold,hot:false},
-   {n:'카페모카',d:'다크초코 + 에스프레소',p:4800,img:IMG.latte,hot:true}]},
- {key:'signature',name:'시그니처 크림',items:[
-   {n:'오르조 라떼',d:'볶은 보리의 고소함 + 크림, 논카페인',p:5500,img:IMG.latte,hot:true,best:true},
-   {n:'오렌지 콜드브루 클라우드',d:'콜드브루 위 오렌지 크림 구름',p:5800,img:IMG.cold,hot:false,best:true},
-   {n:'코코 콜드브루 클라우드',d:'코코넛 크림 + 콜드브루',p:5800,img:IMG.cold,hot:false}]},
- {key:'wellness',name:'논커피·웰니스',items:[
-   {n:'레몬 크림샷',d:'상큼한 레몬 + 부드러운 크림',p:4800,img:IMG.latte,hot:false},
-   {n:'딸기 라떼',d:'생딸기 과육 + 우유',p:5200,img:IMG.latte,hot:false},
-   {n:'말차 오트',d:'우지 말차 + 오트밀크',p:5500,img:IMG.latte,hot:true},
-   {n:'밀크티',d:'잉글리시 블렌드 밀크티',p:4500,img:IMG.latte,hot:true},
-   {n:'에이드',d:'자몽 / 청포도 중 택1',p:4800,img:IMG.cold,hot:false}]},
- {key:'tea',name:'프리미엄 잎차',items:[
-   {n:'B 얼그레이',d:'베르가못 향의 클래식 홍차',p:5000,img:IMG.sig,hot:true},
-   {n:'B 녹차',d:'제주 세작 녹차',p:5000,img:IMG.sig,hot:true},
-   {n:'라비앙로즈',d:'장미·히비스커스 블렌드',p:5500,img:IMG.sig,hot:true},
-   {n:'바닐라 민트',d:'페퍼민트 + 바닐라',p:5000,img:IMG.sig,hot:true}]},
- {key:'bake',name:'베이크',items:[
-   {n:'에그타르트',d:'겉바속촉, CASA B 첫 베이크 시그니처',p:3200,img:IMG.tart,bake:true,best:true},
-   {n:'B 오리지널 티라미수',d:'에스프레소 적신 마스카포네',p:5000,img:IMG.tira,bake:true,best:true},
-   {n:'콘 타르트',d:'달콤한 옥수수 커스터드',p:3500,img:IMG.tart,bake:true},
-   {n:'초콜릿 타르트',d:'다크 가나슈 타르트',p:3500,img:IMG.tart,bake:true},
-   {n:'데일리 베이크',d:'매일 달라지는 오늘의 베이크',p:4000,img:IMG.tart,bake:true}]},
- {key:'pairing',name:'베스트 페어링',items:[
-   {n:'아메리카노 + 에그타르트',d:'The Perfect Pairing Starts Here',p:6000,img:IMG.sig,bake:true,best:true},
-   {n:'아메리카노 + B 티라미수',d:'진한 커피와 티라미수',p:8000,img:IMG.tira,bake:true,best:true},
-   {n:'페어링 세트 (음료+베이크)',d:'원하는 음료 + 베이크 조합',p:6500,img:IMG.sig,bake:true}]}
-];
 var won=function(n){return '₩'+n.toLocaleString('ko-KR');};
-var SUB={'아메리카노':'RICH & BALANCED','카페라떼':'SMOOTH & CREAMY','콜드브루':'DEEP & BOLD','에그타르트':'BUTTERY & SILKY','오르조 라떼':'NUTTY & CREAMY'};
+var IMG={esp:'assets/img/espresso.jpg',latte:'assets/img/latte.jpg',capp:'assets/img/cappuccino.jpg',cold:'assets/img/cold-brew.jpg',tart:'assets/img/egg-tart.jpg',tira:'assets/img/tiramisu.jpg',orzo:'assets/img/orzo.jpg',straw:'assets/img/strawberry.jpg',tea:'assets/img/earlgrey.jpg',cro:'assets/img/croissant.jpg',sig:'assets/img/signature.jpg'};
+var dia='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 45 24 24 45 3 24Z" stroke="#f0cd78" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="20" font-weight="700" fill="#f0cd78">B</text></svg>';
+document.getElementById('diaM').innerHTML=dia;
+function beanSvg(c){return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#f0cd78')+'" stroke-width="1.6"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(32 12 12)"/><path d="M8.5 7.5c2 3 2 6 0 9" stroke-width="1.3"/></svg>';}
+function beanFill(){return '<svg viewBox="0 0 24 24" fill="#fff"><ellipse cx="12" cy="12" rx="6" ry="8.6" transform="rotate(32 12 12)"/><path d="M9 8c1.6 2.6 1.6 5.4 0 8" stroke="#c58f28" stroke-width="1.2" fill="none"/></svg>';}
 
-function go(s){document.querySelectorAll('.screen').forEach(function(x){x.classList.remove('active');});document.getElementById('s-'+s).classList.add('active');document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.dataset.s===s);});window.scrollTo(0,0);document.getElementById('app').scrollTop=0;closeSheet();closeCart();}
+/* MENU DATA */
+var CATS=[
+ {c:'커피',items:[
+   {id:'espresso',n:'에스프레소',d:'깊고 진한 하우스 블렌드 한 잔',p:2500,img:IMG.esp,temp:1},
+   {id:'americano',n:'아메리카노',d:'진한 풍미와 깔끔한 마무리',p:3000,img:IMG.esp,temp:2,badge:'BEST'},
+   {id:'latte',n:'카페 라떼',d:'부드러운 우유와 에스프레소',p:4000,img:IMG.latte,temp:2},
+   {id:'cappuccino',n:'카푸치노',d:'진한 커피와 부드러운 폼',p:4000,img:IMG.capp,temp:1},
+   {id:'coldbrew',n:'콜드브루',d:'12시간 저온 추출, 부드러운 바디',p:4500,img:IMG.cold,temp:3},
+   {id:'vanilla',n:'바닐라 라떼',d:'달콤한 바닐라와 에스프레소',p:4500,img:IMG.cold,temp:3},
+ ]},
+ {c:'논커피 · 티',items:[
+   {id:'orzo',n:'오르조 라떼',d:'보리로 만든 카페인 프리 라떼',p:5500,img:IMG.orzo,temp:2,badge:'SIG'},
+   {id:'strawberry',n:'딸기 라떼',d:'생딸기 과육이 가득',p:5200,img:IMG.straw,temp:3,badge:'NEW'},
+   {id:'earlgrey',n:'B 얼그레이',d:'향긋한 베르가못 블렌딩 티',p:5000,img:IMG.tea,temp:2},
+ ]},
+ {c:'디저트 · 베이커리',items:[
+   {id:'eggtart',n:'에그타르트',d:'겉은 바삭, 속은 부드러운 클래식 포르투갈식',p:3200,img:IMG.tart,temp:0},
+   {id:'tiramisu',n:'B 오리지널 티라미수',d:'마스카포네와 에스프레소의 조화',p:5000,img:IMG.tira,temp:0},
+   {id:'croissant',n:'크루아상',d:'버터 풍미 가득한 결',p:4200,img:IMG.cro,temp:0},
+   {id:'conetart',n:'콘 타르트',d:'고소한 콘 커스터드 타르트',p:3500,img:IMG.tart,temp:0},
+ ]},
+ {c:'세트',items:[
+   {id:'set_am',n:'아메리카노 + 에그타르트',d:'가장 인기있는 모닝 세트',p:6000,img:IMG.tart,temp:2,badge:'SET'},
+   {id:'set_pair',n:'커피 + 페이스트리 세트',d:'좋아하는 커피에 베이커리 하나',p:5900,img:IMG.cro,temp:2,badge:'SET'},
+ ]},
+];
+var ALL={}; CATS.forEach(function(c){c.items.forEach(function(i){ALL[i.id]=i;});});
 
-function bean(on){var fill=on?'#E0671C':'rgba(90,60,30,.12)';var st=on?'#8a3c12':'#7a5a38';return '<div class="stamp"><svg viewBox="0 0 26 34"><ellipse cx="13" cy="17" rx="10.5" ry="15.5" fill="'+fill+'" stroke="'+st+'" stroke-width="1.5"/><path d="M13 3.5 Q8.5 17 13 30.5" fill="none" stroke="'+st+'" stroke-width="1.4" stroke-linecap="round"/></svg></div>';}
-function stamps(el,on){var h='';for(var i=1;i<=10;i++){h+=bean(i<=on);}el.innerHTML=h;}
-stamps(document.getElementById('homeStamps'),7);
-stamps(document.getElementById('couponStamps'),7);
-
-function badges(it){return (it.best?'<span class="badge">BEST</span>':'')+(it.bake?'<span class="badge">BAKE</span>':(it.hot?'<span class="badge">HOT·ICE</span>':'<span class="badge">ICE</span>'));}
-function itemHTML(it,ci){return '<div class="item" onclick="openDetail('+ci.c+','+ci.i+')"><img src="'+it.img+'" alt="'+it.n+'" loading="lazy"><div class="it-b"><div class="it-n">'+it.n+'</div><div class="it-d">'+badges(it)+'<br>'+it.d+'</div><div class="it-f"><span class="it-p">'+won(it.p)+'</span><button class="add-ic" onclick="event.stopPropagation();quickAdd('+ci.c+','+ci.i+')">+</button></div></div></div>';}
-function recHTML(it,ci){return '<div class="reccard" onclick="openDetail('+ci.c+','+ci.i+')"><img src="'+it.img+'" alt="'+it.n+'" loading="lazy"><div class="rc-b"><div class="rc-n">'+it.n+'</div><div class="rc-s">'+(SUB[it.n]||(it.bake?'FRESH BAKE':'SIGNATURE'))+'</div><div class="rc-p">'+won(it.p)+'</div></div></div>';}
-
-var catTabs=document.getElementById('catTabs'),menuList=document.getElementById('menuList');
-CATS.forEach(function(c,ci){var b=document.createElement('button');b.className='cat'+(ci===0?' active':'');b.textContent=c.name;b.onclick=function(){document.querySelectorAll('.cat').forEach(function(x){x.classList.remove('active');});b.classList.add('active');renderCat(ci);};catTabs.appendChild(b);});
-function renderCat(ci){menuList.innerHTML=CATS[ci].items.map(function(it,i){return itemHTML(it,{c:ci,i:i});}).join('');}
-renderCat(0);
-document.getElementById('homeRecs').innerHTML=[{c:4,i:0},{c:0,i:0},{c:1,i:0},{c:4,i:1}].map(function(x){return recHTML(CATS[x.c].items[x.i],{c:x.c,i:x.i});}).join('');
-
-var cur={c:0,i:0,temp:'ICE',size:'R',qty:1,opts:{}};
-var OPTS=[{k:'shot',t:'샷 추가',p:500},{k:'syrup',t:'시럽 추가',p:0},{k:'oat',t:'오트밀크 변경',p:600},{k:'less',t:'얼음 적게',p:0}];
-function openDetail(c,i){
-  var it=CATS[c].items[i];cur={c:c,i:i,temp:it.hot?'HOT':'ICE',size:'R',qty:1,opts:{}};var isBake=!!it.bake;
-  var tempRow=isBake?'':'<div class="opt-group"><div class="opt-label">온도</div><div class="seg" id="segTemp">'+(it.hot?'<button data-v="HOT" class="on" onclick="setTemp(\'HOT\')">HOT</button>':'')+'<button data-v="ICE" class="'+(it.hot?'':'on')+'" onclick="setTemp(\'ICE\')">ICE</button></div></div>';
-  var sizeRow=isBake?'':'<div class="opt-group"><div class="opt-label">사이즈</div><div class="seg" id="segSize"><button class="on" onclick="setSize(\'R\',this)">Regular</button><button onclick="setSize(\'L\',this)">Large +₩500</button></div></div>';
-  var optRows=isBake?'':'<div class="opt-group"><div class="opt-label">옵션</div>'+OPTS.map(function(o){return '<div class="opt-row" id="opt-'+o.k+'" onclick="toggleOpt(\''+o.k+'\')"><div style="display:flex;align-items:center;gap:11px"><span class="ck">✓</span><span class="on-t">'+o.t+'</span></div><span class="on-p">'+(o.p?'+'+won(o.p):'무료')+'</span></div>';}).join('')+'</div>';
-  document.getElementById('sheet').innerHTML='<div class="sh-grip"></div><button class="sh-close" onclick="closeSheet()">✕</button><img class="sh-img" src="'+it.img+'" alt="'+it.n+'"><div class="sh-body"><div class="sh-name">'+it.n+'</div><div class="sh-sub">'+(SUB[it.n]||(isBake?'FRESH BAKE':'SIGNATURE'))+'</div><div class="sh-desc">'+it.d+'</div><div class="sh-price">'+won(it.p)+'</div><div class="hr"></div>'+tempRow+sizeRow+optRows+'<div class="opt-group" style="display:flex;justify-content:space-between;align-items:center"><div class="opt-label" style="margin:0">수량</div><div class="qty"><button onclick="qty(-1)">−</button><span id="qtyN">1</span><button onclick="qty(1)">+</button></div></div><div class="sh-foot"><button class="btn btn-primary" onclick="addToCart()">장바구니 담기 · <span id="shTotal">'+won(it.p)+'</span></button></div></div>';
-  document.getElementById('sheetWrap').classList.add('open');
+/* HOME signature + stamps */
+function renderHome(){
+  var sig=[ALL.eggtart,ALL.orzo,ALL.americano,ALL.tiramisu];
+  document.getElementById('homeSig').innerHTML=sig.slice(0,4).map(function(it){
+    var tag=it.badge==='NEW'?'<span class="tag new">NEW</span>':it.badge==='SIG'?'<span class="tag">SIGNATURE</span>':it.badge==='BEST'?'<span class="tag">BEST</span>':'';
+    return '<div class="pcard" onclick="openDetail(\''+it.id+'\')"><div class="ph">'+tag+'<img src="'+it.img+'"></div><div class="bd"><div class="nm">'+it.n+'</div><div class="de">'+it.d+'</div><div class="pr"><span class="pp">'+won(it.p)+'</span><button class="add" onclick="event.stopPropagation();quickAdd(\''+it.id+'\')">+</button></div></div></div>';
+  }).join('');
+  var hs=''; for(var i=0;i<6;i++){hs+='<div class="st'+(i<5?' on':'')+'">'+(i<5?beanFill():beanSvg())+'</div>';}
+  document.getElementById('homeStamps').innerHTML=hs;
 }
-function closeSheet(){document.getElementById('sheetWrap').classList.remove('open');}
-function setTemp(v){cur.temp=v;document.querySelectorAll('#segTemp button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}
-function setSize(v,el){cur.size=v;document.querySelectorAll('#segSize button').forEach(function(b){b.classList.remove('on');});el.classList.add('on');calc();}
-function toggleOpt(k){cur.opts[k]=!cur.opts[k];document.getElementById('opt-'+k).classList.toggle('on',cur.opts[k]);calc();}
-function qty(d){cur.qty=Math.max(1,cur.qty+d);document.getElementById('qtyN').textContent=cur.qty;calc();}
-function unit(){var it=CATS[cur.c].items[cur.i];var p=it.p;if(cur.size==='L')p+=500;OPTS.forEach(function(o){if(cur.opts[o.k])p+=o.p;});return p;}
-function calc(){var e=document.getElementById('shTotal');if(e)e.textContent=won(unit()*cur.qty);}
 
+/* MENU */
+var curCat=0;
+function renderTabs(){
+  document.getElementById('catTabs').innerHTML=CATS.map(function(c,i){return '<div class="tb'+(i===curCat?' on':'')+'" onclick="setCat('+i+')">'+c.c+'</div>';}).join('');
+}
+function renderMenu(){
+  document.getElementById('menuList').innerHTML=CATS.map(function(c,ci){
+    return '<div class="mcat" id="cat'+ci+'"><div class="ct serif">'+c.c+'</div>'+c.items.map(function(it){
+      var b=it.badge==='BEST'?'<span class="mbadge">BEST</span>':it.badge==='NEW'?'<span class="mbadge">NEW</span>':it.badge==='SIG'?'<span class="mbadge sig">SIGNATURE</span>':it.badge==='SET'?'<span class="mbadge sig">SET</span>':'';
+      return '<div class="mrow" onclick="openDetail(\''+it.id+'\')"><img src="'+it.img+'"><div class="mi"><div class="mn">'+it.n+' '+b+'</div><div class="md">'+it.d+'</div><div class="mp">'+won(it.p)+'</div></div><button class="madd" onclick="event.stopPropagation();quickAdd(\''+it.id+'\')">+</button></div>';
+    }).join('')+'</div>';
+  }).join('');
+}
+function setCat(i){curCat=i;renderTabs();var el=document.getElementById('cat'+i);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* MEMBERSHIP barcode + stampboard */
+function renderMembership(){
+  var bc='',x=0,seed=73;
+  while(x<280){var w=1+ (seed%4); seed=(seed*31+17)%97; if((seed%2)===0){bc+='<rect x="'+x+'" y="0" width="'+w+'" height="66" fill="#241C15"/>';} x+=w+1;}
+  document.getElementById('barcode').innerHTML=bc;
+  var sg='';for(var i=0;i<10;i++){if(i<5)sg+='<div class="sc on">'+beanFill()+'</div>';else if(i===9)sg+='<div class="sc free">무료<br>음료</div>';else sg+='<div class="sc">'+beanSvg('#C6A579')+'</div>';}
+  document.getElementById('stampGrid').innerHTML=sg;
+}
+
+/* CART */
 var cart=[];
-function optText(){var it=CATS[cur.c].items[cur.i];var a=[];if(!it.bake){a.push(cur.temp);a.push(cur.size==='L'?'Large':'Regular');}OPTS.forEach(function(o){if(cur.opts[o.k])a.push(o.t);});return a.join(' · ')||'기본';}
-function addToCart(){var it=CATS[cur.c].items[cur.i];cart.push({n:it.n,img:it.img,opt:optText(),price:unit(),qty:cur.qty});updateCart();closeSheet();toast(it.n+' 담았어요');}
-function quickAdd(c,i){var it=CATS[c].items[i];cart.push({n:it.n,img:it.img,opt:it.bake?'기본':((it.hot?'HOT':'ICE')+' · Regular'),price:it.p,qty:1});updateCart();toast(it.n+' 담았어요');}
-function updateCart(){var n=cart.reduce(function(s,x){return s+x.qty;},0);['cartDot','cartDot2'].forEach(function(id){var d=document.getElementById(id);if(d){d.style.display=n?'grid':'none';d.textContent=n;}});}
-function openCart(){
-  var body=document.getElementById('cartSheet');
-  if(!cart.length){body.innerHTML='<div class="sh-grip"></div><button class="sh-close" onclick="closeCart()">✕</button><div class="sh-body"><div class="sh-name">장바구니</div><div class="empty">담은 메뉴가 없어요 ☕<br>메뉴에서 추가해 주세요.</div></div>';}
-  else{var sub=cart.reduce(function(s,x){return s+x.price*x.qty;},0);
-    var rows=cart.map(function(x,idx){return '<div class="citem"><img src="'+x.img+'"><div style="flex:1"><div class="ci-n">'+x.n+'</div><div class="ci-o">'+x.opt+' · '+x.qty+'개</div><div class="ci-p">'+won(x.price*x.qty)+'</div></div><span class="ci-x" onclick="rmCart('+idx+')">✕</span></div>';}).join('');
-    body.innerHTML='<div class="sh-grip"></div><button class="sh-close" onclick="closeCart()">✕</button><div class="sh-body"><div class="sh-name">장바구니</div><div style="padding:6px 0 8px">'+rows+'</div><div class="sum-row"><span>상품 금액</span><span>'+won(sub)+'</span></div><div class="sum-row"><span>스탬프 적립</span><span style="color:var(--orange)">+'+cart.reduce(function(s,x){return s+x.qty;},0)+'개</span></div><div class="sum-row total"><span>결제 예정</span><span>'+won(sub)+'</span></div><div class="sh-foot"><button class="btn btn-primary" onclick="checkout('+sub+')">'+won(sub)+' 주문하기</button></div></div>';}
-  document.getElementById('cartWrap').classList.add('open');
+function addToCart(it,opt,qty){
+  var key=it.id+'|'+(opt||''); var ex=cart.find(function(c){return c.key===key;});
+  if(ex)ex.qty+=qty; else cart.push({key:key,id:it.id,n:it.n,img:it.img,opt:opt,p:it.p,qty:qty});
+  updateDot();
 }
-function closeCart(){document.getElementById('cartWrap').classList.remove('open');}
-function rmCart(i){cart.splice(i,1);updateCart();openCart();}
-function checkout(sub){var items=cart.reduce(function(s,x){return s+x.qty;},0);var first=cart.length?cart[0].n:'';document.getElementById('tkItems').textContent=first+(items>1?' 외 '+(items-1):'');document.getElementById('tkTotal').textContent=won(sub);document.getElementById('tkNo').textContent='CB250301-'+String(Math.floor(1000+Math.random()*8999));cart=[];updateCart();closeCart();go('order');toast('주문이 접수됐어요 ☕');}
-function reorderToast(){toast('장바구니에 담았어요');go('menu');}
-var tT;function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},1800);}
+function updateDot(){var n=cart.reduce(function(a,c){return a+c.qty;},0);var d=document.getElementById('cartDot');d.textContent=n;d.style.display=n?'grid':'none';}
+function quickAdd(id){var it=ALL[id];var opt=it.temp===0?'':(it.temp===3?'ICE':(it.temp===1?'HOT':'ICE'))+' · R';addToCart(it,opt,1);toast(it.n+' 담았어요');}
+
+/* DETAIL */
+var dSel={temp:null,size:'R',qty:1,id:null};
+function openDetail(id){
+  var it=ALL[id];dSel={temp:(it.temp===1?'HOT':it.temp===3?'ICE':it.temp===0?null:'ICE'),size:'R',qty:1,id:id};
+  var tempHtml='';
+  if(it.temp===2){tempHtml='<div class="opt"><div class="ol">온도</div><div class="pills"><button class="pill" data-t="HOT" onclick="selTemp(this,\'HOT\')">HOT</button><button class="pill on" data-t="ICE" onclick="selTemp(this,\'ICE\')">ICE</button></div></div>';}
+  else if(it.temp===1){tempHtml='<div class="opt"><div class="ol">온도</div><div class="pills"><button class="pill on" data-t="HOT">HOT</button></div></div>';}
+  else if(it.temp===3){tempHtml='<div class="opt"><div class="ol">온도</div><div class="pills"><button class="pill on" data-t="ICE">ICE</button></div></div>';}
+  var sizeHtml=it.temp===0?'':'<div class="opt"><div class="ol">사이즈</div><div class="pills"><button class="pill sz on" onclick="selSize(this,\'R\')">Regular</button><button class="pill sz" onclick="selSize(this,\'L\')">Large +500</button></div></div>';
+  var eyebrow=it.temp===0?'BAKERY':'SIGNATURE COFFEE';
+  document.getElementById('detailSheet').innerHTML=
+   '<div class="grab"><i></i></div>'
+  +'<div class="dh"><img src="'+it.img+'"><button class="x" onclick="closeSheet(\'detailWrap\')">✕</button></div>'
+  +'<div class="db"><span class="eyebrow">'+eyebrow+'</span><div class="dn serif">'+it.n+'</div><div class="dd">'+it.d+'. CASA B가 좋은 재료로 정직하게 만듭니다.</div><div class="dprice serif">'+won(it.p)+'</div><div class="hr"></div>'
+  +tempHtml+sizeHtml
+  +'<div class="opt"><div class="ol">수량</div><div class="qty"><button onclick="dQty(-1)">−</button><span class="qv" id="dQ">1</span><button onclick="dQty(1)">+</button></div></div><div style="height:12px"></div></div>'
+  +'<div class="dfoot"><button class="bigbtn" onclick="addFromDetail()">장바구니에 담기 <span class="bp" id="dTot">· '+won(it.p)+'</span></button></div>';
+  open_('detailWrap');
+}
+function selTemp(b,t){dSel.temp=t;document.querySelectorAll('#detailSheet .pills .pill[data-t]').forEach(function(x){x.classList.remove('on');});b.classList.add('on');}
+function selSize(b,s){dSel.size=s;b.parentNode.querySelectorAll('.pill').forEach(function(x){x.classList.remove('on');});b.classList.add('on');dTotal();}
+function dQty(d){dSel.qty=Math.max(1,dSel.qty+d);document.getElementById('dQ').textContent=dSel.qty;dTotal();}
+function dTotal(){var it=ALL[dSel.id];var p=it.p+(dSel.size==='L'?500:0);document.getElementById('dTot').textContent='· '+won(p*dSel.qty);}
+function addFromDetail(){var it=ALL[dSel.id];var p=it.p+(dSel.size==='L'?500:0);var opt=[dSel.temp,dSel.size!=='R'?'Large':(it.temp!==0?'Regular':'')].filter(Boolean).join(' · ');addToCart({id:it.id,n:it.n,img:it.img,p:p},opt,dSel.qty);closeSheet('detailWrap');toast(it.n+' '+dSel.qty+'개 담았어요');}
+
+/* CART sheet */
+function openCart(){renderCart();open_('cartWrap');}
+function renderCart(){
+  var el=document.getElementById('cartSheet');
+  if(!cart.length){el.innerHTML='<div class="grab"><i></i></div><div class="db"><div class="dn serif" style="font-size:22px">장바구니</div></div><div class="empty"><div class="em">🧺</div><div style="margin-top:10px">아직 담은 메뉴가 없어요</div><button class="bigbtn" style="margin:20px 20px 0;width:calc(100% - 40px)" onclick="closeSheet(\'cartWrap\');go(\'menu\')">메뉴 보러가기</button></div>';return;}
+  var sub=cart.reduce(function(a,c){return a+c.p*c.qty;},0);var disc=Math.round(sub*0.15);var tot=sub-disc;
+  el.innerHTML='<div class="grab"><i></i></div><div class="db"><div class="dn serif" style="font-size:22px">장바구니 <span style="font-size:14px;color:var(--ink-soft)">· 서면점 픽업</span></div>'
+   +cart.map(function(c,i){return '<div class="cart-it"><img src="'+c.img+'"><div class="ci"><div class="cn">'+c.n+'</div><div class="co">'+(c.opt||'기본')+'</div><div class="cf"><span class="cp">'+won(c.p*c.qty)+'</span><div class="miniqty"><button onclick="cQty('+i+',-1)">−</button><span style="font-weight:700;min-width:16px;text-align:center">'+c.qty+'</span><button onclick="cQty('+i+',1)">+</button></div></div></div></div>';}).join('')
+   +'<div style="height:14px"></div><div class="sumrow"><span>상품 금액</span><span>'+won(sub)+'</span></div><div class="sumrow"><span>실버 등급 할인 15%</span><span class="disc">−'+won(disc)+'</span></div><div class="sumrow tot"><span>결제 금액</span><span>'+won(tot)+'</span></div><div style="height:10px"></div></div>'
+   +'<div class="dfoot"><button class="bigbtn" onclick="checkout()">'+won(tot)+' 결제하기</button></div>';
+}
+function cQty(i,d){cart[i].qty+=d;if(cart[i].qty<1)cart.splice(i,1);updateDot();renderCart();}
+function reorder(){addToCart(ALL.americano,'ICE · R',1);addToCart(ALL.eggtart,'',1);toast('어제 주문을 장바구니에 담았어요');openCart();}
+
+/* checkout -> order status */
+function checkout(){closeSheet('cartWrap');var items=cart.slice();cart=[];updateDot();renderOrder(items);open_('orderWrap');}
+var orderStep=0,orderTimer=null;
+function renderOrder(items){
+  orderStep=0;clearInterval(orderTimer);
+  var steps=['접수 완료','제조 중','준비 완료 · 픽업'];
+  function draw(){
+    var el=document.getElementById('orderSheet');
+    var stepHtml=steps.map(function(s,i){
+      var on=i<=orderStep;var cur=i===orderStep;
+      return '<div style="display:flex;gap:13px;align-items:flex-start;opacity:'+(on?1:.4)+'"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:30px;height:30px;border-radius:50%;background:'+(on?'var(--orange)':'var(--cream2)')+';color:'+(on?'#fff':'var(--ink-faint)')+';display:grid;place-items:center;font-weight:800;font-size:13px">'+(i<orderStep?'✓':(i+1))+'</div>'+(i<2?'<div style="width:2px;height:30px;background:'+(i<orderStep?'var(--orange)':'var(--line2)')+'"></div>':'')+'</div><div style="padding-top:4px"><div style="font-weight:800;font-size:14.5px'+(cur?';color:var(--orange)':'')+'">'+s+'</div><div style="font-size:11.5px;color:var(--ink-soft);margin-top:2px">'+(i===0?'주문이 매장에 전달됐어요':i===1?'바리스타가 정성껏 만들고 있어요':'픽업대에서 받아가세요')+'</div></div></div>';
+    }).join('');
+    el.innerHTML='<div class="grab"><i></i></div><div class="db" style="padding-bottom:22px"><span class="eyebrow">ORDER · CB250301-842</span><div class="dn serif" style="font-size:25px;margin-top:6px">'+steps[orderStep]+'</div><div class="dd">서면점 · 픽업번호 <b style="color:var(--ink)">A42</b></div>'
+     +'<div style="background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0">'+stepHtml+'</div>'
+     +'<div style="font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:8px">주문 내역</div>'
+     +items.map(function(c){return '<div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span>'+c.n+' <span style="color:var(--ink-soft);font-size:11px">'+(c.opt||'')+'</span> × '+c.qty+'</span><span style="font-weight:700">'+won(c.p*c.qty)+'</span></div>';}).join('')
+     +'<div style="height:8px"></div></div><div class="dfoot"><button class="bigbtn" style="background:var(--ink)" onclick="closeSheet(\'orderWrap\');go(\'home\')">홈으로</button></div>';
+  }
+  draw();
+  orderTimer=setInterval(function(){if(orderStep<2){orderStep++;draw();if(orderStep===2){toast('☕ 음료가 준비됐어요!');clearInterval(orderTimer);}}},3500);
+}
+
+/* nav + helpers */
+function go(s){
+  document.querySelectorAll('.screen').forEach(function(x){x.classList.toggle('on',x.id===s);});
+  document.querySelectorAll('.tabbar .tbi').forEach(function(x){x.classList.toggle('on',x.dataset.s===s);});
+  window.scrollTo(0,0);
+}
+function open_(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
+function closeSheet(id){document.getElementById(id).classList.remove('on');document.body.style.overflow='';}
+var tT;function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},2200);}
+
+renderHome();renderTabs();renderMenu();renderMembership();
 </script>
 </body>
 </html>

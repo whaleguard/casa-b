@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1F1A17">
+<title>CASA B OS — 관리자</title>
+<meta name="description" content="CASA B OS 관리자 대시보드 — 매출·채널·인기메뉴·다점포 통계.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --black:#1F1A17;--black2:#171310;--cream:#F5EFE4;--kraft:#C9A77D;--kraft-dark:#B48D61;
+  --gold:#D89B2B;--orange:#E8742B;--orange-dark:#A84317;
+  --app:#E8742B;--baemin:#2AC1BC;--coupang:#C5003E;--store:#C9A77D;
+  --up:#6ea06a;--down:#c0564a;
+  --serif:"Cinzel",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
+  --line:rgba(255,255,255,.09);--card:rgba(255,255,255,.028);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--sans);color:var(--cream);background:var(--black2);
+  background-image:url("assets/img/grain-black.jpg");background-size:820px auto;background-blend-mode:screen;
+  -webkit-font-smoothing:antialiased;min-height:100vh;}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(130deg,#28221E 0%,#1F1A17 55%,#141009 100%);opacity:.6;z-index:-1;}
+.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:13px 22px;background:rgba(18,13,10,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:10px;}
+.dia{width:30px;height:30px;}
+.nm{font-family:var(--serif);font-weight:700;letter-spacing:.12em;font-size:17px;
+  background:linear-gradient(103deg,#8a6a1f,#f6e08a,#c98f24,#f3d879,#7c5713);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;}
+.tag{font-size:12.5px;color:#C9B9A6;}
+.tag b{color:var(--cream);}
+.sel{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--cream);font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:9px;}
+.sp{flex:1;}
+.period{display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:3px;}
+.period button{border:0;background:none;color:#b0a08e;font-weight:700;font-size:12.5px;padding:7px 14px;border-radius:7px;cursor:pointer;}
+.period button.on{background:var(--orange);color:#fff6ec;}
+
+.wrap{padding:18px 20px 48px;max-width:1340px;margin:0 auto;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;}
+@media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr);}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px 17px;}
+.kpi .kk{font-size:11.5px;color:#b0a08e;letter-spacing:.02em;}
+.kpi .kv{font-family:var(--serif);font-size:26px;margin-top:7px;letter-spacing:.02em;}
+.kpi .kd{font-size:11.5px;font-weight:800;margin-top:6px;}
+.kpi .kd.up{color:var(--up);}.kpi .kd.down{color:var(--down);}
+.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px;margin-bottom:14px;}
+.card h3{margin:0 0 2px;font-size:14.5px;font-weight:800;letter-spacing:.01em;}
+.card .cs{font-size:11.5px;color:#9b8b79;margin-bottom:14px;}
+.foil{color:var(--gold);}
+
+/* bar trend */
+.trend{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:6px;}
+.tb{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end;}
+.tb .bar{width:62%;max-width:34px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#F0A05A,#E8742B);min-height:4px;position:relative;transition:height .6s;}
+.tb .bar.today{background:linear-gradient(180deg,#f6e08a,#D89B2B);}
+.tb .bv{font-size:10px;color:#cdbda9;font-weight:700;}
+.tb .bl{font-size:10.5px;color:#9b8b79;}
+
+/* channel bars */
+.chrow{display:flex;align-items:center;gap:10px;margin:11px 0;}
+.chrow .cl{width:70px;font-size:12.5px;font-weight:700;flex:0 0 auto;}
+.chrow .ct{flex:1;height:14px;border-radius:7px;background:rgba(255,255,255,.06);overflow:hidden;}
+.chrow .cf{height:100%;border-radius:7px;}
+.chrow .cv{width:98px;text-align:right;font-size:12px;color:#cdbda9;font-weight:700;flex:0 0 auto;font-variant-numeric:tabular-nums;}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:middle;}
+
+/* ranking */
+.rank{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.rank .rn{width:22px;height:22px;border-radius:7px;background:rgba(232,116,43,.16);color:#F3A567;font-weight:800;font-size:12px;display:grid;place-items:center;flex:0 0 auto;}
+.rank.top .rn{background:var(--orange);color:#fff;}
+.rank .ri{flex:1;}
+.rank .rnm{font-size:13.5px;font-weight:700;}
+.rank .rbar{height:6px;border-radius:3px;background:rgba(255,255,255,.07);margin-top:5px;overflow:hidden;}
+.rank .rbf{height:100%;background:var(--gold);border-radius:3px;}
+.rank .rv{font-size:12.5px;font-weight:800;color:#cdbda9;flex:0 0 auto;font-variant-numeric:tabular-nums;}
+
+/* hourly */
+.hours{display:flex;align-items:flex-end;gap:4px;height:130px;}
+.hbar{flex:1;background:linear-gradient(180deg,#8a5a2a,#5A3B28);border-radius:3px 3px 0 0;min-height:3px;position:relative;}
+.hbar.peak{background:linear-gradient(180deg,#F0A05A,#E8742B);}
+.hlabels{display:flex;gap:4px;margin-top:6px;}
+.hlabels span{flex:1;text-align:center;font-size:9px;color:#8a7a68;}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.06);}
+th{font-size:11px;color:#9b8b79;font-weight:700;letter-spacing:.02em;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.pill{font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;}
+.pill.up{color:var(--up);background:rgba(110,160,106,.12);}
+.pill.down{color:var(--down);background:rgba(192,86,74,.12);}
+.sold{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+.badge{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:6px;}
+.badge.ok{color:var(--up);background:rgba(110,160,106,.12);}
+.badge.out{color:var(--down);background:rgba(192,86,74,.14);}
+.badge.low{color:#d9a93a;background:rgba(217,155,43,.14);}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand"><span class="dia" id="dia"></span><span class="nm">CASA B OS</span></div>
+  <span class="tag">관리자 · <b>부산 서면점</b></span>
+  <select class="sel"><option>부산 서면점</option><option>해운대점</option><option>광안리점</option><option>전체 매장</option></select>
+  <span class="sp"></span>
+  <div class="period"><button onclick="setP(this,'오늘')">오늘</button><button class="on" onclick="setP(this,'주간')">주간</button><button onclick="setP(this,'월간')">월간</button></div>
+</div>
+
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><div class="kk">주간 매출</div><div class="kv foil">₩8.42M</div><div class="kd up">▲ 12.4% · 전주 대비</div></div>
+    <div class="kpi"><div class="kk">주간 주문</div><div class="kv">2,518건</div><div class="kd up">▲ 8.1%</div></div>
+    <div class="kpi"><div class="kk">객단가</div><div class="kv">₩3,344</div><div class="kd up">▲ 3.9%</div></div>
+    <div class="kpi"><div class="kk">신규 멤버</div><div class="kv">168명</div><div class="kd up">▲ 21.0%</div></div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h3>매출 추이</h3><div class="cs">최근 7일 · 단위 만원</div>
+        <div class="trend" id="trend"></div>
+      </div>
+      <div class="card">
+        <h3>시간대별 주문</h3><div class="cs">오늘 · 피크 08–09시 / 12–13시 / 15시</div>
+        <div class="hours" id="hours"></div>
+        <div class="hlabels" id="hlabels"></div>
+      </div>
+      <div class="card">
+        <h3>다점포 비교</h3><div class="cs">주간 · 매장별</div>
+        <table>
+          <thead><tr><th>매장</th><th class="num">매출</th><th class="num">주문</th><th class="num">객단가</th><th class="num">전주</th></tr></thead>
+          <tbody>
+            <tr><td>부산 서면점</td><td class="num">₩8.42M</td><td class="num">2,518</td><td class="num">₩3,344</td><td class="num"><span class="pill up">+12%</span></td></tr>
+            <tr><td>해운대점</td><td class="num">₩6.91M</td><td class="num">2,043</td><td class="num">₩3,382</td><td class="num"><span class="pill up">+7%</span></td></tr>
+            <tr><td>광안리점</td><td class="num">₩5.18M</td><td class="num">1,602</td><td class="num">₩3,233</td><td class="num"><span class="pill down">−3%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>채널별 매출</h3><div class="cs">주간 · 비중</div>
+        <div id="channels"></div>
+      </div>
+      <div class="card">
+        <h3>인기 메뉴 TOP 5</h3><div class="cs">주간 판매 수량</div>
+        <div id="rank"></div>
+      </div>
+      <div class="card">
+        <h3>품절 · 재고 현황</h3><div class="cs">실시간 · 서면점</div>
+        <div class="sold"><span>아메리카노</span><span class="badge ok">판매중</span></div>
+        <div class="sold"><span>오르조 라떼</span><span class="badge low">재고 소진 임박</span></div>
+        <div class="sold"><span>에그타르트</span><span class="badge ok">판매중</span></div>
+        <div class="sold"><span>B 오리지널 티라미수</span><span class="badge out">품절</span></div>
+        <div class="sold"><span>데일리 베이크</span><span class="badge ok">판매중</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('dia').innerHTML='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 45 24 24 45 3 24Z" stroke="#D89B2B" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="20" font-weight="700" fill="#D89B2B">B</text></svg>';
+function setP(b,p){document.querySelectorAll('.period button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');}
+
+/* trend */
+var days=['월','화','수','목','금','토','일'];
+var vals=[98,112,105,121,134,152,128]; // 만원
+var mx=Math.max.apply(null,vals);
+document.getElementById('trend').innerHTML=vals.map(function(v,i){
+  var h=Math.round(v/mx*100);
+  return '<div class="tb"><div class="bv">'+v+'</div><div class="bar'+(i===6?' today':'')+'" style="height:'+h+'%"></div><div class="bl">'+days[i]+'</div></div>';
+}).join('');
+
+/* hourly */
+var hrs=[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+var hv=[20,78,92,55,48,88,95,52,70,46,40,58,44,30,18];
+var hmx=Math.max.apply(null,hv);var peaks=[8,9,12,13,15];
+document.getElementById('hours').innerHTML=hv.map(function(v,i){
+  var pk=peaks.indexOf(hrs[i])>=0;return '<div class="hbar'+(pk?' peak':'')+'" style="height:'+Math.round(v/hmx*100)+'%" title="'+hrs[i]+'시"></div>';
+}).join('');
+document.getElementById('hlabels').innerHTML=hrs.map(function(h,i){return '<span>'+((i%2===0)?h:'')+'</span>';}).join('');
+
+/* channels */
+var ch=[{n:'매장 (OKPOS)',v:42,c:'var(--store)',w:'₩3.54M'},{n:'CASA B 앱',v:31,c:'var(--app)',w:'₩2.61M'},{n:'배달의민족',v:18,c:'var(--baemin)',w:'₩1.52M'},{n:'쿠팡이츠',v:9,c:'var(--coupang)',w:'₩0.76M'}];
+document.getElementById('channels').innerHTML=ch.map(function(c){
+  return '<div class="chrow"><span class="cl"><span class="sw" style="background:'+c.c+'"></span></span><span class="ct"><span class="cf" style="width:'+c.v+'%;background:'+c.c+'"></span></span><span class="cv">'+c.w+' · '+c.v+'%</span></div>'+
+  '<div style="font-size:11.5px;color:#b0a08e;margin:-6px 0 4px 0">'+c.n+'</div>';
+}).join('');
+
+/* rank */
+var rk=[{n:'아메리카노',v:612},{n:'에그타르트',v:548},{n:'카페라떼',v:431},{n:'오르조 라떼',v:356},{n:'B 티라미수',v:298}];
+var rmx=rk[0].v;
+document.getElementById('rank').innerHTML=rk.map(function(r,i){
+  return '<div class="rank'+(i===0?' top':'')+'"><div class="rn">'+(i+1)+'</div><div class="ri"><div class="rnm">'+r.n+'</div><div class="rbar"><div class="rbf" style="width:'+Math.round(r.v/rmx*100)+'%"></div></div></div><div class="rv">'+r.v+'</div></div>';
+}).join('');
+</script>
+</body>
+</html>

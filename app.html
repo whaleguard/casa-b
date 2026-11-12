@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F1A17">
+<title>CASA B — 주문</title>
+<meta name="description" content="CASA B 주문 앱 — 미리 주문하고 픽업. Grab. Pair. Go.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --black:#1F1A17;--black2:#171310;--cream:#F5EFE4;--cream2:#EFE7D5;
+  --gold:#D89B2B;--kraft:#C9A77D;--kraft-dark:#B48D61;
+  --orange:#E8742B;--orange-dark:#A84317;--orange-deep:#813412;
+  --gold-foil:linear-gradient(103deg,#8a6a1f 0%,#d9a93a 20%,#f6e08a 38%,#c98f24 52%,#f3d879 66%,#b07d1e 84%,#7c5713 100%);
+  --serif:"Cinzel",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
+  --line:rgba(232,116,43,.22);
+  --radius:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--sans);background:#0d0a08;color:var(--cream);
+  -webkit-font-smoothing:antialiased;line-height:1.5;
+  display:flex;justify-content:center;
+}
+/* phone frame */
+.app{position:relative;width:100%;max-width:440px;min-height:100vh;background:var(--black);
+  background-image:url("assets/img/grain-black.jpg");background-size:720px auto;background-blend-mode:screen;
+  overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.6);}
+.app::before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,#28221E 0%,#1F1A17 52%,#141009 100%);opacity:.55;z-index:0;pointer-events:none;}
+.screen{display:none;position:relative;z-index:1;padding:0 18px 108px;animation:fade .35s ease;}
+.screen.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px 12px;margin:0 -18px 6px;background:rgba(20,15,12,.82);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:9px;}
+.dia{width:26px;height:26px;position:relative;flex:0 0 auto;}
+.dia svg{width:100%;height:100%;display:block;}
+.wordmark{font-family:var(--serif);font-weight:600;letter-spacing:.14em;font-size:16px;
+  background:var(--gold-foil);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+.topbar .store{font-size:11px;color:#C9B9A6;display:flex;align-items:center;gap:4px;}
+.topbar .store b{color:var(--cream);font-weight:600;}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--cream);font-size:16px;display:grid;place-items:center;position:relative;}
+.cart-dot{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--orange);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center;}
+
+h1,h2,h3{margin:0;font-weight:700;}
+.eyebrow{font-size:10.5px;letter-spacing:.28em;font-weight:800;color:var(--orange);text-transform:uppercase;}
+.sec-title{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.04em;margin:3px 0 14px;color:var(--cream);}
+.foil-title{background:var(--gold-foil);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+
+/* buttons — flat orange (anti-AI) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;
+  font-family:var(--sans);font-weight:800;font-size:14px;border-radius:11px;padding:14px 18px;width:100%;transition:transform .15s,filter .15s;}
+.btn:active{transform:scale(.985);}
+.btn-primary{background:var(--orange);color:#fff6ec;border:1px solid var(--orange-dark);box-shadow:0 3px 10px rgba(80,30,8,.3);}
+.btn-primary:hover{filter:brightness(1.05);}
+.btn-ghost{background:transparent;color:var(--orange);border:1px solid var(--orange);}
+.btn-kraft{background:var(--kraft);color:#2a1d13;border:1px solid var(--kraft-dark);}
+.btn-sm{width:auto;padding:9px 14px;font-size:12.5px;border-radius:9px;}
+
+/* ===== HOME / MEMBERSHIP ===== */
+.greet{padding:4px 0 16px;}
+.greet .hi{font-size:13px;color:#C9B9A6;}
+.greet .big{font-family:var(--serif);font-size:23px;margin-top:3px;letter-spacing:.03em;}
+.member-card{position:relative;border-radius:18px;overflow:hidden;padding:20px 20px 18px;margin-bottom:8px;
+  background:var(--kraft);background-image:url("assets/img/grain-cream.jpg");background-size:560px auto;background-blend-mode:multiply;
+  color:#2a1d13;box-shadow:0 10px 26px rgba(0,0,0,.4);border:1px solid #a9865b;}
+.member-card .mc-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.mc-grade{font-size:10.5px;letter-spacing:.2em;font-weight:800;color:#6e4a27;}
+.mc-name{font-family:var(--serif);font-size:19px;font-weight:600;margin-top:2px;letter-spacing:.06em;}
+.mc-dia{width:34px;height:34px;opacity:.92;}
+.mc-stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:16px 0 12px;}
+.stamp{aspect-ratio:1;border-radius:50%;border:1.5px dashed #9a7748;display:grid;place-items:center;font-size:12px;color:#9a7748;background:rgba(255,255,255,.14);}
+.stamp.on{border-style:solid;border-color:var(--orange-dark);background:var(--orange);color:#fff;box-shadow:0 2px 6px rgba(120,45,10,.3);}
+.mc-bar{height:44px;border-radius:7px;background:repeating-linear-gradient(90deg,#231a12 0 2px,transparent 2px 4px,#231a12 4px 7px,transparent 7px 9px,#231a12 9px 11px,transparent 11px 15px);margin-top:4px;opacity:.9;}
+.mc-barnum{text-align:center;font-size:11px;letter-spacing:.32em;color:#5a3c22;margin-top:6px;font-weight:600;}
+.mc-info{display:flex;justify-content:space-between;font-size:11.5px;color:#6e4a27;margin-top:3px;}
+
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 20px;}
+.quick a{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:13px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);text-decoration:none;color:var(--cream);}
+.quick a .q-ic{font-size:19px;}
+.quick a .q-t{font-weight:700;font-size:13.5px;}
+.quick a .q-s{font-size:11px;color:#b6a895;}
+
+.row-head{display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 11px;}
+.row-head .more{font-size:11.5px;color:var(--orange);text-decoration:none;}
+.hscroll{display:flex;gap:12px;overflow-x:auto;margin:0 -18px;padding:0 18px 6px;scrollbar-width:none;}
+.hscroll::-webkit-scrollbar{display:none;}
+.promo{flex:0 0 76%;scroll-snap-align:start;border-radius:16px;overflow:hidden;position:relative;border:1px solid var(--line);}
+.promo img{width:100%;height:150px;object-fit:cover;display:block;}
+.promo .pv{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,11,8,.85) 8%,rgba(15,11,8,.15) 72%);}
+.promo .pt{position:absolute;left:15px;bottom:13px;right:12px;}
+.promo .pt .pe{font-size:9.5px;letter-spacing:.22em;color:#F1BD96;font-weight:800;}
+.promo .pt .ph{font-family:var(--serif);font-size:17px;margin-top:3px;}
+.promo .pt .pp{font-size:12px;color:#E9DACB;margin-top:3px;}
+
+/* ===== MENU ===== */
+.cat-tabs{display:flex;gap:8px;overflow-x:auto;margin:2px -18px 14px;padding:4px 18px 8px;scrollbar-width:none;position:sticky;top:60px;z-index:15;background:rgba(20,15,12,.7);backdrop-filter:blur(6px);}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.cat{flex:0 0 auto;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#cdbda9;
+  font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+.cat.active{background:var(--orange);color:#fff6ec;border-color:var(--orange-dark);}
+.menu-list{display:flex;flex-direction:column;gap:12px;}
+.item{display:flex;gap:13px;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025);cursor:pointer;}
+.item img{width:84px;height:84px;border-radius:11px;object-fit:cover;flex:0 0 auto;background:#241b14;}
+.item .it-b{flex:1;min-width:0;display:flex;flex-direction:column;}
+.item .it-n{font-weight:700;font-size:14.5px;}
+.item .it-d{font-size:11.5px;color:#b0a08e;margin-top:3px;line-height:1.45;flex:1;}
+.item .it-f{display:flex;align-items:center;justify-content:space-between;margin-top:7px;}
+.item .it-p{font-weight:800;font-size:14px;color:var(--cream);}
+.badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;padding:3px 7px;border-radius:6px;background:rgba(232,116,43,.16);color:#F3A567;border:1px solid rgba(232,116,43,.3);margin-right:5px;}
+.add-ic{width:34px;height:34px;border-radius:9px;background:var(--orange);color:#fff;border:1px solid var(--orange-dark);font-size:19px;line-height:1;display:grid;place-items:center;}
+
+/* ===== DETAIL SHEET ===== */
+.sheet-wrap{position:fixed;inset:0;z-index:60;display:none;}
+.sheet-wrap.open{display:block;}
+.sheet-bg{position:absolute;inset:0;background:rgba(5,3,2,.6);backdrop-filter:blur(2px);}
+.sheet{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;
+  background:var(--black);background-image:url("assets/img/grain-black.jpg");background-size:720px;background-blend-mode:screen;
+  border-radius:22px 22px 0 0;border-top:1px solid var(--line);animation:up .3s ease;}
+@keyframes up{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
+.sheet .sh-img{width:100%;height:210px;object-fit:cover;display:block;}
+.sheet .sh-grip{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:rgba(255,255,255,.5);z-index:3;}
+.sh-close{position:absolute;top:12px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;background:rgba(10,7,5,.6);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:17px;}
+.sh-body{padding:16px 18px 20px;}
+.sh-name{font-family:var(--serif);font-size:22px;letter-spacing:.03em;}
+.sh-desc{font-size:12.5px;color:#b6a895;margin:6px 0 14px;line-height:1.6;}
+.opt-group{margin:15px 0;}
+.opt-label{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:#cdbda9;margin-bottom:8px;text-transform:uppercase;}
+.seg{display:flex;gap:8px;}
+.seg button{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#cdbda9;font-weight:700;font-size:13px;padding:11px;border-radius:10px;cursor:pointer;}
+.seg button.on{background:var(--orange);color:#fff6ec;border-color:var(--orange-dark);}
+.opt-row{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid rgba(255,255,255,.07);border-radius:10px;margin-bottom:8px;cursor:pointer;}
+.opt-row.on{border-color:var(--orange);background:rgba(232,116,43,.08);}
+.opt-row .ck{width:20px;height:20px;border-radius:6px;border:1.5px solid #6b5a49;display:grid;place-items:center;font-size:12px;color:transparent;}
+.opt-row.on .ck{background:var(--orange);border-color:var(--orange);color:#fff;}
+.opt-row .on-t{font-size:13.5px;font-weight:600;}
+.opt-row .on-p{font-size:12.5px;color:#b0a08e;}
+.qty{display:flex;align-items:center;gap:16px;}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--cream);font-size:19px;}
+.qty span{font-weight:800;font-size:16px;min-width:22px;text-align:center;}
+.sh-foot{position:sticky;bottom:0;background:linear-gradient(0deg,var(--black) 70%,transparent);padding:12px 0 4px;margin-top:10px;}
+
+/* ===== ORDER STATUS ===== */
+.ticket{position:relative;border-radius:16px;padding:20px 20px 22px;margin:6px 0 18px;
+  background:var(--kraft);background-image:url("assets/img/grain-cream.jpg");background-size:560px;background-blend-mode:multiply;color:#2a1d13;border:1px solid #a9865b;box-shadow:0 10px 26px rgba(0,0,0,.4);}
+.ticket::before,.ticket::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#0d0a08;top:50%;transform:translateY(-50%);}
+.ticket::before{left:-11px;}.ticket::after{right:-11px;}
+.tk-h{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #a9865b;padding-bottom:12px;}
+.tk-no{font-family:var(--serif);font-size:19px;letter-spacing:.08em;font-weight:600;}
+.tk-st{font-size:10.5px;font-weight:800;letter-spacing:.1em;background:var(--orange);color:#fff;padding:5px 10px;border-radius:7px;}
+.tk-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;color:#4a3320;}
+.tk-row b{color:#2a1d13;}
+.steps{display:flex;justify-content:space-between;margin:20px 2px 4px;position:relative;}
+.steps::before{content:"";position:absolute;top:15px;left:12%;right:12%;height:2px;background:#bfa178;}
+.step{display:flex;flex-direction:column;align-items:center;gap:7px;position:relative;z-index:1;flex:1;}
+.step .sc{width:32px;height:32px;border-radius:50%;background:#d9c09c;border:2px solid #bfa178;display:grid;place-items:center;font-size:14px;color:#8a6a43;}
+.step.done .sc{background:var(--orange);border-color:var(--orange-dark);color:#fff;}
+.step.cur .sc{background:var(--orange);border-color:var(--orange-dark);color:#fff;box-shadow:0 0 0 5px rgba(232,116,43,.25);}
+.step .sl{font-size:10.5px;font-weight:700;color:#6e4a27;}
+.step.done .sl,.step.cur .sl{color:#2a1d13;}
+.eta{text-align:center;font-size:12.5px;color:#C9B9A6;margin:2px 0 18px;}
+.eta b{color:var(--orange);font-weight:800;}
+
+/* generic cards / lists */
+.card{border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);border-radius:14px;padding:15px;margin-bottom:12px;}
+.coupon{display:flex;gap:0;border-radius:14px;overflow:hidden;margin-bottom:12px;border:1px dashed var(--kraft-dark);}
+.coupon .cp-l{flex:1;padding:15px 16px;background:rgba(201,167,125,.08);}
+.coupon .cp-l .cp-t{font-weight:800;font-size:15px;color:var(--cream);}
+.coupon .cp-l .cp-s{font-size:11.5px;color:#b0a08e;margin-top:4px;}
+.coupon .cp-r{width:84px;flex:0 0 auto;display:grid;place-items:center;text-align:center;background:var(--orange);color:#fff;font-weight:800;font-size:12px;border-left:2px dashed rgba(255,255,255,.5);}
+.cp-r small{display:block;font-size:9px;font-weight:600;opacity:.85;}
+
+.my-top{display:flex;align-items:center;gap:14px;padding:8px 2px 18px;}
+.my-av{width:56px;height:56px;border-radius:50%;background:var(--gold-foil);display:grid;place-items:center;font-family:var(--serif);font-weight:700;color:#2a1d13;font-size:22px;}
+.my-name{font-family:var(--serif);font-size:19px;letter-spacing:.04em;}
+.my-grade{font-size:11.5px;color:var(--orange);font-weight:700;margin-top:2px;}
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.stat3 div{padding:15px 8px;text-align:center;border-right:1px solid var(--line);}
+.stat3 div:last-child{border-right:0;}
+.stat3 .sv{font-family:var(--serif);font-size:19px;color:var(--cream);}
+.stat3 .sk{font-size:10.5px;color:#b0a08e;margin-top:3px;}
+.menu-link{display:flex;align-items:center;justify-content:space-between;padding:15px 4px;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;cursor:pointer;}
+.menu-link .ar{color:#8a7a68;}
+.ohist{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.ohist img{width:52px;height:52px;border-radius:10px;object-fit:cover;}
+.ohist .oh-b{flex:1;}
+.ohist .oh-n{font-weight:700;font-size:13.5px;}
+.ohist .oh-d{font-size:11px;color:#9b8b79;margin-top:2px;}
+
+/* ===== CART SHEET ===== */
+.cart-items{padding:4px 0 8px;}
+.citem{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.citem img{width:54px;height:54px;border-radius:10px;object-fit:cover;}
+.citem .ci-b{flex:1;}
+.citem .ci-n{font-weight:700;font-size:13.5px;}
+.citem .ci-o{font-size:11px;color:#9b8b79;margin-top:2px;}
+.citem .ci-p{font-weight:800;font-size:13.5px;margin-top:4px;}
+.citem .ci-x{color:#8a7a68;font-size:16px;padding:4px;}
+.sum-row{display:flex;justify-content:space-between;font-size:13px;color:#C9B9A6;padding:4px 0;}
+.sum-row.total{font-size:16px;color:var(--cream);font-weight:800;border-top:1px dashed var(--line);margin-top:6px;padding-top:10px;}
+.empty{text-align:center;color:#8a7a68;padding:40px 0;font-size:13px;}
+
+/* ===== BOTTOM TABBAR ===== */
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;z-index:40;
+  display:grid;grid-template-columns:repeat(4,1fr);background:rgba(18,13,10,.94);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:9px 6px calc(9px + env(safe-area-inset-bottom));}
+.tab{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:#8a7a68;font-size:10.5px;font-weight:700;cursor:pointer;}
+.tab svg{width:23px;height:23px;}
+.tab.active{color:var(--orange);}
+.tab .tnum{position:absolute;}
+.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%) translateY(20px);z-index:80;background:#2a1d13;color:#fff6ec;
+  border:1px solid var(--kraft-dark);padding:11px 18px;border-radius:30px;font-size:13px;font-weight:700;opacity:0;transition:.3s;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.4);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="s-home">
+    <div class="topbar">
+      <div class="brand">
+        <span class="dia" id="diaLogo"></span>
+        <span class="wordmark">CASA B</span>
+      </div>
+      <div class="store">픽업 매장<br><b>부산 서면점 ▾</b></div>
+    </div>
+    <div class="greet">
+      <div class="hi">좋은 아침이에요 ☕</div>
+      <div class="big">진우님, 오늘의 <span class="foil-title">페어링</span>?</div>
+    </div>
+
+    <div class="member-card">
+      <div class="mc-top">
+        <div>
+          <div class="mc-grade">CASA B MEMBERSHIP · GOLD</div>
+          <div class="mc-name">JINWOO JIN</div>
+        </div>
+        <span class="mc-dia" id="diaCard"></span>
+      </div>
+      <div class="mc-stamps" id="homeStamps"></div>
+      <div class="mc-bar"></div>
+      <div class="mc-barnum">C A S A B · 2481 0394 7</div>
+      <div class="mc-info"><span>스탬프 7 / 10</span><span>3개 더 모으면 무료 음료 ☕</span></div>
+    </div>
+
+    <div class="quick">
+      <a onclick="go('menu')"><span class="q-ic">🥤</span><span class="q-t">미리 주문하기</span><span class="q-s">줄 서지 않고 픽업</span></a>
+      <a onclick="go('order')"><span class="q-ic">🧾</span><span class="q-t">주문 현황</span><span class="q-s">제조 중 1건</span></a>
+    </div>
+
+    <div class="row-head"><h2 class="sec-title">시그니처 페어링</h2><a class="more" onclick="go('menu')">전체보기</a></div>
+    <div class="hscroll">
+      <div class="promo" onclick="go('menu')">
+        <img src="assets/img/signature.jpg" alt="에스프레소와 에그타르트 페어링">
+        <div class="pv"></div>
+        <div class="pt"><div class="pe">THE PERFECT PAIRING</div><div class="ph">ESPRESSO × EGG TART</div><div class="pp">아메리카노 + 에그타르트 ₩6,000</div></div>
+      </div>
+      <div class="promo" onclick="go('menu')">
+        <img src="assets/img/tiramisu.jpg" alt="B 티라미수">
+        <div class="pv"></div>
+        <div class="pt"><div class="pe">BEST PAIRING</div><div class="ph">AMERICANO × B TIRAMISU</div><div class="pp">세트 ₩8,000</div></div>
+      </div>
+    </div>
+
+    <div class="row-head"><h2 class="sec-title">추천 메뉴</h2><a class="more" onclick="go('menu')">더보기</a></div>
+    <div class="menu-list" id="homeRecs"></div>
+  </section>
+
+  <!-- ============ MENU ============ -->
+  <section class="screen" id="s-menu">
+    <div class="topbar">
+      <div class="brand"><span class="dia" id="diaLogo2"></span><span class="wordmark">MENU</span></div>
+      <button class="icon-btn" onclick="openCart()">🛒<span class="cart-dot" id="cartDot" style="display:none">0</span></button>
+    </div>
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="menu-list" id="menuList"></div>
+  </section>
+
+  <!-- ============ ORDER STATUS ============ -->
+  <section class="screen" id="s-order">
+    <div class="topbar"><div class="brand"><span class="dia" id="diaLogo3"></span><span class="wordmark">ORDER</span></div></div>
+    <h2 class="sec-title" style="margin-top:10px">주문 현황</h2>
+    <div class="ticket">
+      <div class="tk-h"><span class="tk-no" id="tkNo">CB250301-0834</span><span class="tk-st" id="tkSt">제조 중</span></div>
+      <div style="padding:12px 0 2px">
+        <div class="tk-row"><span>픽업 매장</span><b>부산 서면점</b></div>
+        <div class="tk-row"><span>픽업 예정</span><b id="tkEta">오전 9:48 (약 7분 후)</b></div>
+        <div class="tk-row"><span>주문 메뉴</span><b id="tkItems">아메리카노 ICE 외 2</b></div>
+        <div class="tk-row"><span>결제 금액</span><b id="tkTotal">₩12,700</b></div>
+      </div>
+      <div class="steps">
+        <div class="step done"><div class="sc">✓</div><div class="sl">접수</div></div>
+        <div class="step cur"><div class="sc">●</div><div class="sl">제조 중</div></div>
+        <div class="step"><div class="sc">○</div><div class="sl">픽업 준비</div></div>
+      </div>
+    </div>
+    <div class="eta">제조가 끝나면 <b>푸시 알림</b>으로 알려드릴게요.</div>
+    <button class="btn btn-ghost" onclick="go('menu')">메뉴 더 담기</button>
+    <div style="height:10px"></div>
+    <button class="btn btn-kraft" onclick="reorderToast()">같은 메뉴 재주문</button>
+  </section>
+
+  <!-- ============ COUPONS ============ -->
+  <section class="screen" id="s-coupon">
+    <div class="topbar"><div class="brand"><span class="dia" id="diaLogo4"></span><span class="wordmark">COUPON</span></div></div>
+    <h2 class="sec-title" style="margin-top:10px">쿠폰 · 스탬프</h2>
+    <div class="card" style="background:rgba(201,167,125,.07)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div><div style="font-weight:800;font-size:15px">스탬프 적립</div><div style="font-size:11.5px;color:#b0a08e;margin-top:2px">10개 적립 시 아메리카노 무료</div></div>
+        <div style="font-family:var(--serif);font-size:20px;color:var(--orange)">7/10</div>
+      </div>
+      <div class="mc-stamps" id="couponStamps" style="margin:0"></div>
+    </div>
+    <div class="eyebrow" style="margin:18px 0 10px">사용 가능 쿠폰 2</div>
+    <div class="coupon"><div class="cp-l"><div class="cp-t">신규 가입 ₩2,000 할인</div><div class="cp-s">1만원 이상 · ~2026.12.31</div></div><div class="cp-r">₩2,000<small>OFF</small></div></div>
+    <div class="coupon"><div class="cp-l"><div class="cp-t">에그타르트 1+1</div><div class="cp-s">베이크 메뉴 · 주말 한정</div></div><div class="cp-r">1+1</div></div>
+    <div class="eyebrow" style="margin:18px 0 10px">지난 쿠폰</div>
+    <div class="coupon" style="opacity:.45"><div class="cp-l"><div class="cp-t">첫 주문 무료 업사이즈</div><div class="cp-s">사용 완료 · 2026.11.02</div></div><div class="cp-r" style="background:#6b5a49">USED</div></div>
+  </section>
+
+  <!-- ============ MY ============ -->
+  <section class="screen" id="s-my">
+    <div class="topbar"><div class="brand"><span class="dia" id="diaLogo5"></span><span class="wordmark">MY</span></div></div>
+    <div class="my-top">
+      <div class="my-av">J</div>
+      <div><div class="my-name">진우님</div><div class="my-grade">GOLD 멤버 · CASA B</div></div>
+    </div>
+    <div class="stat3">
+      <div><div class="sv">2,450</div><div class="sk">포인트</div></div>
+      <div><div class="sv">7</div><div class="sk">스탬프</div></div>
+      <div><div class="sv">2</div><div class="sk">쿠폰</div></div>
+    </div>
+    <div class="eyebrow" style="margin:6px 0 4px">최근 주문</div>
+    <div class="ohist"><img src="assets/img/egg-tart.jpg" alt=""><div class="oh-b"><div class="oh-n">에그타르트 외 1</div><div class="oh-d">2026.11.10 · 부산 서면점 · ₩9,200</div></div><button class="btn btn-ghost btn-sm" onclick="reorderToast()">재주문</button></div>
+    <div class="ohist"><img src="assets/img/cold-brew.jpg" alt=""><div class="oh-b"><div class="oh-n">콜드브루 외 2</div><div class="oh-d">2026.11.08 · 부산 서면점 · ₩13,500</div></div><button class="btn btn-ghost btn-sm" onclick="reorderToast()">재주문</button></div>
+    <div class="eyebrow" style="margin:20px 0 2px">설정</div>
+    <div class="menu-link">픽업 매장 관리<span class="ar">›</span></div>
+    <div class="menu-link">결제 수단<span class="ar">›</span></div>
+    <div class="menu-link">알림 설정<span class="ar">›</span></div>
+    <div class="menu-link">홈 화면에 추가 (앱 설치)<span class="ar">›</span></div>
+    <div class="menu-link" style="color:#9b8b79">로그아웃<span class="ar">›</span></div>
+  </section>
+
+  <!-- ============ DETAIL SHEET ============ -->
+  <div class="sheet-wrap" id="sheetWrap">
+    <div class="sheet-bg" onclick="closeSheet()"></div>
+    <div class="sheet" id="sheet"></div>
+  </div>
+
+  <!-- ============ CART SHEET ============ -->
+  <div class="sheet-wrap" id="cartWrap">
+    <div class="sheet-bg" onclick="closeCart()"></div>
+    <div class="sheet" id="cartSheet"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- ============ TABBAR ============ -->
+  <nav class="tabbar">
+    <button class="tab active" data-s="home" onclick="go('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>홈</button>
+    <button class="tab" data-s="menu" onclick="go('menu')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>주문</button>
+    <button class="tab" data-s="coupon" onclick="go('coupon')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v4a2 2 0 000 4v2H4v-2a2 2 0 000-4z"/><path d="M14 7v12" stroke-dasharray="2 2"/></svg>쿠폰</button>
+    <button class="tab" data-s="my" onclick="go('my')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>MY</button>
+  </nav>
+</div>
+
+<script>
+/* ---------- diamond-B logo ---------- */
+var DIA='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 45 24 24 45 3 24Z" stroke="#D89B2B" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="20" font-weight="700" fill="#D89B2B">B</text></svg>';
+var DIAK='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 45 24 24 45 3 24Z" stroke="#5a3c22" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="20" font-weight="700" fill="#5a3c22">B</text></svg>';
+['diaLogo','diaLogo2','diaLogo3','diaLogo4','diaLogo5'].forEach(function(id){var e=document.getElementById(id);if(e)e.innerHTML=DIA;});
+document.getElementById('diaCard').innerHTML=DIAK;
+
+/* ---------- menu data ---------- */
+var IMG={esp:'assets/img/espresso.jpg',latte:'assets/img/cream-latte.jpg',cold:'assets/img/cold-brew.jpg',tart:'assets/img/egg-tart.jpg',tira:'assets/img/tiramisu.jpg',sig:'assets/img/signature.jpg'};
+var CATS=[
+ {key:'coffee',name:'에스프레소·커피',items:[
+   {n:'아메리카노',d:'CASA B 시그니처 블렌드, 깊고 균형 잡힌 산미',p:3000,img:IMG.esp,hot:true},
+   {n:'카페라떼',d:'부드러운 스팀밀크와 에스프레소',p:4000,img:IMG.latte,hot:true},
+   {n:'콜드브루',d:'12시간 저온 추출, 묵직한 바디',p:4500,img:IMG.cold,hot:false},
+   {n:'콜드샷 바닐라',d:'진한 샷 + 바닐라 크림',p:4800,img:IMG.cold,hot:false},
+   {n:'카페모카',d:'다크초코 + 에스프레소',p:4800,img:IMG.latte,hot:true}]},
+ {key:'signature',name:'시그니처 크림',items:[
+   {n:'오르조 라떼',d:'볶은 보리의 고소함 + 크림, 논카페인',p:5500,img:IMG.latte,hot:true,best:true},
+   {n:'오렌지 콜드브루 클라우드',d:'콜드브루 위 오렌지 크림 구름',p:5800,img:IMG.cold,hot:false,best:true},
+   {n:'코코 콜드브루 클라우드',d:'코코넛 크림 + 콜드브루',p:5800,img:IMG.cold,hot:false}]},
+ {key:'wellness',name:'논커피·웰니스',items:[
+   {n:'레몬 크림샷',d:'상큼한 레몬 + 부드러운 크림',p:4800,img:IMG.latte,hot:false},
+   {n:'딸기 라떼',d:'생딸기 과육 + 우유',p:5200,img:IMG.latte,hot:false},
+   {n:'말차 오트',d:'우지 말차 + 오트밀크',p:5500,img:IMG.latte,hot:true},
+   {n:'밀크티',d:'잉글리시 블렌드 밀크티',p:4500,img:IMG.latte,hot:true},
+   {n:'에이드',d:'자몽 / 청포도 중 택1',p:4800,img:IMG.cold,hot:false}]},
+ {key:'tea',name:'프리미엄 잎차',items:[
+   {n:'B 얼그레이',d:'베르가못 향의 클래식 홍차',p:5000,img:IMG.sig,hot:true},
+   {n:'B 녹차',d:'제주 세작 녹차',p:5000,img:IMG.sig,hot:true},
+   {n:'라비앙로즈',d:'장미·히비스커스 블렌드',p:5500,img:IMG.sig,hot:true},
+   {n:'바닐라 민트',d:'페퍼민트 + 바닐라',p:5000,img:IMG.sig,hot:true}]},
+ {key:'bake',name:'베이크',items:[
+   {n:'에그타르트',d:'겉바속촉, CASA B 첫 베이크 시그니처',p:3200,img:IMG.tart,bake:true,best:true},
+   {n:'B 오리지널 티라미수',d:'에스프레소 적신 마스카포네',p:5000,img:IMG.tira,bake:true,best:true},
+   {n:'콘 타르트',d:'달콤한 옥수수 커스터드',p:3500,img:IMG.tart,bake:true},
+   {n:'초콜릿 타르트',d:'다크 가나슈 타르트',p:3500,img:IMG.tart,bake:true},
+   {n:'데일리 베이크',d:'매일 달라지는 오늘의 베이크',p:4000,img:IMG.tart,bake:true}]},
+ {key:'pairing',name:'베스트 페어링',items:[
+   {n:'아메리카노 + 에그타르트',d:'The Perfect Pairing Starts Here',p:6000,img:IMG.sig,bake:true,best:true},
+   {n:'아메리카노 + B 티라미수',d:'진한 커피와 티라미수',p:8000,img:IMG.tira,bake:true,best:true},
+   {n:'페어링 세트 (음료+베이크)',d:'원하는 음료 + 베이크 조합',p:6500,img:IMG.sig,bake:true}]}
+];
+var won=function(n){return '₩'+n.toLocaleString('ko-KR');};
+
+/* ---------- screen nav ---------- */
+function go(s){
+  document.querySelectorAll('.screen').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('s-'+s).classList.add('active');
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.dataset.s===s);});
+  document.getElementById('app').scrollTop=0;window.scrollTo(0,0);
+  closeSheet();closeCart();
+}
+
+/* ---------- stamps ---------- */
+function stamps(el,on){var h='';for(var i=1;i<=10;i++){h+='<div class="stamp '+(i<=on?'on':'')+'">'+(i<=on?'●':i)+'</div>';}el.innerHTML=h;}
+stamps(document.getElementById('homeStamps'),7);
+stamps(document.getElementById('couponStamps'),7);
+
+/* ---------- menu render ---------- */
+function itemHTML(it,ci){
+  var badges=(it.best?'<span class="badge">BEST</span>':'')+(it.bake?'<span class="badge">BAKE</span>':(it.hot?'<span class="badge">HOT·ICE</span>':'<span class="badge">ICE</span>'));
+  return '<div class="item" onclick="openDetail('+ci.c+','+ci.i+')">'+
+    '<img src="'+it.img+'" alt="'+it.n+'" loading="lazy">'+
+    '<div class="it-b"><div class="it-n">'+it.n+'</div><div class="it-d">'+badges+'<br>'+it.d+'</div>'+
+    '<div class="it-f"><span class="it-p">'+won(it.p)+'</span><span class="add-ic" onclick="event.stopPropagation();quickAdd('+ci.c+','+ci.i+')">+</span></div></div></div>';
+}
+var catTabs=document.getElementById('catTabs'),menuList=document.getElementById('menuList');
+CATS.forEach(function(c,ci){
+  var b=document.createElement('button');b.className='cat'+(ci===0?' active':'');b.textContent=c.name;
+  b.onclick=function(){document.querySelectorAll('.cat').forEach(function(x){x.classList.remove('active');});b.classList.add('active');renderCat(ci);};
+  catTabs.appendChild(b);
+});
+function renderCat(ci){menuList.innerHTML=CATS[ci].items.map(function(it,i){return itemHTML(it,{c:ci,i:i});}).join('');document.getElementById('s-menu').scrollTop=0;}
+renderCat(0);
+/* home recommendations */
+document.getElementById('homeRecs').innerHTML=[ {c:4,i:0},{c:1,i:0},{c:0,i:2} ].map(function(x){return itemHTML(CATS[x.c].items[x.i],{c:x.c,i:x.i});}).join('');
+
+/* ---------- detail sheet ---------- */
+var cur={c:0,i:0,temp:'ICE',size:'R',qty:1,opts:{}};
+var OPTS=[{k:'shot',t:'샷 추가',p:500},{k:'syrup',t:'시럽 추가',p:0},{k:'oat',t:'오트밀크 변경',p:600},{k:'less',t:'얼음 적게',p:0}];
+function openDetail(c,i){
+  var it=CATS[c].items[i];cur={c:c,i:i,temp:it.hot?'HOT':'ICE',size:'R',qty:1,opts:{}};
+  var isBake=!!it.bake;
+  var tempRow=isBake?'':'<div class="opt-group"><div class="opt-label">온도</div><div class="seg" id="segTemp">'+
+      (it.hot?'<button data-v="HOT" class="'+(cur.temp==='HOT'?'on':'')+'" onclick="setTemp(\'HOT\')">HOT</button>':'')+
+      '<button data-v="ICE" class="'+(cur.temp==='ICE'?'on':'')+'" onclick="setTemp(\'ICE\')">ICE</button></div></div>';
+  var sizeRow=isBake?'':'<div class="opt-group"><div class="opt-label">사이즈</div><div class="seg" id="segSize">'+
+      '<button class="on" onclick="setSize(\'R\',this)">Regular</button>'+
+      '<button onclick="setSize(\'L\',this)">Large <span style="color:#F3A567">+₩500</span></button></div></div>';
+  var optRows=isBake?'':'<div class="opt-group"><div class="opt-label">옵션</div>'+OPTS.map(function(o){
+      return '<div class="opt-row" id="opt-'+o.k+'" onclick="toggleOpt(\''+o.k+'\')"><div style="display:flex;align-items:center;gap:11px"><span class="ck">✓</span><span class="on-t">'+o.t+'</span></div><span class="on-p">'+(o.p?'+'+won(o.p):'무료')+'</span></div>';
+    }).join('')+'</div>';
+  document.getElementById('sheet').innerHTML=
+    '<div class="sh-grip"></div><button class="sh-close" onclick="closeSheet()">✕</button>'+
+    '<img class="sh-img" src="'+it.img+'" alt="'+it.n+'">'+
+    '<div class="sh-body"><div class="sh-name">'+it.n+'</div><div class="sh-desc">'+it.d+'</div>'+
+    tempRow+sizeRow+optRows+
+    '<div class="opt-group" style="display:flex;justify-content:space-between;align-items:center"><div class="opt-label" style="margin:0">수량</div>'+
+      '<div class="qty"><button onclick="qty(-1)">−</button><span id="qtyN">1</span><button onclick="qty(1)">+</button></div></div>'+
+    '<div class="sh-foot"><button class="btn btn-primary" onclick="addToCart()">장바구니 담기 · <span id="shTotal">'+won(it.p)+'</span></button></div></div>';
+  document.getElementById('sheetWrap').classList.add('open');
+}
+function closeSheet(){document.getElementById('sheetWrap').classList.remove('open');}
+function setTemp(v){cur.temp=v;document.querySelectorAll('#segTemp button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}
+function setSize(v,el){cur.size=v;document.querySelectorAll('#segSize button').forEach(function(b){b.classList.remove('on');});el.classList.add('on');calc();}
+function toggleOpt(k){cur.opts[k]=!cur.opts[k];document.getElementById('opt-'+k).classList.toggle('on',cur.opts[k]);calc();}
+function qty(d){cur.qty=Math.max(1,cur.qty+d);document.getElementById('qtyN').textContent=cur.qty;calc();}
+function unit(){var it=CATS[cur.c].items[cur.i];var p=it.p;if(cur.size==='L')p+=500;OPTS.forEach(function(o){if(cur.opts[o.k])p+=o.p;});return p;}
+function calc(){var t=unit()*cur.qty;var e=document.getElementById('shTotal');if(e)e.textContent=won(t);}
+
+/* ---------- cart ---------- */
+var cart=[];
+function optText(){var a=[];if(CATS[cur.c].items[cur.i].bake){}else{a.push(cur.temp);a.push(cur.size==='L'?'Large':'Regular');}OPTS.forEach(function(o){if(cur.opts[o.k])a.push(o.t);});return a.join(' · ');}
+function addToCart(){var it=CATS[cur.c].items[cur.i];cart.push({n:it.n,img:it.img,opt:optText(),price:unit(),qty:cur.qty});updateCart();closeSheet();toast(it.n+' 담았어요');}
+function quickAdd(c,i){var it=CATS[c].items[i];cart.push({n:it.n,img:it.img,opt:it.bake?'기본':(it.hot?'HOT':'ICE')+' · Regular',price:it.p,qty:1});updateCart();toast(it.n+' 담았어요');}
+function updateCart(){var n=cart.reduce(function(s,x){return s+x.qty;},0);var d=document.getElementById('cartDot');if(d){d.style.display=n?'grid':'none';d.textContent=n;}}
+function openCart(){
+  var body=document.getElementById('cartSheet');
+  if(!cart.length){body.innerHTML='<div class="sh-grip"></div><button class="sh-close" onclick="closeCart()">✕</button><div class="sh-body"><div class="sh-name">장바구니</div><div class="empty">담은 메뉴가 없어요 ☕<br>메뉴에서 추가해 주세요.</div></div>';}
+  else{
+    var sub=cart.reduce(function(s,x){return s+x.price*x.qty;},0);
+    var rows=cart.map(function(x,idx){return '<div class="citem"><img src="'+x.img+'"><div class="ci-b"><div class="ci-n">'+x.n+'</div><div class="ci-o">'+x.opt+' · '+x.qty+'개</div><div class="ci-p">'+won(x.price*x.qty)+'</div></div><span class="ci-x" onclick="rmCart('+idx+')">✕</span></div>';}).join('');
+    body.innerHTML='<div class="sh-grip"></div><button class="sh-close" onclick="closeCart()">✕</button><div class="sh-body"><div class="sh-name">장바구니</div>'+
+      '<div class="cart-items">'+rows+'</div>'+
+      '<div class="sum-row"><span>상품 금액</span><span>'+won(sub)+'</span></div>'+
+      '<div class="sum-row"><span>스탬프 적립</span><span style="color:#F3A567">+'+cart.reduce(function(s,x){return s+x.qty;},0)+'개</span></div>'+
+      '<div class="sum-row total"><span>결제 예정</span><span>'+won(sub)+'</span></div>'+
+      '<div class="sh-foot"><button class="btn btn-primary" onclick="checkout('+sub+')">'+won(sub)+' 주문하기</button></div></div>';
+  }
+  document.getElementById('cartWrap').classList.add('open');
+}
+function closeCart(){document.getElementById('cartWrap').classList.remove('open');}
+function rmCart(i){cart.splice(i,1);updateCart();openCart();}
+function checkout(sub){
+  var items=cart.reduce(function(s,x){return s+x.qty;},0);
+  var first=cart.length?cart[0].n:'';
+  document.getElementById('tkItems').textContent=first+(items>1?' 외 '+(items-1):'');
+  document.getElementById('tkTotal').textContent=won(sub);
+  document.getElementById('tkNo').textContent='CB'+ '250301-' + String(Math.floor(1000+Math.random()*8999));
+  cart=[];updateCart();closeCart();go('order');toast('주문이 접수됐어요 ☕');
+}
+function reorderToast(){toast('장바구니에 담았어요');go('menu');}
+
+/* ---------- toast ---------- */
+var tT;function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},1800);}
+</script>
+</body>
+</html>

@@ -77,8 +77,8 @@ h1,h2,h3{margin:0;font-weight:700;}
 .mc-name{font-family:var(--serif);font-size:19px;font-weight:600;margin-top:2px;letter-spacing:.06em;}
 .mc-dia{width:34px;height:34px;opacity:.92;}
 .mc-stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:16px 0 12px;}
-.stamp{aspect-ratio:1;border-radius:50%;border:1.5px dashed #9a7748;display:grid;place-items:center;font-size:12px;color:#9a7748;background:rgba(255,255,255,.14);}
-.stamp.on{border-style:solid;border-color:var(--orange-dark);background:var(--orange);color:#fff;box-shadow:0 2px 6px rgba(120,45,10,.3);}
+.stamp{aspect-ratio:1;display:grid;place-items:center;}
+.stamp svg{height:34px;width:auto;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.14));}
 .mc-bar{height:44px;border-radius:7px;background:repeating-linear-gradient(90deg,#231a12 0 2px,transparent 2px 4px,#231a12 4px 7px,transparent 7px 9px,#231a12 9px 11px,transparent 11px 15px);margin-top:4px;opacity:.9;}
 .mc-barnum{text-align:center;font-size:11px;letter-spacing:.32em;color:#5a3c22;margin-top:6px;font-weight:600;}
 .mc-info{display:flex;justify-content:space-between;font-size:11.5px;color:#6e4a27;margin-top:3px;}
@@ -136,7 +136,8 @@ h1,h2,h3{margin:0;font-weight:700;}
 .opt-group{margin:15px 0;}
 .opt-label{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:#cdbda9;margin-bottom:8px;text-transform:uppercase;}
 .seg{display:flex;gap:8px;}
-.seg button{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#cdbda9;font-weight:700;font-size:13px;padding:11px;border-radius:10px;cursor:pointer;}
+.seg{flex-wrap:wrap;}
+.seg button{flex:0 0 auto;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#cdbda9;font-weight:700;font-size:13px;padding:11px 24px;border-radius:30px;cursor:pointer;}
 .seg button.on{background:var(--orange);color:#fff6ec;border-color:var(--orange-dark);}
 .opt-row{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid rgba(255,255,255,.07);border-radius:10px;margin-bottom:8px;cursor:pointer;}
 .opt-row.on{border-color:var(--orange);background:rgba(232,116,43,.08);}
@@ -432,7 +433,11 @@ function go(s){
 }
 
 /* ---------- stamps ---------- */
-function stamps(el,on){var h='';for(var i=1;i<=10;i++){h+='<div class="stamp '+(i<=on?'on':'')+'">'+(i<=on?'●':i)+'</div>';}el.innerHTML=h;}
+function bean(on){
+  var fill=on?'#E8742B':'rgba(154,119,72,.16)';var st=on?'#8a3c12':'#9a7748';
+  return '<div class="stamp"><svg viewBox="0 0 26 34"><ellipse cx="13" cy="17" rx="10.5" ry="15.5" fill="'+fill+'" stroke="'+st+'" stroke-width="1.5"/><path d="M13 3.5 Q8.5 17 13 30.5" fill="none" stroke="'+(on?'#8a3c12':'#9a7748')+'" stroke-width="1.4" stroke-linecap="round"/></svg></div>';
+}
+function stamps(el,on){var h='';for(var i=1;i<=10;i++){h+=bean(i<=on);}el.innerHTML=h;}
 stamps(document.getElementById('homeStamps'),7);
 stamps(document.getElementById('couponStamps'),7);
 

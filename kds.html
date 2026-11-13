@@ -76,6 +76,50 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets
 .so-state{font-size:11px;font-weight:800;margin-right:10px;} .so-state.sell{color:#5d7a58;}.so-state.out{color:var(--coupang);}
 .toast{position:fixed;top:72px;right:24px;z-index:80;background:#2a1c10;color:var(--cream);border:1px solid var(--kraft-dark);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 10px 24px rgba(80,50,20,.3);opacity:0;transform:translateX(30px);transition:.3s;display:flex;align-items:center;gap:9px;}
 .toast.show{opacity:1;transform:none;} .toast .nd{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(232,116,43,.25);}
+/* 컵라벨 스티커 */
+.autolabel{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;color:var(--ink2);margin:0 10px 0 2px;}
+.autolabel .dot{width:8px;height:8px;border-radius:50%;background:#5d7a58;box-shadow:0 0 0 3px rgba(93,122,88,.22);animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(93,122,88,.22)}50%{box-shadow:0 0 0 5px rgba(93,122,88,.08)}}
+.oc-hr{display:flex;align-items:center;gap:9px;}
+.lblbtn{border:1px solid var(--kraft-dark);background:rgba(255,255,255,.55);color:#4a3320;font-weight:800;font-size:11px;padding:4px 9px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;line-height:1;}
+.lblbtn:hover{background:#fff;}
+.lblsub{font-size:12px;color:var(--ink-soft);margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.lblsub .on{display:inline-flex;align-items:center;gap:6px;color:#5d7a58;font-weight:800;}
+.lblsub .on .dot{width:7px;height:7px;border-radius:50%;background:#5d7a58;}
+.labels-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+@media(max-width:520px){.labels-grid{grid-template-columns:1fr;}}
+.cuplabel{background:#fffdf8;border:1px dashed #c8ad82;border-radius:11px;padding:12px 13px 11px 16px;color:#1c130a;position:relative;overflow:hidden;}
+.cuplabel::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--orange);}
+.cuplabel .cl-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:7px;border-bottom:1px solid rgba(28,19,10,.12);}
+.cl-brand{font-family:var(--serif);font-weight:700;font-size:12.5px;letter-spacing:.1em;display:inline-flex;align-items:center;gap:5px;}
+.cl-brand .dia{color:var(--orange);font-size:11px;}
+.cl-store{font-size:10px;color:#6e4a27;font-weight:700;}
+.cl-meta{display:flex;align-items:center;justify-content:space-between;margin-top:7px;}
+.cl-no{font-family:var(--serif);font-size:11px;letter-spacing:.02em;color:#3a281a;font-weight:700;}
+.cl-ch{font-size:9.5px;font-weight:800;color:#fff;background:var(--ink);padding:2px 7px;border-radius:5px;}
+.cl-name{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.08;margin:8px 0 4px;color:#1c130a;}
+.cl-opt{font-size:12px;font-weight:600;color:#4a3320;line-height:1.4;}
+.cl-opt b{color:#2a1c10;} .cl-opt .hot{color:var(--orange);font-weight:800;}
+.cl-opt.dim{color:#9a886c;font-style:italic;}
+.cl-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px dashed rgba(28,19,10,.18);}
+.cl-call{font-weight:800;font-size:12px;color:#8a3c12;}
+.cl-seq{font-weight:800;font-size:12px;color:#3a281a;}
+.cl-time{font-size:11px;color:#6e4a27;font-weight:700;font-variant-numeric:tabular-nums;}
+.cl-bars{margin-top:9px;height:16px;background-image:repeating-linear-gradient(90deg,#1c130a 0,#1c130a 1px,transparent 1px,transparent 3px,#1c130a 3px,#1c130a 5px,transparent 5px,transparent 6px);opacity:.7;}
+#printArea{display:none;}
+@media print{
+  @page{size:54mm auto;margin:0;}
+  body{background:#fff!important;}
+  body::before{display:none!important;}
+  body>*{display:none!important;}
+  #printArea{display:block!important;}
+  .print-label{width:54mm;box-sizing:border-box;padding:3mm 3mm 4mm;color:#000;font-family:"Pretendard",sans-serif;page-break-after:always;border-bottom:1px dashed #000;}
+  .print-label .pl-top{font-size:9pt;font-weight:800;letter-spacing:.04em;text-align:center;border-bottom:1px solid #000;padding-bottom:1mm;}
+  .print-label .pl-meta{display:flex;justify-content:space-between;font-size:9pt;font-weight:800;margin-top:1.5mm;}
+  .print-label .pl-name{font-size:15pt;font-weight:800;margin:1.5mm 0 1mm;line-height:1.05;}
+  .print-label .pl-opt{font-size:10pt;font-weight:600;line-height:1.3;}
+  .print-label .pl-foot{display:flex;justify-content:space-between;font-size:8.5pt;margin-top:2mm;border-top:1px dashed #000;padding-top:1mm;}
+}
 </style>
 </head>
 <body>
@@ -88,6 +132,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets
     <div class="k"><div class="kv" id="kRev">₩0</div><div class="kk">오늘 매출</div></div>
     <div class="k"><div class="kv" id="kProg">0</div><div class="kk">제조중</div></div>
   </div>
+  <span class="autolabel" title="주문 접수 시 컵라벨이 라벨 프린터로 자동 출력됩니다"><span class="dot"></span>컵라벨 자동출력 ON</span>
   <button class="btn btn-ghost" onclick="openSold()">품절 관리</button>
   <button class="btn btn-kraft" onclick="simulate()">새 주문 (데모)</button>
 </div>
@@ -105,28 +150,42 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets
 <div class="modal-wrap" id="soldWrap"><div class="modal-bg" onclick="closeSold()"></div>
   <div class="modal"><h3>품절 관리</h3><div class="sub">품절 처리하면 앱·키오스크·배달앱 메뉴에서 자동으로 숨겨집니다.</div><div id="soldList"></div><div style="height:14px"></div><button class="btn btn-kraft" style="width:100%;padding:12px" onclick="closeSold()">완료</button></div>
 </div>
+<div class="modal-wrap" id="lblWrap"><div class="modal-bg" onclick="closeLabels()"></div>
+  <div class="modal"><h3>컵라벨 스티커</h3><div class="lblsub" id="lblSub"></div><div class="labels-grid" id="lblGrid"></div><div style="height:16px"></div><div style="display:flex;gap:10px"><button class="btn btn-kraft" style="flex:1;padding:12px" onclick="printLabels()">🖨 라벨 인쇄</button><button class="btn btn-ghost" style="flex:0 0 auto;padding:12px 18px" onclick="closeLabels()">닫기</button></div></div>
+</div>
+<div id="printArea"></div>
 <div class="toast" id="toast"><span class="nd"></span><span id="toastMsg"></span></div>
 <script>
 var won=function(n){return '₩'+n.toLocaleString('ko-KR');};
 function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('ko-KR',{hour12:false});}
 setInterval(tick,1000);tick();
+function isDrink(n){return !/타르트|티라미수/.test(n);}
+var OPTS=['디카페인','샷 추가','연하게','바닐라 시럽','헤이즐넛 시럽','얼음 적게','휘핑 추가','오트 우유','저지방 우유'];
+function buildOpts(){if(Math.random()<0.45)return [];var k=1+(Math.random()<0.3?1:0);var pool=OPTS.slice();var out=[];for(var i=0;i<k&&pool.length;i++){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);}if(Math.random()<0.28&&out.indexOf('디카페인')<0)out.unshift('디카페인');return out;}
+function labelsOf(o){var arr=[];o.items.forEach(function(it){var q=it.q||1;for(var i=0;i<q;i++){arr.push({no:o.no,call:o.call,ch:o.ch,name:it.n,temp:it.o,opts:it.opts||[],idx:i+1,tot:q,at:o.at});}});return arr;}
+function cupHTML(L){var parts=[];if(L.temp)parts.push('<b>'+L.temp+'</b>');(L.opts||[]).forEach(function(o){parts.push(o==='디카페인'?'<span class="hot">디카페인</span>':o);});var optHtml=parts.join(' · ');var t=new Date(L.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});var mode=L.ch.mode==='delivery'?'배달':(L.ch.mode==='pickup'?'픽업':'포장');return '<div class="cuplabel"><div class="cl-top"><span class="cl-brand"><span class="dia">◆</span>CASA B</span><span class="cl-store">부산 서면점</span></div><div class="cl-meta"><span class="cl-no">'+L.no+'</span><span class="cl-ch">'+L.ch.t+' · '+mode+'</span></div><div class="cl-name">'+L.name+'</div>'+(optHtml?'<div class="cl-opt">'+optHtml+'</div>':'<div class="cl-opt dim">옵션 없음</div>')+'<div class="cl-foot"><span class="cl-call">대기 '+L.call+'</span><span class="cl-seq">'+L.idx+' / '+L.tot+'</span><span class="cl-time">'+t+'</span></div><div class="cl-bars"></div></div>';}
+function printLabelHTML(L){var optline=[L.temp].concat(L.opts||[]).filter(Boolean).join(' · ');var t=new Date(L.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});var mode=L.ch.mode==='delivery'?'배달':(L.ch.mode==='pickup'?'픽업':'포장');return '<div class="print-label"><div class="pl-top">◆ CASA B · 부산 서면점</div><div class="pl-meta"><span>'+L.no+'</span><span>대기 '+L.call+'</span></div><div class="pl-name">'+L.name+'</div><div class="pl-opt">'+(optline||'옵션 없음')+'</div><div class="pl-foot"><span>'+L.idx+'/'+L.tot+'</span><span>'+t+'</span><span>'+mode+'</span></div></div>';}
+var _lblOrder=null;
+function openLabels(id){var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;_lblOrder=o;var ls=labelsOf(o);document.getElementById('lblGrid').innerHTML=ls.map(cupHTML).join('');document.getElementById('lblSub').innerHTML='<b>'+o.no+'</b> · 컵라벨 '+ls.length+'장 <span class="on"><span class="dot"></span>접수 시 자동 출력됨</span>';document.getElementById('lblWrap').classList.add('open');}
+function closeLabels(){document.getElementById('lblWrap').classList.remove('open');}
+function printLabels(){if(!_lblOrder)return;var ls=labelsOf(_lblOrder);document.getElementById('printArea').innerHTML=ls.map(printLabelHTML).join('');window.print();}
 var MENU=[{n:'아메리카노',o:'ICE · R',p:3000},{n:'아메리카노',o:'HOT · R',p:3000},{n:'카페라떼',o:'ICE · L',p:4500},{n:'콜드브루',o:'ICE · R',p:4500},{n:'오르조 라떼',o:'HOT · R',p:5500},{n:'오렌지 콜드브루 클라우드',o:'ICE · R',p:5800},{n:'딸기 라떼',o:'ICE · R',p:5200},{n:'B 얼그레이',o:'HOT · R',p:5000},{n:'에그타르트',o:'',p:3200},{n:'B 오리지널 티라미수',o:'',p:5000},{n:'콘 타르트',o:'',p:3500},{n:'아메리카노+에그타르트',o:'세트',p:6000}];
 var CH=[{k:'app',t:'CASA B 앱',mode:'pickup'},{k:'baemin',t:'배달의민족',mode:'delivery'},{k:'coupang',t:'쿠팡이츠',mode:'delivery'}];
 var NAMES=['김','이','박','최','정','강','조','윤'];
 var orders=[];var seq=835;var todayCount=0;var todayRev=0;
 function rnd(a){return a[Math.floor(Math.random()*a.length)];}
-function makeOrder(flash){var ch=rnd(CH);var n=1+Math.floor(Math.random()*3);var items=[];var tot=0;for(var i=0;i<n;i++){var m=rnd(MENU);var q=1+(Math.random()<0.25?1:0);items.push({n:m.n,o:m.o,q:q,p:m.p});tot+=m.p*q;}seq++;var no=ch.k==='app'?('CB250301-'+String(seq)):ch.k==='baemin'?('배민 #'+(4000+Math.floor(Math.random()*900))):('쿠팡 #'+(7000+Math.floor(Math.random()*900)));var dest=ch.mode==='delivery'?('배달 · '+rnd(NAMES)+'**'):('픽업 · '+rnd(NAMES)+'님');var o={id:Date.now()+Math.random(),no:no,ch:ch,items:items,tot:tot,dest:dest,status:'new',at:Date.now(),flash:!!flash};orders.unshift(o);todayCount++;todayRev+=tot;render();return o;}
+function makeOrder(flash){var ch=rnd(CH);var n=1+Math.floor(Math.random()*3);var items=[];var tot=0;for(var i=0;i<n;i++){var m=rnd(MENU);var q=1+(Math.random()<0.25?1:0);items.push({n:m.n,o:m.o,q:q,p:m.p,opts:isDrink(m.n)?buildOpts():[]});tot+=m.p*q;}seq++;var no=ch.k==='app'?('CB250301-'+String(seq)):ch.k==='baemin'?('배민 #'+(4000+Math.floor(Math.random()*900))):('쿠팡 #'+(7000+Math.floor(Math.random()*900)));var dest=ch.mode==='delivery'?('배달 · '+rnd(NAMES)+'**'):('픽업 · '+rnd(NAMES)+'님');var o={id:Date.now()+Math.random(),no:no,ch:ch,items:items,tot:tot,dest:dest,status:'new',at:Date.now(),flash:!!flash};o.call=10+(todayCount%89);orders.unshift(o);todayCount++;todayRev+=tot;render();return o;}
 function elapsed(at){var s=Math.floor((Date.now()-at)/1000);var m=Math.floor(s/60);return m<1?'방금':(m+'분 전');}
-function cardHTML(o){var chip='<span class="chip '+o.ch.k+'">'+o.ch.t+'</span><span class="chip '+o.ch.mode+'">'+(o.ch.mode==='delivery'?'배달':'픽업')+'</span>';var late=(Date.now()-o.at)>420000;var items=o.items.map(function(it){return '<div class="oc-it"><span><span class="nm2">'+it.n+'</span>'+(it.o?'<span class="op">'+it.o+'</span>':'')+'</span><span class="q">x'+it.q+'</span></div>';}).join('');var act=o.status==='new'?'<button class="oc-act" onclick="adv(\''+o.id+'\')">접수 → 제조</button>':o.status==='prog'?'<button class="oc-act prog" onclick="adv(\''+o.id+'\')">제조 완료</button>':'<button class="oc-act done" onclick="adv(\''+o.id+'\')">'+(o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+'</button>';return '<div class="oc'+(o.flash?' flash':'')+'"><div class="oc-h"><span class="oc-no">'+o.no+'</span><span class="oc-time'+(late?' late':'')+'">'+elapsed(o.at)+'</span></div><div class="chips">'+chip+'<span class="chip pickup">'+o.dest+'</span></div><div class="oc-items">'+items+'</div><div class="oc-f"><span class="oc-tot">'+won(o.tot)+'</span>'+act+'</div></div>';}
+function cardHTML(o){var chip='<span class="chip '+o.ch.k+'">'+o.ch.t+'</span><span class="chip '+o.ch.mode+'">'+(o.ch.mode==='delivery'?'배달':'픽업')+'</span>';var late=(Date.now()-o.at)>420000;var items=o.items.map(function(it){var op=[it.o].concat(it.opts||[]).filter(Boolean).join(' · ').replace('디카페인','<b style="color:#b4531a">디카페인</b>');return '<div class="oc-it"><span><span class="nm2">'+it.n+'</span>'+(op?'<span class="op">'+op+'</span>':'')+'</span><span class="q">x'+it.q+'</span></div>';}).join('');var act=o.status==='new'?'<button class="oc-act" onclick="adv(\''+o.id+'\')">접수 → 제조</button>':o.status==='prog'?'<button class="oc-act prog" onclick="adv(\''+o.id+'\')">제조 완료</button>':'<button class="oc-act done" onclick="adv(\''+o.id+'\')">'+(o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+'</button>';return '<div class="oc'+(o.flash?' flash':'')+'"><div class="oc-h"><span class="oc-no">'+o.no+'</span><span class="oc-hr"><span class="oc-time'+(late?' late':'')+'">'+elapsed(o.at)+'</span><button class="lblbtn" onclick="openLabels(\''+o.id+'\')">🏷 라벨</button></span></div><div class="chips">'+chip+'<span class="chip pickup">'+o.dest+'</span></div><div class="oc-items">'+items+'</div><div class="oc-f"><span class="oc-tot">'+won(o.tot)+'</span>'+act+'</div></div>';}
 function render(){var N=orders.filter(function(o){return o.status==='new';}),P=orders.filter(function(o){return o.status==='prog';}),D=orders.filter(function(o){return o.status==='done';});document.getElementById('colNew').innerHTML=N.length?N.map(cardHTML).join(''):'<div class="col-empty">새 주문 없음</div>';document.getElementById('colProg').innerHTML=P.length?P.map(cardHTML).join(''):'<div class="col-empty">제조중 없음</div>';document.getElementById('colDone').innerHTML=D.length?D.map(cardHTML).join(''):'<div class="col-empty">완료 대기 없음</div>';document.getElementById('cNew').textContent=N.length;document.getElementById('cProg').textContent=P.length;document.getElementById('cDone').textContent=D.length;document.getElementById('kCount').textContent=todayCount;document.getElementById('kRev').textContent=won(todayRev);document.getElementById('kProg').textContent=P.length;orders.forEach(function(o){o.flash=false;});}
 function adv(id){var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;if(o.status==='new')o.status='prog';else if(o.status==='prog')o.status='done';else{orders=orders.filter(function(x){return x!==o;});toast((o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+' · '+o.no);}render();}
 var tT;function toast(m){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},2600);}
-function simulate(){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · '+o.no);}
+function simulate(){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · 컵라벨 '+labelsOf(o).length+'장 출력');}
 var SOLD=['아메리카노','카페라떼','콜드브루','오르조 라떼','딸기 라떼','B 얼그레이','에그타르트','B 오리지널 티라미수','콘 타르트','데일리 베이크'];var soldState={};
 function openSold(){document.getElementById('soldList').innerHTML=SOLD.map(function(n,i){var on=!soldState[n];return '<div class="so-row"><span class="nm3">'+n+'</span><div style="display:flex;align-items:center"><span class="so-state '+(on?'sell':'out')+'" id="st'+i+'">'+(on?'판매중':'품절')+'</span><div class="toggle '+(on?'on':'')+'" id="tg'+i+'" onclick="toggleSold(\''+n.replace(/\x27/g,"")+'\','+i+')"><div class="kn"></div></div></div></div>';}).join('');document.getElementById('soldWrap').classList.add('open');}
 function closeSold(){document.getElementById('soldWrap').classList.remove('open');}
 function toggleSold(n,i){soldState[n]=!soldState[n];var on=!soldState[n];document.getElementById('tg'+i).classList.toggle('on',on);var st=document.getElementById('st'+i);st.textContent=on?'판매중':'품절';st.className='so-state '+(on?'sell':'out');if(!on)toast(n+' 품절 처리 — 앱·배달앱 반영');}
-(function(){for(var i=0;i<3;i++)makeOrder(false);orders[0].status='prog';orders[1].status='prog';todayCount=39;todayRev=372500;render();setInterval(function(){if(document.hidden)return;if(orders.filter(function(o){return o.status!=='done';}).length<9){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · '+o.no);}},15000);setInterval(render,20000);})();
+(function(){for(var i=0;i<3;i++)makeOrder(false);orders[0].status='prog';orders[1].status='prog';todayCount=39;todayRev=372500;render();setInterval(function(){if(document.hidden)return;if(orders.filter(function(o){return o.status!=='done';}).length<9){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · 컵라벨 '+labelsOf(o).length+'장 출력');}},15000);setInterval(render,20000);})();
 </script>
 </body>
 </html>

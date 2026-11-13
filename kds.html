@@ -3,114 +3,130 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#F4EEDF">
-<title>CASA B OS — 매장 주문접수</title>
-<meta name="description" content="CASA B OS — 앱·배달앱 주문 통합 접수 (KDS). 접수 → 제조중 → 완료.">
+<meta name="theme-color" content="#17120E">
+<title>CASA B OS — 주방 주문접수 (KDS)</title>
+<meta name="description" content="CASA B OS — 앱·배달앱 주문 통합 접수(KDS). 접수 → 제조중 → 완료 · 컵라벨 자동출력.">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
 <style>
 :root{
-  --cream:#F4EEDF;--cream2:#EDE4D2;--paper:#FBF6EC;--ink:#241C15;--ink2:#4a3a2d;--ink-soft:#7d6a56;
-  --kraft:#CBB088;--kraft2:#C3A87E;--kraft-dark:#AC8A5E;--gold:#C08A2E;
-  --orange:#E8742B;--orange-dark:#B4531A;--baemin:#2AC1BC;--coupang:#C5003E;
+  --espresso:#1F1A17;--espresso2:#17120E;--card:#271E18;--card2:#2F251E;--cardhi:#352a21;
+  --cream:#F5EFE4;--cream-soft:#E7DCC9;--kraft:#C9A77D;--kraft2:#B4916A;
+  --gold:#D9A847;--gold2:#E7C66E;--orange:#E8742B;--orange2:#F08A43;--orange-dark:#B4531A;
+  --olive:#6f8352;--olive2:#8aa569;--brown:#5A3B28;--muted:#9C8A74;--muted2:#7d6e5a;
+  --baemin:#2AC1BC;--coupang:#E24b6b;--line:rgba(217,168,71,.16);
   --serif:"Cinzel",Georgia,serif;--display:"Cormorant Garamond",Georgia,serif;--sans:"Pretendard",Arial,sans-serif;
-  --line:rgba(120,90,55,.2);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;padding:0;}
-body{font-family:var(--sans);color:var(--ink);background:var(--cream);min-height:100vh;-webkit-font-smoothing:antialiased;}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets/img/grain-cream.jpg");background-size:520px;opacity:.1;mix-blend-mode:multiply;pointer-events:none;}
-.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:18px;padding:14px 24px;background:rgba(244,238,223,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-.brand{display:flex;flex-direction:column;}
-.brand .nm{font-family:var(--serif);font-weight:700;letter-spacing:.12em;font-size:19px;
-  background:linear-gradient(103deg,#9a7723,#d6a63a,#f0cd6e,#bf8a26,#9c7a24);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;}
-.brand .lb{font-size:9px;letter-spacing:.26em;color:var(--ink-soft);font-weight:700;margin-top:3px;}
-.store{font-size:13px;color:var(--ink2);} .store b{color:var(--ink);}
-.clock{font-variant-numeric:tabular-nums;font-size:15px;color:var(--ink);font-weight:800;letter-spacing:.04em;}
+body{font-family:var(--sans);color:var(--cream);background:var(--espresso2);min-height:100vh;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(120% 50% at 50% -8%,rgba(217,168,71,.07),transparent 60%),linear-gradient(180deg,#1b1511,#140F0B);}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets/img/grain-black.jpg");background-size:520px;opacity:.12;mix-blend-mode:overlay;pointer-events:none;}
+.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:20px;padding:13px 26px;background:rgba(20,15,11,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:11px;}
+.brand .dia{width:27px;height:27px;border:1.5px solid var(--gold);transform:rotate(45deg);display:grid;place-items:center;border-radius:5px;background:linear-gradient(145deg,rgba(217,168,71,.18),transparent);}
+.brand .dia b{transform:rotate(-45deg);font-family:var(--serif);color:var(--gold2);font-size:13px;font-weight:700;}
+.brand .tx{display:flex;flex-direction:column;}
+.brand .nm{font-family:var(--serif);font-weight:700;letter-spacing:.14em;font-size:18px;
+  background:linear-gradient(103deg,#9a7723,#e0b64c,#f3d884,#c69329);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;}
+.brand .lb{font-size:8.5px;letter-spacing:.24em;color:var(--muted);font-weight:700;margin-top:2px;}
+.clock{font-variant-numeric:tabular-nums;font-size:15px;color:var(--cream);font-weight:800;letter-spacing:.04em;}
 .sp{flex:1;}
-.kpi{display:flex;gap:22px;align-items:center;margin-right:4px;}
-.kpi .k{text-align:right;} .kpi .kv{font-family:var(--display);font-size:20px;color:var(--ink);line-height:1;font-weight:700;} .kpi .kk{font-size:10px;color:var(--ink-soft);margin-top:3px;}
+.kpi{display:flex;gap:20px;align-items:center;}
+.kpi .k{display:flex;align-items:center;gap:8px;}
+.kpi .ic{width:30px;height:30px;border-radius:9px;background:rgba(217,168,71,.1);border:1px solid var(--line);display:grid;place-items:center;font-size:14px;}
+.kpi .kv{font-family:var(--display);font-size:19px;color:var(--cream);line-height:1;font-weight:700;font-variant-numeric:lining-nums;}
+.kpi .kk{font-size:9.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em;}
+.autolabel{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;color:var(--cream-soft);background:rgba(111,131,82,.16);border:1px solid rgba(138,165,105,.4);padding:7px 12px;border-radius:30px;}
+.autolabel .dot{width:8px;height:8px;border-radius:50%;background:var(--olive2);box-shadow:0 0 0 3px rgba(138,165,105,.18);animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(138,165,105,.18)}50%{box-shadow:0 0 0 5px rgba(138,165,105,.05)}}
 .btn{border:0;cursor:pointer;font-family:var(--sans);font-weight:800;border-radius:9px;font-size:12.5px;padding:9px 14px;}
-.btn-ghost{background:transparent;color:var(--orange);border:1.5px solid var(--orange);}
-.btn-kraft{background:var(--kraft);color:#352414;border:1px solid var(--kraft-dark);}
-.legend{display:flex;gap:16px;flex-wrap:wrap;padding:10px 24px 0;font-size:11px;color:var(--ink-soft);align-items:center;}
+.btn-ghost{background:transparent;color:var(--orange2);border:1.5px solid var(--orange);}
+.btn-kraft{background:rgba(201,167,125,.14);color:var(--cream);border:1px solid var(--kraft2);}
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:11px 26px 0;font-size:11px;color:var(--muted);align-items:center;}
 .legend .lg{display:inline-flex;align-items:center;gap:5px;} .legend .sw{width:10px;height:10px;border-radius:3px;}
-.board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:14px 22px 40px;align-items:start;}
+.legend .q{margin-left:auto;font-style:italic;font-family:var(--display);font-size:15px;color:var(--kraft);}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:14px 24px 40px;align-items:start;}
 @media(max-width:900px){.board{grid-template-columns:1fr;}}
 .col{display:flex;flex-direction:column;}
-.col-h{display:flex;align-items:center;justify-content:space-between;padding:6px 4px 12px;border-bottom:2px solid var(--line);margin-bottom:12px;position:sticky;top:60px;background:var(--cream);z-index:5;}
-.col-h .ct{font-family:var(--display);font-weight:700;font-size:24px;color:var(--ink);display:flex;align-items:center;gap:10px;}
-.col-h .cnt{font-size:13px;color:#fff;min-width:26px;height:26px;border-radius:13px;background:var(--orange);display:grid;place-items:center;padding:0 8px;font-weight:800;}
-.col.prog .cnt{background:var(--gold);} .col.done .cnt{background:#6ea06a;}
-.col-body{display:flex;flex-direction:column;gap:13px;overflow-y:auto;max-height:calc(100vh - 170px);padding-right:2px;}
-.oc{border-radius:12px;overflow:hidden;background:var(--kraft);background-image:url("assets/img/grain-cream.jpg");background-size:420px;background-blend-mode:multiply;color:#2a1c10;border:1px solid var(--kraft-dark);box-shadow:0 4px 12px rgba(120,80,40,.18);animation:pop .3s ease;}
+.col-h{display:flex;align-items:center;justify-content:space-between;padding:7px 4px 12px;border-bottom:1.5px solid var(--line);margin-bottom:12px;position:sticky;top:59px;background:linear-gradient(180deg,#171209,#171209cc);backdrop-filter:blur(6px);z-index:5;}
+.col-h .ct{font-family:var(--display);font-weight:700;font-size:23px;color:var(--cream);display:flex;align-items:center;gap:9px;}
+.col-h .ct .d{width:9px;height:9px;border-radius:50%;}
+.col.new .ct .d{background:var(--orange);} .col.prog .ct .d{background:var(--gold);} .col.done .ct .d{background:var(--olive2);}
+.col-h .cnt{font-size:13px;color:#1a120a;min-width:26px;height:26px;border-radius:13px;background:var(--orange);display:grid;place-items:center;padding:0 9px;font-weight:800;}
+.col.prog .cnt{background:var(--gold);} .col.done .cnt{background:var(--olive2);}
+.col-body{display:flex;flex-direction:column;gap:13px;overflow-y:auto;max-height:calc(100vh - 185px);padding-right:3px;}
+.oc{border-radius:14px;overflow:hidden;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid rgba(217,168,71,.14);box-shadow:0 6px 16px rgba(0,0,0,.3);animation:pop .3s ease;}
 @keyframes pop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .oc.flash{animation:flash 1.4s ease;}
-@keyframes flash{0%{box-shadow:0 0 0 3px rgba(232,116,43,.8),0 4px 12px rgba(120,80,40,.18)}100%{box-shadow:0 4px 12px rgba(120,80,40,.18)}}
-.oc-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 6px;}
-.oc-no{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.03em;}
-.oc-time{font-size:11.5px;color:#6e4a27;font-weight:700;} .oc-time.late{color:#b4201a;}
-.chips{display:flex;gap:6px;padding:0 14px 8px;flex-wrap:wrap;}
-.chip{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:6px;color:#fff;}
-.chip.app{background:var(--orange);}.chip.baemin{background:var(--baemin);}.chip.coupang{background:var(--coupang);}
-.chip.pickup,.chip.delivery{background:rgba(42,28,16,.1);color:#3a281a;border:1px solid rgba(42,28,16,.2);}
-.oc-items{padding:6px 14px 10px;border-top:1px dashed var(--kraft-dark);}
-.oc-it{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:5px 0;}
-.oc-it .nm2{font-weight:700;} .oc-it .op{display:block;font-size:11px;color:#6e4a27;font-weight:600;margin-top:1px;}
-.oc-it .q{font-weight:800;color:#8a3c12;}
-.oc-f{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(42,28,16,.06);border-top:1px solid rgba(42,28,16,.1);}
-.oc-tot{font-weight:800;font-size:14px;}
-.oc-act{border:0;cursor:pointer;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:30px;color:#fff;background:var(--orange);border:1px solid var(--orange-dark);}
-.oc-act.prog{background:var(--gold);border-color:#9a6f1e;} .oc-act.done{background:#5d7a58;border-color:#46603f;}
-.col-empty{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:26px 0;}
-.modal-wrap{position:fixed;inset:0;z-index:60;display:none;}.modal-wrap.open{display:block;}
-.modal-bg{position:absolute;inset:0;background:rgba(40,28,16,.4);}
-.modal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(520px,92vw);max-height:84vh;overflow-y:auto;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 20px 50px rgba(80,50,20,.3);}
-.modal h3{font-family:var(--display);font-size:24px;margin:0 0 4px;font-weight:700;}
-.modal .sub{font-size:12px;color:var(--ink-soft);margin-bottom:14px;}
-.so-row{display:flex;align-items:center;justify-content:space-between;padding:11px 2px;border-bottom:1px solid var(--line);}
-.so-row .nm3{font-size:14px;font-weight:600;}
-.toggle{width:52px;height:28px;border-radius:15px;background:#d8c7ad;border:1px solid var(--line);position:relative;cursor:pointer;flex:0 0 auto;transition:.2s;}
-.toggle .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
-.toggle.on{background:var(--orange);border-color:var(--orange-dark);} .toggle.on .kn{left:26px;}
-.so-state{font-size:11px;font-weight:800;margin-right:10px;} .so-state.sell{color:#5d7a58;}.so-state.out{color:var(--coupang);}
-.toast{position:fixed;top:72px;right:24px;z-index:80;background:#2a1c10;color:var(--cream);border:1px solid var(--kraft-dark);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 10px 24px rgba(80,50,20,.3);opacity:0;transform:translateX(30px);transition:.3s;display:flex;align-items:center;gap:9px;}
-.toast.show{opacity:1;transform:none;} .toast .nd{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(232,116,43,.25);}
-/* 컵라벨 스티커 */
-.autolabel{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;color:var(--ink2);margin:0 10px 0 2px;}
-.autolabel .dot{width:8px;height:8px;border-radius:50%;background:#5d7a58;box-shadow:0 0 0 3px rgba(93,122,88,.22);animation:pulse 1.8s ease-in-out infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(93,122,88,.22)}50%{box-shadow:0 0 0 5px rgba(93,122,88,.08)}}
+@keyframes flash{0%{box-shadow:0 0 0 2px var(--orange),0 6px 16px rgba(0,0,0,.3)}100%{box-shadow:0 6px 16px rgba(0,0,0,.3)}}
+.oc-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 7px;}
+.oc-no{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.03em;color:var(--gold2);}
 .oc-hr{display:flex;align-items:center;gap:9px;}
-.lblbtn{border:1px solid var(--kraft-dark);background:rgba(255,255,255,.55);color:#4a3320;font-weight:800;font-size:11px;padding:4px 9px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;line-height:1;}
-.lblbtn:hover{background:#fff;}
-.lblsub{font-size:12px;color:var(--ink-soft);margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.lblsub .on{display:inline-flex;align-items:center;gap:6px;color:#5d7a58;font-weight:800;}
-.lblsub .on .dot{width:7px;height:7px;border-radius:50%;background:#5d7a58;}
+.oc-time{font-size:11.5px;color:var(--muted);font-weight:700;} .oc-time.late{color:#f0845a;}
+.lblbtn{border:1px solid var(--kraft2);background:rgba(201,167,125,.12);color:var(--cream-soft);font-weight:800;font-size:11px;padding:4px 9px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;line-height:1;}
+.lblbtn:hover{background:rgba(201,167,125,.22);}
+.chips{display:flex;gap:6px;padding:0 14px 9px;flex-wrap:wrap;align-items:center;}
+.chip{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:6px;color:#fff;}
+.chip.app{background:var(--orange);}.chip.baemin{background:var(--baemin);color:#0b2f2e;}.chip.coupang{background:var(--coupang);}
+.chip.mode{background:rgba(217,168,71,.12);color:var(--gold2);border:1px solid var(--line);}
+.chip.wait{background:rgba(111,131,82,.2);color:var(--olive2);border:1px solid rgba(138,165,105,.4);margin-left:auto;font-variant-numeric:lining-nums;}
+.oc-items{padding:7px 14px 10px;border-top:1px dashed rgba(217,168,71,.18);}
+.oc-it{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:5px 0;}
+.oc-it .nm2{font-weight:700;color:var(--cream);} .oc-it .op{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:1px;}
+.oc-it .q{font-weight:800;color:var(--gold2);font-variant-numeric:lining-nums;}
+.oc-f{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(0,0,0,.18);border-top:1px solid rgba(217,168,71,.1);}
+.oc-tot{font-weight:800;font-size:14px;color:var(--cream);font-variant-numeric:lining-nums;}
+.oc-act{border:0;cursor:pointer;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:30px;color:#fff;background:linear-gradient(135deg,var(--orange),var(--orange-dark));}
+.oc-act.prog{background:linear-gradient(135deg,var(--gold),#a9801f);color:#2a1c05;} .oc-act.done{background:linear-gradient(135deg,var(--olive),#45532f);}
+.col-empty{text-align:center;color:var(--muted2);font-size:12.5px;padding:26px 0;}
+/* modal */
+.modal-wrap{position:fixed;inset:0;z-index:60;display:none;}.modal-wrap.open{display:block;}
+.modal-bg{position:absolute;inset:0;background:rgba(10,7,5,.65);backdrop-filter:blur(3px);}
+.modal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(560px,92vw);max-height:86vh;overflow-y:auto;background:linear-gradient(180deg,#271E18,#1c1612);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 30px 70px rgba(0,0,0,.55);}
+.modal h3{font-family:var(--display);font-size:25px;margin:0 0 4px;font-weight:700;color:var(--cream);}
+.modal .sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.lblsub{font-size:12px;color:var(--muted);margin-bottom:15px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.lblsub b{color:var(--gold2);} .lblsub .on{display:inline-flex;align-items:center;gap:6px;color:var(--olive2);font-weight:800;}
+.lblsub .on .dot{width:7px;height:7px;border-radius:50%;background:var(--olive2);}
 .labels-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
 @media(max-width:520px){.labels-grid{grid-template-columns:1fr;}}
-.cuplabel{background:#fffdf8;border:1px dashed #c8ad82;border-radius:11px;padding:12px 13px 11px 16px;color:#1c130a;position:relative;overflow:hidden;}
-.cuplabel::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--orange);}
-.cuplabel .cl-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:7px;border-bottom:1px solid rgba(28,19,10,.12);}
-.cl-brand{font-family:var(--serif);font-weight:700;font-size:12.5px;letter-spacing:.1em;display:inline-flex;align-items:center;gap:5px;}
-.cl-brand .dia{color:var(--orange);font-size:11px;}
+/* cup label = cream/kraft ticket (GPT 시안) */
+.cuplabel{background:linear-gradient(180deg,#fbf4e6,#f3ead6);border:1px solid #d8c3a0;border-radius:12px;padding:13px 14px 12px 17px;color:#211608;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.cuplabel::after{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--orange);}
+.cuplabel .cl-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(33,22,8,.14);}
+.cl-brand{font-family:var(--serif);font-weight:700;font-size:13px;letter-spacing:.1em;display:inline-flex;align-items:center;gap:5px;color:#2a1c0c;}
+.cl-brand .dia{color:var(--orange-dark);font-size:11px;}
 .cl-store{font-size:10px;color:#6e4a27;font-weight:700;}
-.cl-meta{display:flex;align-items:center;justify-content:space-between;margin-top:7px;}
-.cl-no{font-family:var(--serif);font-size:11px;letter-spacing:.02em;color:#3a281a;font-weight:700;}
-.cl-ch{font-size:9.5px;font-weight:800;color:#fff;background:var(--ink);padding:2px 7px;border-radius:5px;}
-.cl-name{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.08;margin:8px 0 4px;color:#1c130a;}
-.cl-opt{font-size:12px;font-weight:600;color:#4a3320;line-height:1.4;}
-.cl-opt b{color:#2a1c10;} .cl-opt .hot{color:var(--orange);font-weight:800;}
+.cl-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.cl-no{font-family:var(--serif);font-size:12px;letter-spacing:.02em;color:#3a281a;font-weight:700;}
+.cl-ch{font-size:9.5px;font-weight:800;color:#fff;background:#2a1c10;padding:2px 8px;border-radius:5px;}
+.cl-name{font-family:var(--display);font-weight:700;font-size:23px;line-height:1.05;margin:9px 0 5px;color:#1c130a;}
+.cl-opt{font-size:12px;font-weight:600;color:#4a3320;line-height:1.45;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.cl-opt .pill{background:rgba(42,28,16,.08);border:1px solid rgba(42,28,16,.14);border-radius:5px;padding:2px 7px;font-weight:700;}
+.cl-opt .hot{background:rgba(232,116,43,.14);border-color:rgba(232,116,43,.4);color:var(--orange-dark);}
 .cl-opt.dim{color:#9a886c;font-style:italic;}
-.cl-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px dashed rgba(28,19,10,.18);}
-.cl-call{font-weight:800;font-size:12px;color:#8a3c12;}
-.cl-seq{font-weight:800;font-size:12px;color:#3a281a;}
+.cl-foot{display:flex;align-items:center;justify-content:space-between;margin-top:11px;padding-top:9px;border-top:1px dashed rgba(33,22,8,.2);}
+.cl-call{font-weight:800;font-size:12px;color:var(--orange-dark);font-variant-numeric:lining-nums;}
+.cl-seq{font-weight:800;font-size:12px;color:#3a281a;font-variant-numeric:lining-nums;}
 .cl-time{font-size:11px;color:#6e4a27;font-weight:700;font-variant-numeric:tabular-nums;}
-.cl-bars{margin-top:9px;height:16px;background-image:repeating-linear-gradient(90deg,#1c130a 0,#1c130a 1px,transparent 1px,transparent 3px,#1c130a 3px,#1c130a 5px,transparent 5px,transparent 6px);opacity:.7;}
+.cl-bars{margin-top:10px;height:17px;background-image:repeating-linear-gradient(90deg,#1c130a 0,#1c130a 1px,transparent 1px,transparent 3px,#1c130a 3px,#1c130a 5px,transparent 5px,transparent 6px);opacity:.72;}
+.cl-code{text-align:center;font-size:9px;letter-spacing:.2em;color:#6e4a27;margin-top:3px;font-variant-numeric:lining-nums;}
+.modal-btns{display:flex;gap:10px;margin-top:18px;}
+.modal-btns .btn{flex:1;padding:13px;font-size:14px;}
+/* sold modal rows */
+.so-row{display:flex;align-items:center;justify-content:space-between;padding:11px 2px;border-bottom:1px solid var(--line);}
+.so-row .nm3{font-size:14px;font-weight:600;color:var(--cream);}
+.toggle{width:52px;height:28px;border-radius:15px;background:#4a3a2d;border:1px solid var(--line);position:relative;cursor:pointer;flex:0 0 auto;transition:.2s;}
+.toggle .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.toggle.on{background:var(--orange);border-color:var(--orange-dark);} .toggle.on .kn{left:26px;}
+.so-state{font-size:11px;font-weight:800;margin-right:10px;} .so-state.sell{color:var(--olive2);}.so-state.out{color:#f0845a;}
+.toast{position:fixed;top:74px;right:26px;z-index:80;background:#2a1c10;color:var(--cream);border:1px solid var(--gold);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.4);opacity:0;transform:translateX(30px);transition:.3s;display:flex;align-items:center;gap:9px;}
+.toast.show{opacity:1;transform:none;} .toast .nd{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(232,116,43,.25);}
 #printArea{display:none;}
 @media print{
   @page{size:54mm auto;margin:0;}
-  body{background:#fff!important;}
-  body::before{display:none!important;}
+  body{background:#fff!important;}body::before{display:none!important;}
   body>*{display:none!important;}
   #printArea{display:block!important;}
   .print-label{width:54mm;box-sizing:border-box;padding:3mm 3mm 4mm;color:#000;font-family:"Pretendard",sans-serif;page-break-after:always;border-bottom:1px dashed #000;}
@@ -124,13 +140,13 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets
 </head>
 <body>
 <div class="bar">
-  <div class="brand"><span class="nm">CASA B OS</span><span class="lb">KITCHEN DISPLAY · 부산 서면점</span></div>
+  <div class="brand"><span class="dia"><b>B</b></span><div class="tx"><span class="nm">CASA B OS</span><span class="lb">KITCHEN DISPLAY · 부산 서면점</span></div></div>
   <span class="clock" id="clock">--:--:--</span>
   <span class="sp"></span>
   <div class="kpi">
-    <div class="k"><div class="kv" id="kCount">0</div><div class="kk">오늘 주문</div></div>
-    <div class="k"><div class="kv" id="kRev">₩0</div><div class="kk">오늘 매출</div></div>
-    <div class="k"><div class="kv" id="kProg">0</div><div class="kk">제조중</div></div>
+    <div class="k"><span class="ic">🧾</span><div><div class="kv" id="kCount">0</div><div class="kk">오늘 주문</div></div></div>
+    <div class="k"><span class="ic">₩</span><div><div class="kv" id="kRev">0</div><div class="kk">오늘 매출</div></div></div>
+    <div class="k"><span class="ic">☕</span><div><div class="kv" id="kProg">0</div><div class="kk">제조중</div></div></div>
   </div>
   <span class="autolabel" title="주문 접수 시 컵라벨이 라벨 프린터로 자동 출력됩니다"><span class="dot"></span>컵라벨 자동출력 ON</span>
   <button class="btn btn-ghost" onclick="openSold()">품절 관리</button>
@@ -140,18 +156,20 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets
   <span class="lg"><span class="sw" style="background:var(--orange)"></span>CASA B 앱</span>
   <span class="lg"><span class="sw" style="background:var(--baemin)"></span>배달의민족</span>
   <span class="lg"><span class="sw" style="background:var(--coupang)"></span>쿠팡이츠</span>
-  <span style="margin-left:auto;font-style:italic;font-family:var(--display);font-size:14px">Good Coffee Brings People Together</span>
+  <span class="q">Good Coffee Brings People Together</span>
 </div>
 <div class="board">
-  <div class="col new"><div class="col-h"><span class="ct">신규 · 접수대기</span><span class="cnt" id="cNew">0</span></div><div class="col-body" id="colNew"></div></div>
-  <div class="col prog"><div class="col-h"><span class="ct">제조중</span><span class="cnt" id="cProg">0</span></div><div class="col-body" id="colProg"></div></div>
-  <div class="col done"><div class="col-h"><span class="ct">완료 · 픽업/배달</span><span class="cnt" id="cDone">0</span></div><div class="col-body" id="colDone"></div></div>
-</div>
-<div class="modal-wrap" id="soldWrap"><div class="modal-bg" onclick="closeSold()"></div>
-  <div class="modal"><h3>품절 관리</h3><div class="sub">품절 처리하면 앱·키오스크·배달앱 메뉴에서 자동으로 숨겨집니다.</div><div id="soldList"></div><div style="height:14px"></div><button class="btn btn-kraft" style="width:100%;padding:12px" onclick="closeSold()">완료</button></div>
+  <div class="col new"><div class="col-h"><span class="ct"><span class="d"></span>신규 · 접수대기</span><span class="cnt" id="cNew">0</span></div><div class="col-body" id="colNew"></div></div>
+  <div class="col prog"><div class="col-h"><span class="ct"><span class="d"></span>제조중</span><span class="cnt" id="cProg">0</span></div><div class="col-body" id="colProg"></div></div>
+  <div class="col done"><div class="col-h"><span class="ct"><span class="d"></span>완료 · 픽업/배달</span><span class="cnt" id="cDone">0</span></div><div class="col-body" id="colDone"></div></div>
 </div>
 <div class="modal-wrap" id="lblWrap"><div class="modal-bg" onclick="closeLabels()"></div>
-  <div class="modal"><h3>컵라벨 스티커</h3><div class="lblsub" id="lblSub"></div><div class="labels-grid" id="lblGrid"></div><div style="height:16px"></div><div style="display:flex;gap:10px"><button class="btn btn-kraft" style="flex:1;padding:12px" onclick="printLabels()">🖨 라벨 인쇄</button><button class="btn btn-ghost" style="flex:0 0 auto;padding:12px 18px" onclick="closeLabels()">닫기</button></div></div>
+  <div class="modal"><h3>컵라벨 스티커</h3><div class="lblsub" id="lblSub"></div><div class="labels-grid" id="lblGrid"></div>
+    <div class="modal-btns"><button class="btn btn-kraft" onclick="printLabels()">🖨 라벨 인쇄 / 재출력</button><button class="btn btn-ghost" onclick="closeLabels()">닫기</button></div></div>
+</div>
+<div class="modal-wrap" id="soldWrap"><div class="modal-bg" onclick="closeSold()"></div>
+  <div class="modal"><h3>품절 관리</h3><div class="sub">품절 처리하면 앱·키오스크·배달앱 메뉴에서 자동으로 숨겨집니다.</div><div id="soldList"></div>
+    <div class="modal-btns"><button class="btn btn-kraft" onclick="closeSold()">완료</button></div></div>
 </div>
 <div id="printArea"></div>
 <div class="toast" id="toast"><span class="nd"></span><span id="toastMsg"></span></div>
@@ -159,33 +177,33 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("assets
 var won=function(n){return '₩'+n.toLocaleString('ko-KR');};
 function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('ko-KR',{hour12:false});}
 setInterval(tick,1000);tick();
-function isDrink(n){return !/타르트|티라미수/.test(n);}
-var OPTS=['디카페인','샷 추가','연하게','바닐라 시럽','헤이즐넛 시럽','얼음 적게','휘핑 추가','오트 우유','저지방 우유'];
-function buildOpts(){if(Math.random()<0.45)return [];var k=1+(Math.random()<0.3?1:0);var pool=OPTS.slice();var out=[];for(var i=0;i<k&&pool.length;i++){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);}if(Math.random()<0.28&&out.indexOf('디카페인')<0)out.unshift('디카페인');return out;}
-function labelsOf(o){var arr=[];o.items.forEach(function(it){var q=it.q||1;for(var i=0;i<q;i++){arr.push({no:o.no,call:o.call,ch:o.ch,name:it.n,temp:it.o,opts:it.opts||[],idx:i+1,tot:q,at:o.at});}});return arr;}
-function cupHTML(L){var parts=[];if(L.temp)parts.push('<b>'+L.temp+'</b>');(L.opts||[]).forEach(function(o){parts.push(o==='디카페인'?'<span class="hot">디카페인</span>':o);});var optHtml=parts.join(' · ');var t=new Date(L.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});var mode=L.ch.mode==='delivery'?'배달':(L.ch.mode==='pickup'?'픽업':'포장');return '<div class="cuplabel"><div class="cl-top"><span class="cl-brand"><span class="dia">◆</span>CASA B</span><span class="cl-store">부산 서면점</span></div><div class="cl-meta"><span class="cl-no">'+L.no+'</span><span class="cl-ch">'+L.ch.t+' · '+mode+'</span></div><div class="cl-name">'+L.name+'</div>'+(optHtml?'<div class="cl-opt">'+optHtml+'</div>':'<div class="cl-opt dim">옵션 없음</div>')+'<div class="cl-foot"><span class="cl-call">대기 '+L.call+'</span><span class="cl-seq">'+L.idx+' / '+L.tot+'</span><span class="cl-time">'+t+'</span></div><div class="cl-bars"></div></div>';}
-function printLabelHTML(L){var optline=[L.temp].concat(L.opts||[]).filter(Boolean).join(' · ');var t=new Date(L.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});var mode=L.ch.mode==='delivery'?'배달':(L.ch.mode==='pickup'?'픽업':'포장');return '<div class="print-label"><div class="pl-top">◆ CASA B · 부산 서면점</div><div class="pl-meta"><span>'+L.no+'</span><span>대기 '+L.call+'</span></div><div class="pl-name">'+L.name+'</div><div class="pl-opt">'+(optline||'옵션 없음')+'</div><div class="pl-foot"><span>'+L.idx+'/'+L.tot+'</span><span>'+t+'</span><span>'+mode+'</span></div></div>';}
-var _lblOrder=null;
-function openLabels(id){var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;_lblOrder=o;var ls=labelsOf(o);document.getElementById('lblGrid').innerHTML=ls.map(cupHTML).join('');document.getElementById('lblSub').innerHTML='<b>'+o.no+'</b> · 컵라벨 '+ls.length+'장 <span class="on"><span class="dot"></span>접수 시 자동 출력됨</span>';document.getElementById('lblWrap').classList.add('open');}
-function closeLabels(){document.getElementById('lblWrap').classList.remove('open');}
-function printLabels(){if(!_lblOrder)return;var ls=labelsOf(_lblOrder);document.getElementById('printArea').innerHTML=ls.map(printLabelHTML).join('');window.print();}
-var MENU=[{n:'아메리카노',o:'ICE · R',p:3000},{n:'아메리카노',o:'HOT · R',p:3000},{n:'카페라떼',o:'ICE · L',p:4500},{n:'콜드브루',o:'ICE · R',p:4500},{n:'오르조 라떼',o:'HOT · R',p:5500},{n:'오렌지 콜드브루 클라우드',o:'ICE · R',p:5800},{n:'딸기 라떼',o:'ICE · R',p:5200},{n:'B 얼그레이',o:'HOT · R',p:5000},{n:'에그타르트',o:'',p:3200},{n:'B 오리지널 티라미수',o:'',p:5000},{n:'콘 타르트',o:'',p:3500},{n:'아메리카노+에그타르트',o:'세트',p:6000}];
+var MENU=[{n:'아메리카노',o:'ICE · R',p:4000},{n:'아메리카노',o:'HOT · R',p:4000},{n:'카페라떼',o:'ICE · L',p:5300},{n:'콜드브루',o:'ICE · R',p:4800},{n:'카푸치노',o:'HOT · R',p:5000},{n:'오르조',o:'HOT · R',p:5500},{n:'B크림라떼',o:'ICE · R',p:5800},{n:'딸기크림라떼',o:'ICE · R',p:5500},{n:'바닐라라떼',o:'ICE · R',p:5300},{n:'B얼그레이',o:'HOT · R',p:5000},{n:'에스프레소',o:'HOT',p:3800},{n:'에그타르트',o:'',p:3900},{n:'B티라미수',o:'',p:6500},{n:'크루아상',o:'',p:4500},{n:'콘타르트',o:'',p:3800},{n:'아메리카노+에그타르트',o:'세트',p:6500}];
 var CH=[{k:'app',t:'CASA B 앱',mode:'pickup'},{k:'baemin',t:'배달의민족',mode:'delivery'},{k:'coupang',t:'쿠팡이츠',mode:'delivery'}];
 var NAMES=['김','이','박','최','정','강','조','윤'];
 var orders=[];var seq=835;var todayCount=0;var todayRev=0;
 function rnd(a){return a[Math.floor(Math.random()*a.length)];}
-function makeOrder(flash){var ch=rnd(CH);var n=1+Math.floor(Math.random()*3);var items=[];var tot=0;for(var i=0;i<n;i++){var m=rnd(MENU);var q=1+(Math.random()<0.25?1:0);items.push({n:m.n,o:m.o,q:q,p:m.p,opts:isDrink(m.n)?buildOpts():[]});tot+=m.p*q;}seq++;var no=ch.k==='app'?('CB250301-'+String(seq)):ch.k==='baemin'?('배민 #'+(4000+Math.floor(Math.random()*900))):('쿠팡 #'+(7000+Math.floor(Math.random()*900)));var dest=ch.mode==='delivery'?('배달 · '+rnd(NAMES)+'**'):('픽업 · '+rnd(NAMES)+'님');var o={id:Date.now()+Math.random(),no:no,ch:ch,items:items,tot:tot,dest:dest,status:'new',at:Date.now(),flash:!!flash};o.call=10+(todayCount%89);orders.unshift(o);todayCount++;todayRev+=tot;render();return o;}
+function isDrink(n){return !/타르트|티라미수|크루아상/.test(n);}
+var OPTS=['디카페인','샷 추가','연하게','바닐라 시럽','헤이즐넛 시럽','얼음 적게','휘핑 추가','오트 우유','저지방 우유'];
+function buildOpts(){if(Math.random()<0.45)return [];var k=1+(Math.random()<0.3?1:0);var pool=OPTS.slice();var out=[];for(var i=0;i<k&&pool.length;i++){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);}if(Math.random()<0.28&&out.indexOf('디카페인')<0)out.unshift('디카페인');return out;}
+function makeOrder(flash){var ch=rnd(CH);var n=1+Math.floor(Math.random()*3);var items=[];var tot=0;for(var i=0;i<n;i++){var m=rnd(MENU);var q=1+(Math.random()<0.25?1:0);items.push({n:m.n,o:m.o,q:q,p:m.p,opts:isDrink(m.n)?buildOpts():[]});tot+=m.p*q;}seq++;var no=ch.k==='app'?('CB-'+String(seq)):ch.k==='baemin'?('배민 #'+(4000+Math.floor(Math.random()*900))):('쿠팡 #'+(7000+Math.floor(Math.random()*900)));var dest=ch.mode==='delivery'?('배달 · '+rnd(NAMES)+'**'):('픽업 · '+rnd(NAMES)+'님');var o={id:Date.now()+Math.random(),no:no,ch:ch,items:items,tot:tot,dest:dest,status:'new',at:Date.now(),flash:!!flash};o.call=10+(todayCount%89);orders.unshift(o);todayCount++;todayRev+=tot;render();return o;}
 function elapsed(at){var s=Math.floor((Date.now()-at)/1000);var m=Math.floor(s/60);return m<1?'방금':(m+'분 전');}
-function cardHTML(o){var chip='<span class="chip '+o.ch.k+'">'+o.ch.t+'</span><span class="chip '+o.ch.mode+'">'+(o.ch.mode==='delivery'?'배달':'픽업')+'</span>';var late=(Date.now()-o.at)>420000;var items=o.items.map(function(it){var op=[it.o].concat(it.opts||[]).filter(Boolean).join(' · ').replace('디카페인','<b style="color:#b4531a">디카페인</b>');return '<div class="oc-it"><span><span class="nm2">'+it.n+'</span>'+(op?'<span class="op">'+op+'</span>':'')+'</span><span class="q">x'+it.q+'</span></div>';}).join('');var act=o.status==='new'?'<button class="oc-act" onclick="adv(\''+o.id+'\')">접수 → 제조</button>':o.status==='prog'?'<button class="oc-act prog" onclick="adv(\''+o.id+'\')">제조 완료</button>':'<button class="oc-act done" onclick="adv(\''+o.id+'\')">'+(o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+'</button>';return '<div class="oc'+(o.flash?' flash':'')+'"><div class="oc-h"><span class="oc-no">'+o.no+'</span><span class="oc-hr"><span class="oc-time'+(late?' late':'')+'">'+elapsed(o.at)+'</span><button class="lblbtn" onclick="openLabels(\''+o.id+'\')">🏷 라벨</button></span></div><div class="chips">'+chip+'<span class="chip pickup">'+o.dest+'</span></div><div class="oc-items">'+items+'</div><div class="oc-f"><span class="oc-tot">'+won(o.tot)+'</span>'+act+'</div></div>';}
+function labelsOf(o){var arr=[];o.items.forEach(function(it){var q=it.q||1;for(var i=0;i<q;i++){arr.push({no:o.no,call:o.call,ch:o.ch,name:it.n,temp:it.o,opts:it.opts||[],idx:i+1,tot:q,at:o.at,food:!isDrink(it.n)});}});return arr;}
+function cupHTML(L){var parts=[];if(!L.food&&L.temp)parts.push('<span class="pill">'+L.temp+'</span>');(L.opts||[]).forEach(function(o){parts.push('<span class="pill'+(o==='디카페인'?' hot':'')+'">'+o+'</span>');});if(L.food&&L.tot>1)parts.push('<span class="pill">수량 '+L.tot+'</span>');var optHtml=parts.join('');var t=new Date(L.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});var mode=L.ch.mode==='delivery'?'배달':(L.ch.mode==='pickup'?'픽업':'포장');var code=('A'+String(Math.floor(L.call*1000+L.idx)).padStart(7,'0'));return '<div class="cuplabel"><div class="cl-top"><span class="cl-brand"><span class="dia">◆</span>CASA B</span><span class="cl-store">부산 서면점</span></div><div class="cl-meta"><span class="cl-no">'+L.no+'</span><span class="cl-ch">'+L.ch.t+' · '+mode+'</span></div><div class="cl-name">'+L.name+'</div>'+(optHtml?'<div class="cl-opt">'+optHtml+'</div>':'<div class="cl-opt dim">옵션 없음</div>')+'<div class="cl-foot"><span class="cl-call">대기 '+L.call+'</span><span class="cl-seq">'+L.idx+' / '+L.tot+'</span><span class="cl-time">'+t+'</span></div><div class="cl-bars"></div><div class="cl-code">'+code+'</div></div>';}
+function printLabelHTML(L){var optline=[];if(!L.food&&L.temp)optline.push(L.temp);optline=optline.concat(L.opts||[]);if(L.food&&L.tot>1)optline.push('수량 '+L.tot);optline=optline.join(' · ');var t=new Date(L.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});var mode=L.ch.mode==='delivery'?'배달':(L.ch.mode==='pickup'?'픽업':'포장');return '<div class="print-label"><div class="pl-top">◆ CASA B · 부산 서면점</div><div class="pl-meta"><span>'+L.no+'</span><span>대기 '+L.call+'</span></div><div class="pl-name">'+L.name+'</div><div class="pl-opt">'+(optline||'옵션 없음')+'</div><div class="pl-foot"><span>'+L.idx+'/'+L.tot+'</span><span>'+t+'</span><span>'+mode+'</span></div></div>';}
+var _lblOrder=null;
+function openLabels(id){var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;_lblOrder=o;var ls=labelsOf(o);document.getElementById('lblGrid').innerHTML=ls.map(cupHTML).join('');document.getElementById('lblSub').innerHTML='<b>'+o.no+'</b> · 컵라벨 '+ls.length+'장 <span class="on"><span class="dot"></span>접수 시 자동 출력됨</span>';document.getElementById('lblWrap').classList.add('open');}
+function closeLabels(){document.getElementById('lblWrap').classList.remove('open');}
+function printLabels(){if(!_lblOrder)return;var ls=labelsOf(_lblOrder);document.getElementById('printArea').innerHTML=ls.map(printLabelHTML).join('');window.print();}
+function cardHTML(o){var chip='<span class="chip '+o.ch.k+'">'+o.ch.t+'</span><span class="chip mode">'+(o.ch.mode==='delivery'?'배달':'픽업')+'</span><span class="chip wait">대기 '+o.call+'</span>';var late=(Date.now()-o.at)>420000;var items=o.items.map(function(it){var op=[it.o].concat(it.opts||[]).filter(Boolean).join(' · ').replace('디카페인','<b style="color:#f0845a">디카페인</b>');return '<div class="oc-it"><span><span class="nm2">'+it.n+'</span>'+(op?'<span class="op">'+op+'</span>':'')+'</span><span class="q">x'+it.q+'</span></div>';}).join('');var act=o.status==='new'?'<button class="oc-act" onclick="adv(\''+o.id+'\')">접수 → 제조</button>':o.status==='prog'?'<button class="oc-act prog" onclick="adv(\''+o.id+'\')">제조 완료</button>':'<button class="oc-act done" onclick="adv(\''+o.id+'\')">'+(o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+'</button>';return '<div class="oc'+(o.flash?' flash':'')+'"><div class="oc-h"><span class="oc-no">'+o.no+'</span><span class="oc-hr"><span class="oc-time'+(late?' late':'')+'">'+elapsed(o.at)+'</span><button class="lblbtn" onclick="openLabels(\''+o.id+'\')">🏷 라벨</button></span></div><div class="chips">'+chip+'</div><div style="padding:0 14px 6px;font-size:11.5px;color:var(--muted);font-weight:600">'+o.dest+'</div><div class="oc-items">'+items+'</div><div class="oc-f"><span class="oc-tot">'+won(o.tot)+'</span>'+act+'</div></div>';}
 function render(){var N=orders.filter(function(o){return o.status==='new';}),P=orders.filter(function(o){return o.status==='prog';}),D=orders.filter(function(o){return o.status==='done';});document.getElementById('colNew').innerHTML=N.length?N.map(cardHTML).join(''):'<div class="col-empty">새 주문 없음</div>';document.getElementById('colProg').innerHTML=P.length?P.map(cardHTML).join(''):'<div class="col-empty">제조중 없음</div>';document.getElementById('colDone').innerHTML=D.length?D.map(cardHTML).join(''):'<div class="col-empty">완료 대기 없음</div>';document.getElementById('cNew').textContent=N.length;document.getElementById('cProg').textContent=P.length;document.getElementById('cDone').textContent=D.length;document.getElementById('kCount').textContent=todayCount;document.getElementById('kRev').textContent=won(todayRev);document.getElementById('kProg').textContent=P.length;orders.forEach(function(o){o.flash=false;});}
 function adv(id){var o=orders.find(function(x){return String(x.id)===String(id);});if(!o)return;if(o.status==='new')o.status='prog';else if(o.status==='prog')o.status='done';else{orders=orders.filter(function(x){return x!==o;});toast((o.ch.mode==='delivery'?'배달 출발':'픽업 완료')+' · '+o.no);}render();}
 var tT;function toast(m){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},2600);}
 function simulate(){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · 컵라벨 '+labelsOf(o).length+'장 출력');}
-var SOLD=['아메리카노','카페라떼','콜드브루','오르조 라떼','딸기 라떼','B 얼그레이','에그타르트','B 오리지널 티라미수','콘 타르트','데일리 베이크'];var soldState={};
-function openSold(){document.getElementById('soldList').innerHTML=SOLD.map(function(n,i){var on=!soldState[n];return '<div class="so-row"><span class="nm3">'+n+'</span><div style="display:flex;align-items:center"><span class="so-state '+(on?'sell':'out')+'" id="st'+i+'">'+(on?'판매중':'품절')+'</span><div class="toggle '+(on?'on':'')+'" id="tg'+i+'" onclick="toggleSold(\''+n.replace(/\x27/g,"")+'\','+i+')"><div class="kn"></div></div></div></div>';}).join('');document.getElementById('soldWrap').classList.add('open');}
+var SOLD=['아메리카노','카페라떼','콜드브루','오르조','딸기크림라떼','B얼그레이','에그타르트','B티라미수','크루아상','콘타르트'];var soldState={};
+function openSold(){document.getElementById('soldList').innerHTML=SOLD.map(function(n,i){var on=!soldState[n];return '<div class="so-row"><span class="nm3">'+n+'</span><div style="display:flex;align-items:center"><span class="so-state '+(on?'sell':'out')+'" id="st'+i+'">'+(on?'판매중':'품절')+'</span><div class="toggle '+(on?'on':'')+'" id="tg'+i+'" onclick="toggleSold(\''+n+'\','+i+')"><div class="kn"></div></div></div></div>';}).join('');document.getElementById('soldWrap').classList.add('open');}
 function closeSold(){document.getElementById('soldWrap').classList.remove('open');}
 function toggleSold(n,i){soldState[n]=!soldState[n];var on=!soldState[n];document.getElementById('tg'+i).classList.toggle('on',on);var st=document.getElementById('st'+i);st.textContent=on?'판매중':'품절';st.className='so-state '+(on?'sell':'out');if(!on)toast(n+' 품절 처리 — 앱·배달앱 반영');}
-(function(){for(var i=0;i<3;i++)makeOrder(false);orders[0].status='prog';orders[1].status='prog';todayCount=39;todayRev=372500;render();setInterval(function(){if(document.hidden)return;if(orders.filter(function(o){return o.status!=='done';}).length<9){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · 컵라벨 '+labelsOf(o).length+'장 출력');}},15000);setInterval(render,20000);})();
+(function(){for(var i=0;i<3;i++)makeOrder(false);orders[0].status='prog';orders[1].status='prog';todayCount=187;todayRev=964800;render();setInterval(function(){if(document.hidden)return;if(orders.filter(function(o){return o.status!=='done';}).length<9){var o=makeOrder(true);toast('새 주문 · '+o.ch.t+' · 컵라벨 '+labelsOf(o).length+'장 출력');}},15000);setInterval(render,20000);})();
 </script>
 </body>
 </html>

@@ -379,7 +379,7 @@ body{font-family:var(--sans);background:#d9cdb8;color:var(--ink);-webkit-font-sm
 
 <script>
 var won=function(n){return '₩'+n.toLocaleString('ko-KR');};
-var IMG={esp:'assets/img/espresso.jpg',latte:'assets/img/latte.jpg',capp:'assets/img/cappuccino.jpg',cold:'assets/img/cold-brew.jpg',tart:'assets/img/egg-tart.jpg',tira:'assets/img/tiramisu.jpg',orzo:'assets/img/orzo.jpg',straw:'assets/img/strawberry.jpg',tea:'assets/img/earlgrey.jpg',cro:'assets/img/croissant.jpg',sig:'assets/img/signature.jpg'};
+var IMG={esp:'assets/img/espresso.jpg',latte:'assets/img/latte.jpg',capp:'assets/img/cappuccino.jpg',cold:'assets/img/cold-brew.jpg',tart:'assets/img/egg-tart.jpg',tira:'assets/img/tiramisu.jpg',orzo:'assets/img/orzo.jpg',straw:'assets/img/strawberry.jpg',tea:'assets/img/earlgrey.jpg',cro:'assets/img/croissant.jpg',cream:'assets/img/cream-latte.jpg',sig:'assets/img/signature.jpg'};
 var dia='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 45 24 24 45 3 24Z" stroke="#f0cd78" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Cinzel,serif" font-size="20" font-weight="700" fill="#f0cd78">B</text></svg>';
 document.getElementById('diaM').innerHTML=dia;
 function beanSvg(c){return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#f0cd78')+'" stroke-width="1.6"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(32 12 12)"/><path d="M8.5 7.5c2 3 2 6 0 9" stroke-width="1.3"/></svg>';}
@@ -388,27 +388,30 @@ function beanFill(){return '<svg viewBox="0 0 24 24" fill="#fff"><ellipse cx="12
 /* MENU DATA */
 var CATS=[
  {c:'커피',items:[
-   {id:'espresso',n:'에스프레소',d:'깊고 진한 하우스 블렌드 한 잔',p:2500,img:IMG.esp,temp:1},
-   {id:'americano',n:'아메리카노',d:'진한 풍미와 깔끔한 마무리',p:3000,img:IMG.esp,temp:2,badge:'BEST'},
-   {id:'latte',n:'카페 라떼',d:'부드러운 우유와 에스프레소',p:4000,img:IMG.latte,temp:2},
-   {id:'cappuccino',n:'카푸치노',d:'진한 커피와 부드러운 폼',p:4000,img:IMG.capp,temp:1},
-   {id:'coldbrew',n:'콜드브루',d:'12시간 저온 추출, 부드러운 바디',p:4500,img:IMG.cold,temp:3},
-   {id:'vanilla',n:'바닐라 라떼',d:'달콤한 바닐라와 에스프레소',p:4500,img:IMG.cold,temp:3},
+   {id:'espresso',n:'에스프레소',d:'깊고 진한 하우스 블렌드 한 잔',p:3800,img:IMG.esp,temp:1},
+   {id:'americano',n:'아메리카노',d:'진한 풍미와 깔끔한 마무리',p:4000,img:IMG.esp,temp:2,badge:'BEST'},
+   {id:'latte',n:'카페 라떼',d:'부드러운 우유와 에스프레소',p:5300,img:IMG.latte,temp:2},
+   {id:'cappuccino',n:'카푸치노',d:'진한 커피와 부드러운 폼',p:5000,img:IMG.capp,temp:1},
+   {id:'coldbrew',n:'콜드브루',d:'12시간 저온 추출, 부드러운 바디',p:4800,img:IMG.cold,temp:3},
  ]},
- {c:'논커피 · 티',items:[
-   {id:'orzo',n:'오르조 라떼',d:'보리로 만든 카페인 프리 라떼',p:5500,img:IMG.orzo,temp:2,badge:'SIG'},
-   {id:'strawberry',n:'딸기 라떼',d:'생딸기 과육이 가득',p:5200,img:IMG.straw,temp:3,badge:'NEW'},
+ {c:'크림커피',items:[
+   {id:'bcream',n:'B 크림라떼',d:'CASA B 시그니처 크림이 올라간 부드럽고 진한 라떼',p:5800,img:IMG.cream,temp:3,badge:'SIG'},
+   {id:'vanilla',n:'바닐라 라떼',d:'달콤한 바닐라와 에스프레소',p:5300,img:IMG.cream,temp:3},
+   {id:'strawberry',n:'딸기 크림라떼',d:'생딸기 과육과 부드러운 크림',p:5500,img:IMG.straw,temp:3,badge:'NEW'},
+ ]},
+ {c:'논커피 · 웰니스',items:[
+   {id:'orzo',n:'오르조 라떼',d:'보리로 만든 카페인 프리 라떼',p:5500,img:IMG.orzo,temp:2},
    {id:'earlgrey',n:'B 얼그레이',d:'향긋한 베르가못 블렌딩 티',p:5000,img:IMG.tea,temp:2},
  ]},
- {c:'디저트 · 베이커리',items:[
-   {id:'eggtart',n:'에그타르트',d:'겉은 바삭, 속은 부드러운 클래식 포르투갈식',p:3200,img:IMG.tart,temp:0},
-   {id:'tiramisu',n:'B 오리지널 티라미수',d:'마스카포네와 에스프레소의 조화',p:5000,img:IMG.tira,temp:0},
-   {id:'croissant',n:'크루아상',d:'버터 풍미 가득한 결',p:4200,img:IMG.cro,temp:0},
-   {id:'conetart',n:'콘 타르트',d:'고소한 콘 커스터드 타르트',p:3500,img:IMG.tart,temp:0},
+ {c:'베이크',items:[
+   {id:'eggtart',n:'에그타르트',d:'겉은 바삭, 속은 부드러운 클래식 포르투갈식',p:3900,img:IMG.tart,temp:0,badge:'SIG'},
+   {id:'tiramisu',n:'B 티라미수',d:'마스카포네와 에스프레소의 조화',p:6500,img:IMG.tira,temp:0},
+   {id:'croissant',n:'크루아상',d:'버터 풍미 가득한 결',p:4500,img:IMG.cro,temp:0},
+   {id:'conetart',n:'콘 타르트',d:'고소한 콘 커스터드 타르트',p:3800,img:IMG.tart,temp:0},
  ]},
  {c:'세트',items:[
-   {id:'set_am',n:'아메리카노 + 에그타르트',d:'가장 인기있는 모닝 세트',p:6000,img:IMG.tart,temp:2,badge:'SET'},
-   {id:'set_pair',n:'커피 + 페이스트리 세트',d:'좋아하는 커피에 베이커리 하나',p:5900,img:IMG.cro,temp:2,badge:'SET'},
+   {id:'set_am',n:'아메리카노 + 에그타르트',d:'가장 인기있는 모닝 세트',p:6500,img:IMG.tart,temp:2,badge:'SET'},
+   {id:'set_pair',n:'커피 + 베이크 세트',d:'좋아하는 커피에 베이크 하나',p:7500,img:IMG.cro,temp:2,badge:'SET'},
  ]},
 ];
 var ALL={}; CATS.forEach(function(c){c.items.forEach(function(i){ALL[i.id]=i;});});

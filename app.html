@@ -264,19 +264,10 @@ body{font-family:var(--sans);background:#d9cdb8;color:var(--ink);-webkit-font-sm
       <img src="assets/img/hero-cupbox.jpg" alt="CASA B 커피와 에그타르트">
       <div class="ov"></div>
       <div class="in">
-        <div class="eb">GOOD COFFEE, EVERY MOMENT</div>
         <div class="ttl serif">좋은 커피,<br>언제 어디서나</div>
         <div class="ds">CASA B와 함께하는<br>일상의 작은 여유.</div>
       </div>
     </div>
-
-    <!-- promo banners -->
-    <div class="promos" id="promos">
-      <div class="pbanner p1" onclick="go('coupon')"><div class="pbd">NEW MEMBER</div><div class="phd">가입하면 아메리카노 1+1</div><div class="psb">첫 잔은 1+1으로 시작하세요</div><div class="pem">🎁</div></div>
-      <div class="pbanner p2" onclick="go('menu')"><div class="pbd">NEW · 신제품</div><div class="phd">오르조 라떼 출시</div><div class="psb">보리로 만든 카페인 프리 시그니처</div><div class="pem">🌾</div></div>
-      <div class="pbanner p3" onclick="go('coupon')"><div class="pbd">SEASON · 할인</div><div class="phd">겨울 시즌 전 메뉴 15%</div><div class="psb">실버 등급 이상 · 12월 한정</div><div class="pem">❄️</div></div>
-    </div>
-    <div class="promo-dots" id="promoDots"><i class="on"></i><i></i><i></i></div>
 
     <!-- membership (kraft) -->
     <div class="mcard" onclick="go('membership')">
@@ -367,6 +358,7 @@ body{font-family:var(--sans);background:#d9cdb8;color:var(--ink);-webkit-font-sm
       <div><div class="pn">진우재 님</div><div class="pt"><b>SILVER</b> · 별 128 · 이번 달 12잔</div></div>
     </div>
     <div class="mylist">
+      <div class="myrow" onclick="go('membership')"><span class="mic">★</span><span class="ml">멤버십 · 등급</span><span class="mv">SILVER · 스탬프 5/10</span><span class="ch">›</span></div>
       <div class="myrow" onclick="toast('주문내역 준비 중')"><span class="mic">🧾</span><span class="ml">주문 내역</span><span class="mv">최근 어제</span><span class="ch">›</span></div>
       <div class="myrow" onclick="toast('결제수단 준비 중')"><span class="mic">💳</span><span class="ml">결제 수단</span><span class="mv">카카오페이</span><span class="ch">›</span></div>
       <div class="myrow" onclick="go('coupon')"><span class="mic">🎟️</span><span class="ml">쿠폰함</span><span class="mv">3장</span><span class="ch">›</span></div>
@@ -403,10 +395,9 @@ body{font-family:var(--sans);background:#d9cdb8;color:var(--ink);-webkit-font-sm
   <!-- TABBAR -->
   <nav class="tabbar">
     <div class="tbi on" data-s="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>홈</div>
-    <div class="tbi" data-s="menu" onclick="go('menu')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h11"/></svg>메뉴</div>
-    <div class="tbi" data-s="membership" onclick="go('membership')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>멤버십</div>
+    <div class="tbi" data-s="menu" onclick="go('menu')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h13l-1.2 8.3a2 2 0 01-2 1.7H9.2a2 2 0 01-2-1.7L6 7zM6 7L5.3 4H3.2"/><circle cx="9.5" cy="20.5" r="1"/><circle cx="16" cy="20.5" r="1"/></svg>주문하기</div>
     <div class="tbi" data-s="coupon" onclick="go('coupon')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v3a2 2 0 000 4v3H4v-3a2 2 0 000-4z"/></svg>쿠폰</div>
-    <div class="tbi" data-s="my" onclick="go('my')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>MY</div>
+    <div class="tbi" data-s="my" onclick="go('my')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>내정보</div>
   </nav>
 </div>
 
